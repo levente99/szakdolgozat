@@ -7,4 +7,7 @@
 *.gz
 *.thm
 *.toc
-
+*.dvi
+*.fdb_latexmk
+*.fls
+*.dict
