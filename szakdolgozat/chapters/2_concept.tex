@@ -31,15 +31,15 @@
 
 \Section{Problémakör}
 
-A gamefikáció vagy játékosítás lényege hogy egy adott információt a felhasználó számára játékos formában jelenítsük meg. Ezt az eszközt általában olyan területeken használják amelyek nem annyira játékosak és így próbálják érdekessé, felhasználó baráttá, motiválóvá tenni az adott feladatkört. \vspace{5mm}
+A gamefikáció vagy játékosítás lényege hogy egy adott információt a felhasználó számára játékos formában jelenítsük meg. Ezt az eszközt általában olyan területeken használják amelyek nem annyira játékosak és így próbálják érdekessé, felhasználó baráttá, motiválóvá tenni az adott feladatkört.
 
-A legtöbb rendszer magára a funkcionalitásra fókuszál, hogy elvégezzünk rajta egy meghatározott feladatot a lehető leggyorsabban. Ami munkavégzés szempontjából hatékony, viszont a fogyasztó úgy fogja érezni hogy neki ezt azért kell csinálni mert muszáj, nem azért mert szükségszerűen el akarják látni azt a bizonyos feladatokat.\vspace{5mm}
+A legtöbb rendszer magára a funkcionalitásra fókuszál, hogy elvégezzünk rajta egy meghatározott feladatot a lehető leggyorsabban. Ami munkavégzés szempontjából hatékony, viszont a fogyasztó úgy fogja érezni hogy neki ezt azért kell csinálni mert muszáj, nem azért mert szükségszerűen el akarják látni azt a bizonyos feladatokat.
 
 Ezzel ellentétben az emberközpontú tervezést használó rendszerek használatakor nem érezzük úgy magunkat, hogy az emberek egy kis fogaskerekek egy nagy rendszerben. Az emberközpontú tervezés arra van optimalizálva hogy, motivációs hatása legyen, elkötelezettséget váltson ki belőlünk természetesen az elvégzendő feladat mellett. A valóság az hogy munkával ellentétben játszani nem kötelező, ha nem tetszik egy játék bármelyik pillanatban abba lehet hagyni. Ezért ember központúak a játékok mert a játék készítőinek muszáj lefoglalnia a játékost, ezért van az a sok küldetés, cél és évtizedek alatt kitapasztalt rengeteg játékos elem hogy a játékos ne hagyja abba a játékot. \cite{actionablegamification}.
 
 \Section{Piackutatás}
 
-Napjainkban a két talán legelterjedtem alkalmazást választottam mintául az enyém elkészítéséhez. Az egyik ilyen alkalmazás a Duolingo\cite{duolingo} a másik pedig a Kahoot!\cite{kahoot}, mind a kettőt az oktatást játékosítására hozták létre. \vspace{5mm}
+Napjainkban a két talán legelterjedtem alkalmazást választottam mintául az enyém elkészítéséhez. Az egyik ilyen alkalmazás a Duolingo\cite{duolingo} a másik pedig a Kahoot!\cite{kahoot}, mind a kettőt az oktatást játékosítására hozták létre.
 
 \subsection{Kahoot!}
 
@@ -74,13 +74,14 @@ Majd ha kész vagyunk, akkor mások is kitölthetik a tesztünket. Ezt úgy lehe
 Kérdések után láthatjuk mennyien válaszoltak az adott válaszra és a hogy melyik volt a helyes. Mi magunknak pedig látjuk helyes volt e válaszunk és hogy mennyi pontot szereztünk ezzel a válasszal. Majd a kérdéssorozat után láthatjuk az első három helyezettet és pontjaikat, a játék késztője pedig teljes jelentést nézhet meg a játszott felhasználók teljesítményéről.
 
 \subsection{Duolingo}
-A Duolingo a legnépszerűbb nyelvtanulási platform és a legtöbbet letöltött oktatási alkalmazás a világon, több mint 300 millió felhasználóval. Az alkalmazás célja az oktatás ingyenes, szórakoztató és mindenki számára elérhetővé tétele. A Duoling-ót úgy tervezték, hogy úgy érezd egy játékot játszol.\cite{whatIsDuolingo}
-
+A Duolingo a legnépszerűbb nyelvtanulási platform és a legtöbbet letöltött oktatási alkalmazás a világon, több mint 300 millió felhasználóval. Az alkalmazás célja az oktatás ingyenes, szórakoztató és mindenki számára elérhetővé tétele. A Duoling-ót úgy tervezték, hogy úgy érezd egy játékot játszol \cite{whatIsDuolingo}.
+\Aref{fig:duolingo}. ábrán láthatunk egy képet a webalkalmazásról.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=6.8cm]{images/Duolingo_main_page.png}
-  \caption{Válaszadás Kahoot!-on}
+  \includegraphics[width=\textwidth]{images/Duolingo_main_page.png}
+  \caption{Egy kép a Duolingo-ról}
+  \label{fig:duolingo}
 \end{figure}
 
 A felületem is már látszik hogy játékos és hogy játékokból vett elemekkel van megtűzdelve az egész oldal. Például:
@@ -121,3 +122,5 @@ A saját alkalmazásomba bele szeretném vinni előzőleg bemutatott mindkét al
   \item {Ranglista}
   \item {Felhasználói szerepkörök kezelése}
 \end{itemize}
+
+% TODO: Külön szakaszban érdemes lenne a szerepköröket is részletezni, az azokhoz tartozó jogosultságokat. (Lehet inkább ehhez tartozna inkább a use case diagram.)
