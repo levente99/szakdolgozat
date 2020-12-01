@@ -153,118 +153,117 @@ Ehhez egy ingyenes Bootstrap témát választottam ami szerintem menne a webolda
 
 \Section{Az oldal felépítése}
 
-A funkciók elrendezésének és felépítésének bemutatására képernyőterv vázlatot magyarul drótváznak, angolul wireframe vagy mockup-nak is nevezzük.
+A funkciók elrendezésének és felépítésének bemutatására képernyőterv vázlatot (magyarul drótváznak, angolul wireframe vagy mockup-nak is nevezzük) készítettem a MockFlow \cite{mockflow} nevű oldalon.
 Először azt az oldalt mutatom be amivel mindenki először találkozik az oldal megnyitásakor, ez pedig a bejelentkezési és regisztrációs felület.
 
-\begin{figure}[h!]
+\subsection{Bejelentkezés és regisztráció}
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/login_wireframe.png}
+    \caption{Bejelentkezés}
+    \label{fig:login_wireframe}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/signin_wireframe.png}
+    \caption{Regisztráció}
+    \label{fig:signin_wireframe}
 \end{figure}
 
-Bejelentkezni email cím és jelszóval lehet. Regisztrációkor pedig ki kell választani hogy tanár vagy diákként szeretnénk regisztrálni.
-Ezután ha sikeresen beléptünk vagy regisztráltunk akkor hozzáférhetünk az oldalhoz ami így fog kinézni:
+Bejelentkezni \ref{fig:login_wireframe} email cím és jelszóval lehet. Regisztrációkor \ref{fig:signin_wireframe} pedig ki kell választani hogy tanár vagy diákként szeretnénk regisztrálni majd meg kell adni az alapvető adatokat.
+Ezután ha sikeresen beléptünk vagy regisztráltunk akkor hozzáférhetünk az oldalhoz.
 
-\newpage
+\subsection{Főoldal}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/main_login_wireframe.png}
+    \caption{Főoldal}
+    \label{fig:main_page}
 \end{figure}
 
-Itt láthatjuk a felhasználónevünket, hogy mennyi xp-vel rendelkezünk, hanyas szintűek vagyunk, és hogy hány darab kitöltött és kitöltetlen tesztünk van még.
+Itt láthatjuk \ref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel rendelkezünk, hanyas szintűek vagyunk, és hogy hány darab kitöltött és kitöltetlen tesztünk van még.
 
+\subsection{Teszt készítés}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/make_test_wireframe.png}
+    \caption{Kvíz teszt készítés}
+    \label{fig:new_quiz_question}
 \end{figure}
 
-Ezen a képen a tesztkészítési felület látható amelyhez majd csak a tanárok férhetnek hozzá. Egy tesztnél meghatározható hogy mi legyen a kérdés, mennyi idő legyen rá, mennyi jutalmat lehessen érte kapni, vagyis xp-t és hogy mik legyenek a válaszok és azok közül melyik a jó.
+Ezen a képen \ref{fig:new_quiz_question} a tesztkészítési felület látható amelyhez majd csak a tanárok férhetnek hozzá. Egy tesztnél meghatározható hogy mi legyen a kérdés, mennyi idő legyen rá, mennyi jutalmat lehessen érte kapni, vagyis xp-t és hogy mik legyenek a válaszok és azok közül melyik a jó.
 
-\newpage
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/make_test2_wireframe.png}
+    \caption{Új kérdés hozzáadása}
+    \label{fig:new_question}
 \end{figure}
 
-Ezután ha elkészítettünk egy kérdést az "Új kérdés" gomb megnyomásával lehet majd új kérdést hozzáadni, itt választhatunk hogy igaz/hamis vagy kvíz típusú kérdést szeretnénk feltenni.
+Ezután ha elkészítettünk egy kérdést az "Új kérdés" gomb megnyomásával lehet majd új kérdést hozzáadni, itt választhatunk hogy igaz/hamis vagy kvíz típusú kérdést szeretnénk feltenni \ref{fig:new_question}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/make_test3_wireframe.png}
+    \caption{Igaz/hamis teszt készítése}
+    \label{fig:test_true_false}
 \end{figure}
 
-Az igaz/hamis típusú kérdésnél csak annyi változik hogy nem lehet válasz lehetőséget írni csak azt hogy az állítás igaz vagy hamis.
+Az igaz/hamis típusú kérdésnél csak annyi változik hogy nem lehet válasz lehetőséget írni csak azt hogy az állítás igaz vagy hamis \ref{fig:test_true_false}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/make_test4_wireframe.png}
+    \caption{Adatok megadása és teszt elmentése}
+    \label{fig:save_test}
 \end{figure}
 
-\newpage
+Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megjelenni majd a diákoknak. Ezután hozzáadunk tetszőleges számú diákot akiktől szeretnénk hogy töltsék ki majd, egy kitöltési határidőt, és elkészült a tesztünk \ref{fig:save_test}.
 
-Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megjelenni majd a diákoknak. Ezután hozzáadunk tetszőleges számú diákot akiktől szeretnénk hogy töltsék ki majd, egy kitöltési határidőt, és elkészült a tesztünk.
-
-\Section{Adatmodell}
-
-Az adatokat egyed-kapcsolat diagrammon ábrázoltam így a teljes kép könnyebben áttekinthető ezen rendszervázlat alapján.
-
-\begin{figure}[h!]
+\subsection{Saját tesztek}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{images/TestME_ER.png}
+    \includegraphics[width=\linewidth]{images/my_tests_wireframe.png}
+    \caption{Felhasználóhoz rendelt tesztek}
+    \label{fig:my_tests}
 \end{figure}
 
-A diagramm 5 táblából áll, melyek az alábbiak:
-\begin{itemize}
-    \item {User}
-          \begin{addmargin}[\parindent]{0pt}
-              Ez a tábla egy felhasználót reprezentál akinek az alap létfontosságú adatait bekérjük regisztrációkor, ilyen például a név, email cím, jelszó. Majd ezen felül még meg kell határoznia milyen szerepkörben szeretné használni az oldalt és miután töltött ki tesztet növekedni fog az xp-je mennyisége így van egy Xp adattag is.
-          \end{addmargin}
+Ezen a képen \ref{fig:my_tests} a diákhoz rendelt teszteket látjuk. Itt azok az adatok láthatóak amiket tesztkészítéskor adott meg a tanár. Tehát a kitöltési határidő, mi a teszt címe, mennyi idő van rá, hány kérdés van és hogy mennyi pontot lehet szerezni. Ezenkívül láthatjuk még hogy mikor lett kiírva és egy kezdés gombot amivel kitölthetjük.
 
-    \item {Test}
-          \begin{addmargin}[\parindent]{0pt}
-              A Test tábla egy tanár által készített tesztet reprezentál. Egy teszt kétféle típusú lehet az egyik a kvíz a másik az igaz/hamis, így ezen kettő idegen kulcsa lesz benne. Ezenkívül a teszt címe, hogy mikor készült és hogy mi a kitöltési határidő.
-          \end{addmargin}
+\subsection{Teszt kitöltése}
 
-    \item {FillingOut}
-          \begin{addmargin}[\parindent]{0pt}
-              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz az előbb említett két tábla idegen kulcsa, a konkrét teszt töltése után kapott Xp és az hogy mikor lett teljesítve a teszt.
-          \end{addmargin}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/test1_wireframe.png}
+    \caption{Feltett kérdés}
+    \label{fig:test_question}
+\end{figure}
 
-    \item {QuizQuestion}
-          \begin{addmargin}[\parindent]{0pt}
-              A QuizQuestion egy kvíz kérdés adatait tárolja amibe beletartozik a kérdés, a négy válasz az idő és hogy melyik a helyes válasz.
-          \end{addmargin}
+Itt \ref{fig:test_question} egy kérdést látható teszt indítás után. Minden kérdésnél egy stopper órában láthatjuk hány másodpercünk van még válaszolni.
 
-    \item {TrueFalseQuestion}
-          \begin{addmargin}[\parindent]{0pt}
-              A TrueFalseQuestion pedig egy igaz/hamis típusú kérdés kérdését, válaszát, idejét, Xp-jét és helyes válaszát tárolja majd.
-          \end{addmargin}
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/test2_wireframe.png}
+    \caption{Válasz a kérdésre}
+    \label{fig:test_answer}
+\end{figure}
 
-\Section{API}
+Válasz adás után pedig láthatjuk \ref{fig:test_answer} hogy ha válaszolunk egy kérdésre akkor melyik volt a jó és hogy válaszunk rossz vagy jó.
 
-Az alábbi endpointokat szeretném használni az adatok lekérésére és tárolására:
-\begin{itemize}
-    \item {Get}
-          \begin{addmargin}[\parindent]{0pt}
-              \url{api/user/id} \\
-              \url{api/tests/id}
-          \end{addmargin}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/test3_wireframe.png}
+    \caption{Teszt eredmény}
+    \label{fig:test_finished}
+\end{figure}
 
-    \item {Post}
-          \begin{addmargin}[\parindent]{0pt}
-              \url{api/user} \\
-              \url{api/fillingOut/id} \\
-              \url{api/tests/id}
-          \end{addmargin}
-\end{itemize}
+Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk és hogy kik lettek a legjobbak. \ref{fig:test_finished}
+
 
 \Section{Funkciók}
 
@@ -325,3 +324,77 @@ Egy tanár tud teszteket létrehozni és azokat hozzárendelni diákokhoz.
 
 \subsubsection{Diák szerepkör}
 Annyiban tér el a tanárétól hogy nem tud tesztet létrehozni csak a hozzárendelteket megtekinteni és kitölteni.
+
+
+\Section{Adatmodell}
+
+Az adatokat egyed-kapcsolat diagrammon ábrázoltam így a teljes kép könnyebben áttekinthető ezen rendszervázlat alapján.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/TestME_ER.png}
+\end{figure}
+
+A diagramm 5 táblából áll, melyek az alábbiak:
+\begin{itemize}
+    \item {User}
+          \begin{addmargin}[\parindent]{0pt}
+              Ez a tábla egy felhasználót reprezentál akinek az alap létfontosságú adatait bekérjük regisztrációkor, ilyen például a név, email cím, jelszó. Majd ezen felül még meg kell határoznia milyen szerepkörben szeretné használni az oldalt és miután töltött ki tesztet növekedni fog az xp-je mennyisége így van egy Xp adattag is.
+          \end{addmargin}
+
+    \item {Test}
+          \begin{addmargin}[\parindent]{0pt}
+              A Test tábla egy tanár által készített tesztet reprezentál. Egy teszten belül két típusú kérdés lehet az egyik a kvíz a másik az igaz/hamis. Ezenkívül benne van a teszt címe, hogy mikor készült és hogy mi a kitöltési határidő.
+          \end{addmargin}
+
+    \item {Question}
+          \begin{addmargin}[\parindent]{0pt}
+              A Question egy kérdés adatait tárolja amibe beletartozik a kérdés, a négy válasz, az idő, hogy mennyi pontot ér és hogy melyik a helyes válasz.
+          \end{addmargin}
+
+    \item {Answer}
+          \begin{addmargin}[\parindent]{0pt}
+              Ez a tábla egy kérdés válaszát tárolja el. Ebben a táblában benne van az előbb említett táblák azonosítója, emellett hogy mennyi pontot kapott a felhasználó a kérdésre.
+          \end{addmargin}
+
+    \item {UsersTest}
+          \begin{addmargin}[\parindent]{0pt}
+              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz a Test és User tábla idegen kulcsa. Erre azért van szükség hogy le tudjuk kérni hogy egy felhasználóhoz melyik tesztek tartoznak.
+          \end{addmargin}
+
+\end{itemize}
+
+\Section{API}
+
+Az alábbi endpointokat szeretném használni az adatok lekérésére és tárolására:
+\subsection{Felhasználók}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\url{api/users:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor egy \url{GET} hívással és regisztrációkor ide tudjuk elküldeni az adatait \url{POST}-tal.
+          \end{addmargin}
+\end{itemize}
+
+\subsection{Tesztek}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\url{api/tests:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Ha a diák ki akarja tölteni a tesztet innen tudjuk lekérni a kérdésekkel együtt. Illetve egy tanár ide küldi el az újat.
+          \end{addmargin}
+\end{itemize}
+
+\subsection{Felhasználó tesztjei}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\url{api/usersTest:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Ha a diák meg akarja nézni a saját tesztjeit hogy miket kell kitöltenie és miket töltött eddig ki akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal hogy befejezték-e már és hogy mennyi pontot kaptak általa.
+          \end{addmargin}
+\end{itemize}
+
+\subsection{Válaszok}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\url{api/answers:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Itt egy teszt kérdés válasza tárolódik amely kötődik a felhasználóhoz, teszthez és magához a kérdéshez.
+          \end{addmargin}
+\end{itemize}
