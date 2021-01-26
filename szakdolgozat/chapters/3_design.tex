@@ -75,6 +75,40 @@
 % Ez egy példa
 % \end{example}
 
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+basicstyle=\ttfamily\scriptsize,
+numbers=left,
+numberstyle=\scriptsize,
+stepnumber=1,
+numbersep=8pt,
+showstringspaces=false,
+breaklines=true,
+frame=lines,
+backgroundcolor=\color{background},
+literate=
+*{0}{{{\color{numb}0}}}{1}
+{1}{{{\color{numb}1}}}{1}
+{2}{{{\color{numb}2}}}{1}
+{3}{{{\color{numb}3}}}{1}
+{4}{{{\color{numb}4}}}{1}
+{5}{{{\color{numb}5}}}{1}
+{6}{{{\color{numb}6}}}{1}
+{7}{{{\color{numb}7}}}{1}
+{8}{{{\color{numb}8}}}{1}
+{9}{{{\color{numb}9}}}{1}
+{:}{{{\color{punct}{:}}}}{1}
+{,}{{{\color{punct}{,}}}}{1}
+{\{}{{{\color{delim}{\{}}}}{1}
+{\}}{{{\color{delim}{\}}}}}{1}
+{[}{{{\color{delim}{[}}}}{1}
+{]}{{{\color{delim}{]}}}}{1},
+}
+
 \Chapter{Tervezés}
 
 % TODO: Érdemes lenne részletezni magát az adatmodellt is, tehát hogy egy felhasználóhoz, feladathoz mik tartoznak. (Lehet a felületi tervek előtt vagy után is, szokták így-is úgy-is.)
@@ -144,16 +178,16 @@ Minden grafikus elem szeretném hogy egységes legyen így törekedtem arra hogy
     \end{subfigure}
 \end{figure}
 
-Az ikonokat a Flaticon nevű oldalról töltöttem le \cite{competitiveGamingIcon}.
+Az ikonokat a Flaticon nevű oldalról töltöttem le \ref{competitiveGamingIcon}.
 % TODO: Leírni, hogy az ikonok honnan származnak.
 
 Valamint Bootstrap-et szeretnék használni ami egy olyan keretrendszer, amely segít a weboldalak gyorsabb és könnyebb megtervezésében. HTML és CSS alapú tervezősablonokat tartalmaz a tipográfiához, űrlapokat, gombokat, táblázatokat, navigációt, modelleket stb. Ez segítene abban hogy az oldalon egységes kinézetet hozhassak létre valamit a Bootstrap CSS-je alkalmazkodik a telefonokhoz, táblagépekhez és asztali számítógépekhez is.
 
-Ehhez egy ingyenes Bootstrap témát választottam ami szerintem menne a weboldal témájához, ezt a témát Litera-nak\cite{litera} hívják.
+Ehhez egy ingyenes Bootstrap témát választottam ami szerintem menne a weboldal témájához, ezt a témát Litera-nak\ref{litera} hívják.
 
 \Section{Az oldal felépítése}
 
-A funkciók elrendezésének és felépítésének bemutatására képernyőterv vázlatot (magyarul drótváznak, angolul wireframe vagy mockup-nak is nevezzük) készítettem a MockFlow \cite{mockflow} nevű oldalon.
+A funkciók elrendezésének és felépítésének bemutatására képernyőterv vázlatot (magyarul drótváznak, angolul wireframe vagy mockup-nak is nevezzük) készítettem a MockFlow \ref{mockflow} nevű oldalon.
 Először azt az oldalt mutatom be amivel mindenki először találkozik az oldal megnyitásakor, ez pedig a bejelentkezési és regisztrációs felület.
 
 \subsection{Bejelentkezés és regisztráció}
@@ -371,30 +405,187 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/users:}}
           \begin{addmargin}[\parindent]{0pt}
-              Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor egy \url{GET} hívással és regisztrációkor ide tudjuk elküldeni az adatait \url{POST}-tal.
+              Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor egy \url{GET} hívással és regisztrációkor ide tudjuk elküldeni az adatait \url{POST}-tal. Bejelentkezéskor a felhasználó email címét és jelszavát elküldve kikeressük hogy valóban létező, mentett email címet és jelszót küldött el és visszaküldjük a felhasználó adatait.
+
+              \begin{lstlisting}[language=json,firstnumber=1]
+{
+    "Email": "teszt@teszt.hu",
+    "Password": "jelszo000"
+}
+            \end{lstlisting}
+
+              Visszaküldött adatok:
+              \begin{lstlisting}[language=json,firstnumber=1]
+{
+    "id": 3,
+    "roleId": 0,
+    "firstName": "Makszimus",
+    "lastName": "Levente",
+    "email": "teszt@teszt.hu",
+    "password": "jelszo000",
+    "xp": 0,
+    "registrationDate": "2021-01-22T00:00:00",
+    "activated": false
+}
+            \end{lstlisting}
+
+              Regisztrációkor pedig elküldődnek a felhasználó adatait és bejelentkezteti az oldal. Az elküldött adatok az alábbiak:
+
+              \begin{lstlisting}[language=json,firstnumber=1]
+{
+    "RoleId": 0,
+    "FirstName": "Makszimus",
+    "LastName": "Levente",
+    "Email": "teszt@teszt.hu",
+    "Password": "jelszo000"
+}
+            \end{lstlisting}
+
+              Valamint lehet egy felhasználó adatait módosítani, \url{PUT} és törölni, \url{DELETE} hívással ugyan azon az endpointon: \url{api/users/id}.
           \end{addmargin}
 \end{itemize}
 
-\subsection{Tesztek}
+\subsection{Teszt}
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/tests:}}
           \begin{addmargin}[\parindent]{0pt}
-              Ha a diák ki akarja tölteni a tesztet innen tudjuk lekérni a kérdésekkel együtt. Illetve egy tanár ide küldi el az újat.
+              Ha a diák ki akarja tölteni a tesztet innen tudjuk lekérni a kérdésekkel együtt. Illetve ha valaki készít egyet akkor ide küldi el az újat.
+              Egy elkészített teszt így néz ki ha elküldjük \url{POST}-tal:
+              \begin{lstlisting}[language=json,firstnumber=1]
+{
+    "Title": "Mesterséges intelligencia alapok 2 teszt",
+    "Created": "2021-01-12",
+    "Deadline": "2021-01-22",
+    "Creator": "Makszimus Levente",
+    "Description": "Mesterséges intelligencia alapok második zárthelyi dolgozat",
+    "Questions": [
+        {
+            "Problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+            "AnswerOne": "110",
+            "AnswerTwo": "120",
+            "AnswerThree": "130",
+            "AnswerFour": "140",
+            "Time": 10,
+            "Xp": 5,
+            "CorrectAnswer": 0
+        },
+        {
+            "Problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+            "AnswerOne": "true",
+            "AnswerTwo": "false",
+            "Time": 5,
+            "Xp": 3,
+            "CorrectAnswer": 0
+        }
+    ]
+}
+                \end{lstlisting}
+
+              Ha pedig a felhasználó ki szeretné tölteni akkor egy \url{GET} hívással a \url{/api/tests/3} endpontra ezt kapnánk:
+              \begin{lstlisting}[language=json,firstnumber=1]
+{
+    "id": 3,
+    "description": "Ez egy új teszt",
+    "creator": "Makszimus Levente",
+    "title": "Mesterséges intelligencia alapok első zárthelyi dolgozat",
+    "created": "2021-01-12T00:00:00",
+    "deadline": "2021-01-22T00:00:00",
+    "questions": [
+        {
+            "id": 5,
+            "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+            "answerOne": "110",
+            "answerTwo": "120",
+            "answerThree": "130",
+            "answerFour": "140",
+            "time": 10,
+            "xp": 5,
+            "correctAnswer": 0
+        },
+        {
+            "id": 6,
+            "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+            "answerOne": "true",
+            "answerTwo": "false",
+            "answerThree": null,
+            "answerFour": null,
+            "time": 5,
+            "xp": 3,
+            "correctAnswer": 0
+        }
+    ]
+}
+                    \end{lstlisting}
+          \end{addmargin}
+\end{itemize}
+
+
+\subsubsection{Válaszok}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\url{api/tests/answers:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Itt egy teszt kérdés válasza tárolódik amely kötődik a teszthez és magához a kérdéshez.
+
+              \begin{lstlisting}[language=json,firstnumber=1]
+[
+    {
+        "QuestionId": 1,
+        "UsersTestId": 2,
+        "Time": 5,
+        "userAnswer": 4
+    }
+]
+                \end{lstlisting}
           \end{addmargin}
 \end{itemize}
 
 \subsection{Felhasználó tesztjei}
-\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
-    \item[] {\url{api/usersTest:}}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=0pt]
+    \item[] {\url{api/UsersTests:}}
           \begin{addmargin}[\parindent]{0pt}
-              Ha a diák meg akarja nézni a saját tesztjeit hogy miket kell kitöltenie és miket töltött eddig ki akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal hogy befejezték-e már és hogy mennyi pontot kaptak általa.
+              Ha egy diák meg akarja nézni a saját tesztjeit hogy miket kell kitöltenie és miket töltött eddig ki akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal hogy befejezték-e már és hogy mennyi pontot kaptak általa. A lekérés a felhasználó id-jának elküldésével történne, és ezt kell visszakapnunk:
+
+              \begin{lstlisting}[language=json,firstnumber=1]
+{
+    "id": 1,
+    "userId": 1,
+    "testId": 1,
+    "test": {
+        "id": 1,
+        "title": "Mesterséges intelligencia alapok 2 teszt",
+        "created": "2021-01-12T00:00:00",
+        "deadline": "2021-01-22T00:00:00",
+        "questions": [
+            {
+                "id": 1,0
+                "title": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+                "answerOne": "110",
+                "answerTwo": "120",
+                "answerThree": "130",
+                "answerFour": "140",
+                "time": 10,
+                "xp": 5,
+                "correctAnswer": 0
+            },
+            {
+                "id": 2,
+                "title": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+                "answerOne": "true",
+                "answerTwo": "false",
+                "answerThree": null,
+                "answerFour": null,
+                "time": 5,
+                "xp": 3,
+                "correctAnswer": 0
+            }
+        ]
+    },
+    "finished": "2021-01-13T00:00:00",
+    "earnedXp": 6
+}
+                \end{lstlisting}
+
+              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor megjelenik egy rangsor hogy ki hány pontot ért el ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/id} endpoint-on.
           \end{addmargin}
 \end{itemize}
 
-\subsection{Válaszok}
-\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
-    \item[] {\url{api/answers:}}
-          \begin{addmargin}[\parindent]{0pt}
-              Itt egy teszt kérdés válasza tárolódik amely kötődik a felhasználóhoz, teszthez és magához a kérdéshez.
-          \end{addmargin}
-\end{itemize}
