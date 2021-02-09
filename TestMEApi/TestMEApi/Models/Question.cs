@@ -26,7 +26,7 @@ namespace TestMEApi.Models
         public string AnswerFour { get; set; }
 
         [Required]
-        public int Time { get; set; }
+        public int TimeLimit { get; set; }
 
         [Required]
         public int Xp { get; set; }

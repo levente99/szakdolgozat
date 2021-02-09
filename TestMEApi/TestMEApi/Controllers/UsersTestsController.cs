@@ -23,7 +23,7 @@ namespace TestMEApi.Controllers
 
         // GET: api/UsersTests/5
         [HttpGet("{UserId}")]
-        public async Task<ActionResult<List<UsersTest>>> GetUsersTest(int UserId)
+        public async Task<ActionResult<List<UsersTest>>> GetUsersTest(string UserId)
         {
             var usersTest = await _context.UsersTest.Include(ut => ut.Test).Include(ut => ut.Test.Questions).Where(ut => ut.UserId == UserId).ToListAsync();
 
@@ -34,8 +34,9 @@ namespace TestMEApi.Controllers
 
             return usersTest;
         }
-        
+
         // GET: api/UsersTests/5
+        [HttpGet]
         [Route("/api/[controller]/test/{TestId}")]
         public async Task<ActionResult<List<UsersTest>>> GetAllUsersTestResult(int TestId)
         {
@@ -91,12 +92,12 @@ namespace TestMEApi.Controllers
 
         // POST: api/UsersTests
         [HttpPost]
-        public async Task<ActionResult<UsersTest>> PostUsersTest(UsersTest usersTest)
+        public ActionResult<UsersTest> PostUsersTest(UsersTest usersTest)
         {
             _context.UsersTest.Add(usersTest);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            return CreatedAtAction("GetUsersTest", new { id = usersTest.Id }, usersTest);
+            return StatusCode(200);
         }
 
         // DELETE: api/UsersTests/5
@@ -115,6 +116,7 @@ namespace TestMEApi.Controllers
             return usersTest;
         }
 
+        [HttpPost]
         private bool UsersTestExists(int id)
         {
             return _context.UsersTest.Any(e => e.Id == id);

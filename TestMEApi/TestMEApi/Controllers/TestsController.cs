@@ -30,7 +30,7 @@ namespace TestMEApi.Controllers
         }
 
         // GET: api/Tests/5
-        [Route("/api/[controller]/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Test>> GetTest(int id)
         {
             var test = await _context.Test.Include(t => t.Questions).FirstOrDefaultAsync(t => t.Id == id);
@@ -84,6 +84,7 @@ namespace TestMEApi.Controllers
             return CreatedAtAction("GetTest", new { id = test.Id }, test);
         }
 
+        [HttpPost]
         [Route("/api/[controller]/answers")]
         public async Task<ActionResult<Test>> PostTestAnswer([FromBody] List<Answer> answer)
         {
@@ -111,6 +112,9 @@ namespace TestMEApi.Controllers
                 return NotFound();
             }
 
+            var usersTests = _context.UsersTest.Where(ut => ut.TestId == id).ToList();
+
+            _context.UsersTest.RemoveRange(usersTests);
             _context.Test.Remove(test);
             await _context.SaveChangesAsync();
 

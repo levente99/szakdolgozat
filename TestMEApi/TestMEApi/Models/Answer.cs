@@ -15,7 +15,7 @@ namespace TestMEApi.Models
 
         [ForeignKey("UsersTest")]
         public int UsersTestId { get; set; }
-        public int Time { get; set; }
-        public sbyte userAnswer { get; set; }
+        public int ResponseTime { get; set; }
+        public sbyte UserAnswer { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace TestMEApi.Models
 {
     public class Role
     {
-        public string Teacher { get; set; }
-        public string Student { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
