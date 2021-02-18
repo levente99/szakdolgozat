@@ -1,14 +1,143 @@
-// 20210209180748
+// 20210218193117
 // https://localhost:44369/swagger/TestMEApi/swagger.json
 
 {
   "swagger": "2.0",
   "info": {
     "title": "Test ME Api",
-    "version": "v1.0"
+    "version": "v1.0.0"
   },
   "paths": {
-    "/api/Tests": {
+    "/api/answers/{id}": {
+      "get": {
+        "tags": [
+          "Answers"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Answer"
+            }
+          }
+        }
+      }
+    },
+    "/api/answers": {
+      "post": {
+        "tags": [
+          "Answers"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Answer"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Test"
+            }
+          }
+        }
+      }
+    },
+    "/api/questions/{id}": {
+      "get": {
+        "tags": [
+          "Questions"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
+          }
+        }
+      }
+    },
+    "/api/questions": {
+      "post": {
+        "tags": [
+          "Questions"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
+          }
+        }
+      }
+    },
+    "/api/tests": {
       "get": {
         "tags": [
           "Tests"
@@ -63,7 +192,7 @@
         }
       }
     },
-    "/api/Tests/{id}": {
+    "/api/tests/{id}": {
       "get": {
         "tags": [
           "Tests"
@@ -150,44 +279,7 @@
         }
       }
     },
-    "/api/Tests/answers": {
-      "post": {
-        "tags": [
-          "Tests"
-        ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Answer"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/Test"
-            }
-          }
-        }
-      }
-    },
-    "/api/Users/{id}": {
+    "/api/users/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -279,7 +371,7 @@
         }
       }
     },
-    "/api/Users/login": {
+    "/api/login": {
       "post": {
         "tags": [
           "Users"
@@ -313,7 +405,7 @@
         }
       }
     },
-    "/api/Users/logout": {
+    "/api/logout": {
       "post": {
         "tags": [
           "Users"
@@ -325,7 +417,7 @@
         }
       }
     },
-    "/api/Users/register": {
+    "/api/register": {
       "post": {
         "tags": [
           "Users"
@@ -359,7 +451,7 @@
         }
       }
     },
-    "/api/Users/ConfirmEmail": {
+    "/api/confirm-email": {
       "get": {
         "tags": [
           "Users"
@@ -383,7 +475,7 @@
         }
       }
     },
-    "/api/UsersTests/{UserId}": {
+    "/api/users-tests/{userId}": {
       "get": {
         "tags": [
           "UsersTests"
@@ -396,7 +488,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "UserId",
+            "name": "userId",
             "required": true,
             "type": "string"
           }
@@ -414,7 +506,7 @@
         }
       }
     },
-    "/api/UsersTests/test/{TestId}": {
+    "/api/users-tests/test/{testId}": {
       "get": {
         "tags": [
           "UsersTests"
@@ -427,7 +519,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "TestId",
+            "name": "testId",
             "required": true,
             "type": "integer",
             "format": "int32"
@@ -446,7 +538,7 @@
         }
       }
     },
-    "/api/UsersTests/{id}": {
+    "/api/users-tests/{id}": {
       "put": {
         "tags": [
           "UsersTests"
@@ -506,7 +598,7 @@
         }
       }
     },
-    "/api/UsersTests": {
+    "/api/users-tests": {
       "post": {
         "tags": [
           "UsersTests"
@@ -542,6 +634,31 @@
     }
   },
   "definitions": {
+    "Answer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "questionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "usersTestId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "responseTime": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "userAnswer": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
     "Question": {
       "required": [
         "answerOne",
@@ -615,31 +732,6 @@
           "items": {
             "$ref": "#/definitions/Question"
           }
-        }
-      }
-    },
-    "Answer": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "questionId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "usersTestId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "responseTime": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "userAnswer": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
