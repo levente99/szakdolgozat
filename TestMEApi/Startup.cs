@@ -54,6 +54,13 @@ namespace TestMEApi
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddSwaggerGen(swagger =>
             {
@@ -84,6 +91,8 @@ namespace TestMEApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseSwagger();
 
