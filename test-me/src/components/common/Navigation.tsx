@@ -6,10 +6,19 @@ export default class Navigation extends Component {
         return (
             <>
                 <Navbar bg="primary" variant="dark">
-                    <Navbar.Brand href="/">TestME</Navbar.Brand>
+                    <Navbar.Brand href="/">
+                        <img
+                            alt=""
+                            src="/gameboy-logo.png"
+                            width="25"
+                            className="d-inline-block align-top"
+                        />{' '}
+                        Test ME
+                    </Navbar.Brand>
                     <Nav className="ml-auto">
                         <Nav.Link href="/tests">Tesztjeim</Nav.Link>
                         <Nav.Link href="/maketests">Teszt készítése</Nav.Link>
+                        <Nav.Link href="/auth">Bejelentkezés</Nav.Link>
                     </Nav>
                 </Navbar>
             </>
