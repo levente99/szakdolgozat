@@ -99,6 +99,12 @@ namespace TestMEApi.Controllers
         [HttpPost]
         public ActionResult<UsersTest> PostUsersTest(UsersTest usersTest)
         {
+            usersTest.User = _context.User.FirstOrDefault(u => u.Email == usersTest.User.Email);
+            if(usersTest.User == null)
+            {
+                return StatusCode(404);
+            }
+            usersTest.UserId = usersTest.User.Id;
             _context.UsersTest.Add(usersTest);
             var result = _context.SaveChanges();
             if(result == 0)

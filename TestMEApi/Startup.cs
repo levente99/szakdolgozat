@@ -15,6 +15,7 @@ using TestMEApi.Data;
 using Microsoft.AspNetCore.Identity;
 using TestMEApi.Models;
 using TestMEApi.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace TestMEApi
 {
@@ -30,13 +31,17 @@ namespace TestMEApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            services.Configure<CookiePolicyOptions>(options =>
             {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddCors();
+
+            services.AddMvc();
+
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddDbContext<TestMEApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("TestMEApiContext")));
@@ -48,17 +53,15 @@ namespace TestMEApi
             .AddEntityFrameworkStores<TestMEApiContext>()
             .AddDefaultTokenProviders();
 
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-            services.AddDistributedMemoryCache();
+            services.AddDistributedSqlServerCache(options => {
+                options.ConnectionString = Configuration.GetConnectionString("TestMEApiContext");
+                options.SchemaName = "dbo";
+                options.TableName = "Session";
+            });
 
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);
-                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
+                options.Cookie.HttpOnly = false;
                 options.Cookie.IsEssential = true;
             });
 
@@ -79,7 +82,11 @@ namespace TestMEApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("MyPolicy");
+            app.UseCors(x => x
+             .AllowAnyMethod()
+             .AllowAnyHeader()
+             .SetIsOriginAllowed(origin => true) // allow any origin
+             .AllowCredentials());
 
             app.UseSwagger(c =>
             {
@@ -88,11 +95,11 @@ namespace TestMEApi
 
             app.UseHttpsRedirection();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseSession();
 
             app.UseSwagger();
 

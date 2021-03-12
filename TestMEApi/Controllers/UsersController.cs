@@ -79,7 +79,7 @@ namespace TestMEApi.Controllers
         public IActionResult FetchFromSession()
         {
             string name = HttpContext.Session.GetString("user");
-            return Content(name);
+            return Ok(name);
         }
 
         [HttpPost]

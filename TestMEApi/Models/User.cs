@@ -10,9 +10,6 @@ namespace TestMEApi.Models
 {
     public class User : IdentityUser
     {
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //public override string Id { get; set; }
-
         [ForeignKey("Role")]
         public int RoleId { get; set; }
 
