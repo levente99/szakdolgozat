@@ -17,7 +17,7 @@ export default class Navigation extends Component {
                     </Navbar.Brand>
                     <Nav className="ml-auto">
                         <Nav.Link href="/tests">Tesztjeim</Nav.Link>
-                        <Nav.Link href="/maketests">Teszt készítése</Nav.Link>
+                        <Nav.Link href="/create">Teszt készítése</Nav.Link>
                         <Nav.Link href="/auth">Bejelentkezés</Nav.Link>
                     </Nav>
                 </Navbar>

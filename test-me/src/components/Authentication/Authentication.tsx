@@ -115,8 +115,7 @@ export default class Login extends Component<LoginProps, LoginState> {
                     break;
                 case 200:
                     await this.getUserId().then(async function (userId) {
-                        await fetch(`https://localhost:44369/api/users/save-to-session?id=${userId}`);
-                        // return body.text();
+                        fetch(`https://localhost:44369/api/users/save-to-session?id=${userId}`, { method: 'GET', credentials: "include" });
                     })
 
                     this.setState(prevState => ({

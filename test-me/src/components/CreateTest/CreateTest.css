@@ -1,0 +1,268 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.edit-container {
+    display: grid;
+    height: calc(100vh - 62.67px);
+    grid-template-columns: [sidebar-start] 250px [question-start] calc((100vw - 250px)/2) [question-middle] calc((100vw - 250px)/2) [question-end];
+    grid-template-rows: [question-text] 20% [question-options] 40% [answer-start] 40% [answer-end];
+}
+
+.sidebar-container {
+    box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
+    grid-column-start: sidebar-start;
+    grid-column-end: question-start;
+    grid-row-start: question-text;
+    grid-row-end: answer-end;
+
+    width: 250px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar {
+    overflow: auto;
+    width: 100%;
+}
+
+.question-list-item {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    padding: 20px;
+    padding-top: 30px;
+    width: 100%;
+    height: 150px;
+}
+
+.question-item-content {
+    width: 85%;
+    height: 100%;
+    border: black;
+    background-color: #9ecdff;
+    border-radius: 0.25rem;
+}
+
+.sidebar-question-number {
+    position: relative;
+    top: -28px;
+    left: -55px;
+    color: rgba(0, 0, 0, 0.603);
+    text-shadow: 0px 0px 5px rgb(255, 255, 255);
+}
+
+.sidebar-question-number::after {
+    content: '. kérdés';
+}
+
+.question-type {
+    position: relative;
+    top: -68px;
+    text-align: right;
+    width: 175px;
+    color: rgba(0, 0, 0, 0.603);
+    text-shadow: 0px 0px 5px rgb(255, 255, 255);
+}
+
+.item-question-text {
+    position: relative;
+    top: -70px;
+}
+
+.save-exit-button {
+    margin: 10px;
+}
+
+.new-question-button,
+.save-exit-button button {
+    box-shadow: rgb(0 0 0 / 25%) 0px -4px inset;
+}
+
+.new-question-button>img {
+    filter: drop-shadow(1px 1px 4px rgba(255, 255, 255, 0.644));
+    margin-bottom: 10px;
+    width: 50px;
+}
+
+.new-question-button p:nth-child(3) {
+    font-size: 13px;
+}
+
+.new-question-button:hover,
+.save-exit-button button:hover {
+    margin-top: 2px;
+    padding-bottom: 2px;
+    box-shadow: rgb(0 0 0 / 25%) 0px -2px inset;
+}
+
+.new-question-button:hover {
+    background-color: #46a0ff;
+
+}
+
+.popover-body div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.save-exit-button>button:hover {
+    background-color: #d85461;
+}
+
+.save-exit-button button:nth-child(2):hover {
+    background-color: #54aa68;
+
+}
+
+.save-exit-button button {
+    margin-bottom: 0;
+    margin-right: 5px;
+    width: 45%;
+}
+
+.create {
+    background-color: #007bff1f;
+    grid-column-start: question-start;
+    grid-column-end: question-end;
+    grid-row-start: question-text;
+    grid-row-end: answer-end;
+
+    display: grid;
+    grid-template-columns: [question-start] 50% [question-middle] 50% [question-end];
+    grid-template-rows: [question-text-start] 20% [question-options-start] 30% [question-options-end] auto [question-answers-end];
+    justify-items: center;
+    align-items: center;
+}
+
+.question-text {
+    grid-column-start: question-start;
+    grid-column-end: question-end;
+    grid-row-start: question-text-start;
+    grid-row-end: question-text-start;
+    width: 80%;
+}
+
+#question-text-input {
+    font-size: 35px;
+    box-shadow: rgb(0 0 0 / 15%) 0px -4px 0px 0px inset;
+}
+
+.question-details {
+    grid-column-start: question-start;
+    grid-column-end: question-end;
+    grid-row-start: question-options-start;
+    grid-row-end: question-options-end;
+    width: 60%;
+}
+
+.time-limit {
+    margin-bottom: 15%;
+}
+
+.time-label,
+.time-number-label,
+.xp-label,
+.xp-slider-number-label {
+    font-size: 30px;
+}
+
+.time-label,
+.xp-label {
+    margin-right: 5px;
+}
+
+
+.time-number-label,
+.xp-slider-number-label {
+    font-weight: bold;
+}
+
+.time-number-label::after {
+    font-weight: 400;
+    content: ' mp';
+}
+
+.answers {
+    grid-column-start: question-start;
+    grid-column-end: question-end;
+    grid-row-start: question-options-end;
+    grid-row-end: question-answers-end;
+    width: 100%;
+    display: contents;
+}
+
+.answers>div {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 10px;
+    width: 90%;
+    height: 35%;
+    box-shadow: rgb(0 0 0 / 15%) 0px -0.25rem 0px 0px inset;
+}
+
+.answers>div>input {
+    border-color: white;
+    background-color: white;
+    font-size: 20px;
+    margin: 10px;
+    width: 80%;
+    height: 70%;
+}
+
+.answers>div>input:focus {
+    box-shadow: inset 0 -1px 0 #ddd;
+    border-color: rgb(255, 255, 255);
+}
+
+.form-check>input {
+    width: 2rem;
+    height: 2rem;
+}
+
+.answers-true-label,
+.answers-false-label {
+    font-size: 20px;
+    margin-right: 250px;
+}
+
+.user-email-input {
+    margin-bottom: 20px;
+}
+
+.add-user-button {
+    float: right;
+    margin: 10px 0 10px 0;
+}
+
+.added-users {
+    overflow: auto;
+    height: 450px;
+}
+
+.test-date-input label {
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 0;
+}
+
+input::-webkit-datetime-edit {
+    position: relative;
+    left: 15px;
+}
+
+input::-webkit-datetime-edit-fields-wrapper {
+    position: relative;
+    left: 15px;
+}

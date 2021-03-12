@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import Navigation from './components/common/Navigation';
 import MyTests from "./components/MyTests/MyTests";
 import Authentication from "./components/Authentication/Authentication";
+import CreateTest from './components/CreateTest/CreateTest';
 import './App.css';
 
 function App() {
@@ -14,8 +15,9 @@ function App() {
       <div className="App">
         <Navigation />
         <Switch>
-          <Route exact path="/auth" component={Authentication} />
+          <Route path="/auth" component={Authentication} />
           <Route path="/tests" component={MyTests} />
+          <Route path="/create" component={CreateTest} />
           <Route exact path="/" component={Home} />
         </Switch>
       </div>
