@@ -235,14 +235,6 @@
     width: 90px;
 }
 
-.test-time::after {
-    position: relative;
-    top: -3px;
-    font-size: 23px;
-    z-index: 10;
-    content: ' perc';
-}
-
 .gameboy .controls-cont .btn-direction .horizontal {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);

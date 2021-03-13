@@ -7,7 +7,7 @@ interface GameboyProps {
     lastName: string;
     createdTime: string;
     deadline: string;
-    testTime: number;
+    testTime: string;
     questionNumber: number;
     xp: number;
 }

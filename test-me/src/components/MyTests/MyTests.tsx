@@ -58,9 +58,9 @@ export default class MyTests extends Component {
                             lastName={userTest.user.lastName}
                             createdTime={userTest.test.created.split('T')[0]}
                             deadline={userTest.test.deadline.split('T')[0]}
-                            testTime={userTest.test.questions.reduce(function (a, b) {
+                            testTime={this.convertSecToMin(userTest.test.questions.reduce(function (a, b) {
                                 return +a + +b.timeLimit;
-                            }, 0)}
+                            }, 0))}
                             questionNumber={userTest?.test?.questions?.length}
                             xp={userTest.test.questions.reduce(function (a, b) {
                                 return +a + +b.xp;
@@ -68,6 +68,10 @@ export default class MyTests extends Component {
                         />
                     )
         )
+    }
+
+    convertSecToMin(value: number): string {
+        return Math.floor(value / 60) + ":" + (value % 60 ? value % 60 : '00')
     }
 
 }
