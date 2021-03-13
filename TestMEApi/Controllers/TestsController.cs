@@ -78,8 +78,7 @@ namespace TestMEApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Test>> PostTest([FromBody] Test test)
         {
-            //test.Deadline = test.Deadline.ToString("yyyy-MM-dd");
-            //test.Deadline = DateTime.ParseExact(stringDate, "yyyy-MM-dd", null);
+            test.Created = DateTime.Today;
             _context.Test.Add(test);
 
             await _context.SaveChangesAsync();
