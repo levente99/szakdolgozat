@@ -256,21 +256,18 @@ namespace TestMEApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnswerOne")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnswerThree")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnswerTwo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("CorrectAnswer")
                         .HasColumnType("smallint");
 
                     b.Property<string>("Problem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TestId")

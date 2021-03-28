@@ -23,9 +23,11 @@ namespace TestMEApi.Controllers
 
         // GET: api/users-tests/5
         [HttpGet("{userId}")]
-        public async Task<ActionResult<List<UsersTest>>> GetUsersTest(string userId)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<List<UsersTest>>> GetUsersTests(string userId)
         {
-            var usersTest = await _context.UsersTest.Include(ut=> ut.User).Include(ut => ut.Test).Include(ut => ut.Test.Questions).Where(ut => ut.UserId == userId).ToListAsync();
+            var usersTest = await _context.UsersTest.Include(ut => ut.User).Include(ut => ut.Test).Include(ut => ut.Test.Questions).Where(ut => ut.UserId == userId).ToListAsync();
 
             if (usersTest == null)
             {
@@ -39,22 +41,30 @@ namespace TestMEApi.Controllers
             return usersTest;
         }
 
+        // GET: api/users-test
+        [HttpGet("{userId}/{testId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<List<UsersTest>>> GetUsersTest(string userId, int testId)
+        {
+            var usersTest = await _context.UsersTest.Include(ut => ut.User).Include(ut => ut.Test).Include(ut => ut.Test.Questions).Where(ut => (ut.UserId == userId) && (ut.TestId == testId)).ToListAsync();
+
+            if (usersTest == null)
+            {
+                return NotFound();
+            }
+
+            return usersTest;
+        }
+
         // GET: api/users-tests/test/5
         [HttpGet]
         [Route("test/{testId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<List<UsersTest>>> GetAllUsersTestResult(int testId)
         {
-            var usersTest = await _context.UsersTest.Include(ut=> ut.User).Where(ut => ut.TestId == testId).ToListAsync();
-
-            //var userResults = await (from UsersTest in _context.UsersTest
-            //                        join User in _context.User
-            //                        on UsersTest.Id equals User.Id
-            //                        select new User 
-            //                        { 
-            //                            UserId = User.Id,
-                                        
-                                        
-            //                        }).ToListAsync();
+            var usersTest = await _context.UsersTest.Include(ut=> ut.User).Where(ut => ut.TestId == testId).OrderByDescending(ut=> ut.EarnedXp).ToListAsync();
 
             if (usersTest == null)
             {
@@ -66,10 +76,10 @@ namespace TestMEApi.Controllers
         }
 
         // PUT: api/users-tests/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsersTest(int id, UsersTest usersTest)
+        [HttpPut("{usersTestId}")]
+        public async Task<IActionResult> PutUsersTest(int usersTestId, UsersTest usersTest)
         {
-            if (id != usersTest.Id)
+            if (usersTestId != usersTest.Id)
             {
                 return BadRequest();
             }
@@ -82,7 +92,7 @@ namespace TestMEApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsersTestExists(id))
+                if (!UsersTestExists(usersTestId))
                 {
                     return NotFound();
                 }
@@ -95,8 +105,32 @@ namespace TestMEApi.Controllers
             return NoContent();
         }
 
+        // PUT: api/users-tests/{usersTestId}/update-xp/{xp}
+        [HttpPut()]
+        [Route("{usersTestId}/update-xp/{xp}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateXp(int usersTestId, int xp)
+        {
+            var ut = await _context.UsersTest.FirstOrDefaultAsync(ut => ut.Id == usersTestId);
+
+            if (ut == null)
+            {
+                return NotFound();
+            }
+
+            ut.EarnedXp = xp;
+
+            _context.SaveChanges();
+
+            return StatusCode(200);
+        }
+
         // POST: api/users-tests
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public ActionResult<UsersTest> PostUsersTest(UsersTest usersTest)
         {
             usersTest.User = _context.User.FirstOrDefault(u => u.Email == usersTest.User.Email);
@@ -115,10 +149,12 @@ namespace TestMEApi.Controllers
         }
 
         // DELETE: api/users-tests/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<UsersTest>> DeleteUsersTest(int id)
+        [HttpDelete("{usersTestId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UsersTest>> DeleteUsersTest(int usersTestId)
         {
-            var usersTest = await _context.UsersTest.FindAsync(id);
+            var usersTest = await _context.UsersTest.FindAsync(usersTestId);
             if (usersTest == null)
             {
                 return NotFound();
@@ -131,9 +167,9 @@ namespace TestMEApi.Controllers
         }
 
         [HttpPost]
-        private bool UsersTestExists(int id)
+        private bool UsersTestExists(int usersTestId)
         {
-            return _context.UsersTest.Any(e => e.Id == id);
+            return _context.UsersTest.Any(e => e.Id == usersTestId);
         }
     }
 }

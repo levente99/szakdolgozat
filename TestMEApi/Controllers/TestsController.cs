@@ -31,24 +31,27 @@ namespace TestMEApi.Controllers
         }
 
         // GET: api/tests/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Test>> GetTest(int id)
+        [HttpGet("{testId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Test>> GetTest(int testId)
         {
-            var test = await _context.Test.Include(t => t.Questions).FirstOrDefaultAsync(t => t.Id == id);
+            var test = await _context.Test.Include(t => t.Questions).FirstOrDefaultAsync(t => t.Id == testId);
             if (test == null)
             {
-                return NotFound();
+                return StatusCode(404);
             }
-            
 
             return test;
         }
 
         // PUT: api/tests/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTest(int id, Test test)
+        [HttpPut("{testId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> PutTest(int testId, Test test)
         {
-            if (id != test.Id)
+            if (testId != test.Id)
             {
                 return BadRequest();
             }
@@ -61,9 +64,9 @@ namespace TestMEApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TestExists(id))
+                if (!TestExists(testId))
                 {
-                    return NotFound();
+                    return StatusCode(404);
                 }
                 else
                 {
@@ -87,19 +90,21 @@ namespace TestMEApi.Controllers
         }
 
         // DELETE: api/tests/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Test>> DeleteTest(int id)
+        [HttpDelete("{testId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Test>> DeleteTest(int testId)
         {
-            var test = await _context.Test.FindAsync(id);
+            var test = await _context.Test.FindAsync(testId);
             if (test == null)
             {
-                return NotFound();
+                return StatusCode(404);
             }
 
-            var usersTests = _context.UsersTest.Where(ut => ut.TestId == id).ToList();
+            var usersTests = _context.UsersTest.Where(ut => ut.TestId == testId).ToList();
             if (usersTests == null)
             {
-                return NotFound();
+                return StatusCode(404);
             }
             _context.UsersTest.RemoveRange(usersTests);
             _context.Test.Remove(test);
@@ -108,9 +113,9 @@ namespace TestMEApi.Controllers
             return test;
         }
 
-        private bool TestExists(int id)
+        private bool TestExists(int testId)
         {
-            return _context.Test.Any(e => e.Id == id);
+            return _context.Test.Any(e => e.Id == testId);
         }
     }
 }

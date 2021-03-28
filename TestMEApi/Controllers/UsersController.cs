@@ -26,28 +26,25 @@ namespace TestMEApi.Controllers
         private IConfiguration _configuration;
         private IMailService _mailService;
         private readonly TestMEApiContext _context;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public UsersController(UserManager<User> userManager,SignInManager<User> signInManager, IMailService mailService, IConfiguration configuration ,TestMEApiContext context)
+        public UsersController(IHttpContextAccessor contextAccessor,UserManager<User> userManager,SignInManager<User> signInManager, IMailService mailService, IConfiguration configuration ,TestMEApiContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mailService = mailService;
             _configuration = configuration;
             _context = context;
+            _contextAccessor = contextAccessor;
         }
 
-        //// GET: api/users
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<User>>> GetUser()
-        //{
-        //    return await _context.User.Include(u => u.RoleId).ToListAsync();
-        //}
-
         // GET: api/users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
+        [HttpGet("{userId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<User>> GetUser(string userId)
         {
-            var user = await _userManager.Users.SingleAsync(u => u.Id == id);
+            var user = await _userManager.Users.SingleAsync(u => u.Id == userId);
 
             if (user == null)
             {
@@ -68,10 +65,10 @@ namespace TestMEApi.Controllers
 
         [HttpGet]
         [Route("save-to-session")]
-        public IActionResult SaveToSession(string id)
+        public IActionResult SaveToSession(string userId)
         {
-            HttpContext.Session.SetString("user", id);
-            return Content(id);
+            HttpContext.Session.SetString("user", userId);
+            return Content(userId);
         }
 
         [HttpGet]
@@ -84,6 +81,9 @@ namespace TestMEApi.Controllers
 
         [HttpPost]
         [Route("/api/login")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(500)]
         public async Task<StatusCodeResult> Login(User user)
         {
             var findUser = _userManager.Users.First(u => u.UserName == user.UserName);
@@ -111,10 +111,10 @@ namespace TestMEApi.Controllers
         }
 
         //// PUT: api/users/5
-        [HttpPut("{id}")]
-        public async Task<IdentityResult> PutXp(string id, User user)
+        [HttpPut("{userId}")]
+        public async Task<IdentityResult> PutXp(string userId, User user)
         {
-            var userManagerUser = await _userManager.FindByIdAsync(id);
+            var userManagerUser = await _userManager.FindByIdAsync(userId);
             if (userManagerUser == null)
             {
                 return IdentityResult.Failed();
@@ -129,6 +129,8 @@ namespace TestMEApi.Controllers
 
         [HttpPost]
         [Route("/api/register")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(500)]
         public async Task<IdentityResult> Register([FromBody]User user)
         {
             user.RegistrationDate = DateTime.Today;
@@ -149,6 +151,8 @@ namespace TestMEApi.Controllers
                 
         [HttpGet]
         [Route("/api/confirm-email")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> ConfirmEmail([FromQuery()] string email, [FromQuery()] string token)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -160,7 +164,7 @@ namespace TestMEApi.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, codeDecoded);
             if (result.Succeeded)
             {
-                return StatusCode(200);
+                return StatusCode(201);
             }
             else
             {
@@ -169,10 +173,12 @@ namespace TestMEApi.Controllers
         }
 
         // DELETE: api/users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(string id)
+        [HttpDelete("{userId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<User>> DeleteUser(string userId)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.User.FindAsync(userId);
             if (user == null)
             {
                 return NotFound();

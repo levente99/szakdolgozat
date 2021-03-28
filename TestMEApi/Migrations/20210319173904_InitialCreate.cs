@@ -211,9 +211,9 @@ namespace TestMEApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnswerOne = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnswerTwo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnswerOne = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnswerTwo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AnswerThree = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AnswerFour = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TimeLimit = table.Column<int>(type: "int", nullable: false),

@@ -10,7 +10,7 @@ using TestMEApi.Data;
 namespace TestMEApi.Migrations
 {
     [DbContext(typeof(TestMEApiContext))]
-    [Migration("20210217190044_InitialCreate")]
+    [Migration("20210319173904_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -258,21 +258,18 @@ namespace TestMEApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnswerOne")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnswerThree")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnswerTwo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("CorrectAnswer")
                         .HasColumnType("smallint");
 
                     b.Property<string>("Problem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TestId")

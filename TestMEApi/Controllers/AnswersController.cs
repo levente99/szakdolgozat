@@ -23,14 +23,16 @@ namespace TestMEApi.Controllers
         }
 
         // GET: api/answers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Answer>> GetAnswer(int id)
+        [HttpGet("{answerId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Answer>> GetAnswer(int answerId)
         {
-            var answer = await _context.Answer.FindAsync(id);
+            var answer = await _context.Answer.FindAsync(answerId);
 
             if (answer == null)
             {
-                return NotFound();
+                return StatusCode(404);
             }
 
             return answer;
@@ -38,11 +40,13 @@ namespace TestMEApi.Controllers
 
         [HttpPost]
         [Route("/api/answers")]
-        public async Task<ActionResult<Test>> PostTestAnswer([FromBody] List<Answer> answer)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult<Test>> PostTestAnswer([FromBody]Answer answer)
         {
             try
             {
-                answer.ForEach(a => _context.Answer.Add(a));
+                _context.Answer.Add(answer);
 
                 await _context.SaveChangesAsync();
             }
