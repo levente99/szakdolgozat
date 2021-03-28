@@ -31,11 +31,13 @@ export default class MyTests extends Component {
     }
 
     componentDidMount() {
-        fetch(`https://localhost:44369/api/users/fetch-from-session`, { method: 'GET', credentials: "include", mode: 'cors' }).then(function (body) {
+        fetch(`https://localhost:44369/api/users/fetch-from-session`, {
+            method: 'GET', credentials: "include",
+            mode: 'cors'
+        }).then(function (body) {
             return body.text();
         }).then((response) => {
             this.setState({ userId: response });
-
             fetch(`https://localhost:44369/api/users-tests/${response}`, {
                 method: 'GET',
             })
@@ -52,6 +54,7 @@ export default class MyTests extends Component {
                 this.state.usersTests[0].test.id == "" ? <div className="alert alert-success" role="alert">Nincsennek tesztek</div> :
                     this.state.usersTests.map((userTest) =>
                         <Gameboy
+                            id={userTest.test.id}
                             key={userTest.id}
                             testName={userTest.test.title}
                             firstName={userTest.user.firstName}

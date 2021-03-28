@@ -21,6 +21,10 @@ export default class Home extends React.Component<HomeProps> {
 
     componentDidMount() {
         fetch(`https://localhost:44369/api/users/fetch-from-session`, { method: 'GET', credentials: "include", mode: 'cors' })
+            .then(function (body) {
+                return body.text();
+            }).then((response) => {
+            });
     }
 
     render() {

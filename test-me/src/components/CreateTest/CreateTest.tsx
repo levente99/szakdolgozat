@@ -1,6 +1,5 @@
-
 import React, { Component } from 'react'
-import { Button, Form, OverlayTrigger, Popover, Image, Modal, ListGroup, Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Button, Form, OverlayTrigger, Popover, Image, Modal, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import './CreateTest.css';
 
@@ -141,7 +140,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
 
         return (
             this.state.userId == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be hogy tesztet készíthess!</div> :
-                <div className="edit-container">
+                <div className="edit-container full-height">
                     <div className="sidebar-container">
                         <div className="sidebar">
                             {questionList}

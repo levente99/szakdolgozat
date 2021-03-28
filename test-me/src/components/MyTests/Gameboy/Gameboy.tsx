@@ -1,7 +1,9 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import "./Gameboy.css";
 
 interface GameboyProps {
+    id: string;
     testName: string;
     firstName: string;
     lastName: string;
@@ -12,7 +14,7 @@ interface GameboyProps {
     xp: number;
 }
 
-export const Gameboy: React.FC<GameboyProps> = ({ testName, firstName, lastName, createdTime, deadline, testTime, questionNumber, xp }: GameboyProps) => {
+export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastName, createdTime, deadline, testTime, questionNumber, xp }: GameboyProps) => {
     return (
         <div className="gameboy">
             <div className="screen-cont">
@@ -38,7 +40,7 @@ export const Gameboy: React.FC<GameboyProps> = ({ testName, firstName, lastName,
                     <div className="xp-number-label">XP</div>
                 </div>
                 <div className="btn-select"></div>
-                <div className="btn-start"></div>
+                <Link to={`/play/${id}`} className="btn-start" ></Link>
                 <div className="btn-start-label">Kezdés</div>
             </div>
             <div className="speakers"></div>

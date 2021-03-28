@@ -4,9 +4,12 @@
     padding: 0;
 }
 
+.full-height {
+    height: calc(100vh - 62.67px);
+}
+
 .edit-container {
     display: grid;
-    height: calc(100vh - 62.67px);
     grid-template-columns: [sidebar-start] 250px [question-start] calc((100vw - 250px)/2) [question-middle] calc((100vw - 250px)/2) [question-end];
     grid-template-rows: [question-text] 20% [question-options] 40% [answer-start] 40% [answer-end];
 }
@@ -136,7 +139,7 @@
 
     display: grid;
     grid-template-columns: [question-start] 50% [question-middle] 50% [question-end];
-    grid-template-rows: [question-text-start] 20% [question-options-start] 30% [question-options-end] auto [question-answers-end];
+    grid-template-rows: [question-text-start] 30% [question-options-start] 25% [question-options-end] auto [question-answers-end];
     justify-items: center;
     align-items: center;
 }
@@ -160,10 +163,6 @@
     grid-row-start: question-options-start;
     grid-row-end: question-options-end;
     width: 60%;
-}
-
-.time-limit {
-    margin-bottom: 15%;
 }
 
 .time-label,
@@ -202,25 +201,41 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
     margin: 10px;
     width: 90%;
-    height: 35%;
+    height: 60%;
     box-shadow: rgb(0 0 0 / 15%) 0px -0.25rem 0px 0px inset;
 }
 
 .answers>div>input {
-    border-color: white;
-    background-color: white;
+    background-color: transparent;
+    border-color: transparent;
     font-size: 20px;
     margin: 10px;
     width: 80%;
     height: 70%;
 }
 
+.answers-one {
+    background-color: #66a3ff;
+}
+
+.answers-two {
+    background-color: #FF6868;
+}
+
+.answers-three {
+    background-color: #FFAB2C;
+}
+
+.answers-four {
+    background-color: #68C95C;
+}
+
 .answers>div>input:focus {
-    box-shadow: inset 0 -1px 0 #ddd;
-    border-color: rgb(255, 255, 255);
+    box-shadow: inset 0 -1px 0 transparent;
+    background-color: transparent;
+    border-color: transparent
 }
 
 .form-check>input {
