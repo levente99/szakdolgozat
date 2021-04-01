@@ -124,6 +124,8 @@
 }
 
 .test-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
     position: relative;
     top: -20px;
     text-align: center;
@@ -131,8 +133,10 @@
 
 .test-create-dates,
 .test-deadline {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
     position: relative;
-    top: 95px;
+    top: 110px;
     text-align: center;
 }
 
