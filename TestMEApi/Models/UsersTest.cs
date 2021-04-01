@@ -18,7 +18,7 @@ namespace TestMEApi.Models
         public int TestId { get; set; }
         public Test Test { get; set; }
 
-        public DateTime Finished { get; set; }
+        public DateTime? Finished { get; set; }
         public int EarnedXp { get; set; }
     }
 } 

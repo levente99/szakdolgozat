@@ -240,7 +240,7 @@ namespace TestMEApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TestId = table.Column<int>(type: "int", nullable: false),
-                    Finished = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Finished = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EarnedXp = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

@@ -10,6 +10,14 @@ using TestMEApi.Models;
 
 namespace TestMEApi.Controllers
 {
+    public class UserTestStatus
+    {
+        public int Completed { get; set; }
+        public int NotCompleted { get; set; }
+        public int AllXp { get; set; }
+        public string Error { get; set; }
+    }
+
     [ApiController]
     [Route("api/users-tests")]
     public class UsersTestsController : ControllerBase
@@ -41,7 +49,7 @@ namespace TestMEApi.Controllers
             return usersTest;
         }
 
-        // GET: api/users-test
+        // GET: api/users-test/{userId}/{testId}
         [HttpGet("{userId}/{testId}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
@@ -55,6 +63,32 @@ namespace TestMEApi.Controllers
             }
 
             return usersTest;
+        }
+
+        // GET: api/users-test/status/{userId}
+        [HttpGet("status/{userId}")]
+        public async Task<UserTestStatus> GetUsersTestCompleteStatus(string userId)
+        {
+            var usersTest = await _context.UsersTest.Include(ut => ut.User).Include(ut => ut.Test).Include(ut => ut.Test.Questions).Where(ut => ut.UserId == userId).ToListAsync();
+
+            if (usersTest == null)
+            {
+                var userTestStatusError = new UserTestStatus()
+                {
+                    Error = "A megadott user id nem létezik!"
+                };
+
+                return userTestStatusError;
+            }
+
+            var userTestStatus = new UserTestStatus()
+            {
+                Completed = usersTest.Count(ut => ut.Finished != null),
+                NotCompleted = usersTest.Count(ut => ut.Finished == null),
+                AllXp= usersTest.Sum(ut => ut.EarnedXp)
+            };
+
+            return userTestStatus;
         }
 
         // GET: api/users-tests/test/5

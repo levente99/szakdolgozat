@@ -10,7 +10,7 @@ using TestMEApi.Data;
 namespace TestMEApi.Migrations
 {
     [DbContext(typeof(TestMEApiContext))]
-    [Migration("20210319173904_InitialCreate")]
+    [Migration("20210330151406_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -340,7 +340,7 @@ namespace TestMEApi.Migrations
                     b.Property<int>("EarnedXp")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Finished")
+                    b.Property<DateTime?>("Finished")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("TestId")

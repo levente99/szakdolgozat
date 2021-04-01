@@ -63,6 +63,8 @@ namespace TestMEApi
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
                 options.Cookie.HttpOnly = false;
                 options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
 
             services.AddSwaggerGen(swagger =>

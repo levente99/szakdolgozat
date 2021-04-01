@@ -28,7 +28,7 @@ namespace TestMEApi.Controllers
         private readonly TestMEApiContext _context;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public UsersController(IHttpContextAccessor contextAccessor,UserManager<User> userManager,SignInManager<User> signInManager, IMailService mailService, IConfiguration configuration ,TestMEApiContext context)
+        public UsersController(IHttpContextAccessor contextAccessor, UserManager<User> userManager, SignInManager<User> signInManager, IMailService mailService, IConfiguration configuration, TestMEApiContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,7 +38,7 @@ namespace TestMEApi.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        // GET: api/users/5
+        //GET: api/users/5
         [HttpGet("{userId}")]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
@@ -110,7 +110,7 @@ namespace TestMEApi.Controllers
 
         }
 
-        //// PUT: api/users/5
+        // PUT: api/users/5
         [HttpPut("{userId}")]
         public async Task<IdentityResult> PutXp(string userId, User user)
         {
@@ -148,7 +148,7 @@ namespace TestMEApi.Controllers
 
             return result;
         }
-                
+
         [HttpGet]
         [Route("/api/confirm-email")]
         [ProducesResponseType(201)]

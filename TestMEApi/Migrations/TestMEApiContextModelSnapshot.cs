@@ -338,7 +338,7 @@ namespace TestMEApi.Migrations
                     b.Property<int>("EarnedXp")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Finished")
+                    b.Property<DateTime?>("Finished")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("TestId")
