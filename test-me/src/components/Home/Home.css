@@ -1,0 +1,61 @@
+.home-container {
+    position: relative;
+    width: 100vw;
+    height: calc(100vh - 63px);
+    background: linear-gradient(90deg, #efedff 21px, transparent 1%) center, linear-gradient(#efedff 21px, transparent 1%) center, #636363;
+    background-size: 22px 22px;
+}
+
+.home-data {
+    width: 80vw;
+    height: fit-content;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.home-name {
+    font-size: 4vh;
+}
+
+.home-xp-label {
+    font-size: 2vh;
+    margin: 20px;
+}
+
+.current-level,
+.next-level {
+    position: absolute;
+    margin-top: -2px;
+}
+
+.home-progress {
+    margin: auto;
+    width: 95%;
+    background-color: #add6ff;
+}
+
+.next-level {
+    text-align: right;
+    margin-top: -3px;
+    width: -webkit-fill-available;
+}
+
+.completed-test-count-container,
+.not-completed-test-count-container {
+    margin: 40px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5vw;
+}
+
+.complete-img,
+.not-complete-img {
+    margin-right: 10px;
+}

@@ -89,6 +89,7 @@ export default class Login extends Component<LoginProps, LoginState> {
             method: "POST",
             headers: {
                 Accept: "application/json",
+                mode: 'cors',
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -117,7 +118,7 @@ export default class Login extends Component<LoginProps, LoginState> {
                     await this.getUserId().then(async function (userId) {
                         fetch(`https://localhost:44369/api/users/save-to-session?userId=${userId}`, {
                             method: 'GET',
-                            mode: 'cors',
+                            // mode: 'cors',
                             credentials: 'include'
                         });
                     })
