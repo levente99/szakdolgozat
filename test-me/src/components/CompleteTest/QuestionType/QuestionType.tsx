@@ -19,7 +19,7 @@ export default class extends React.Component<QuestionTypeProps>{
     render() {
         return (
             <div className="question-type-container" >
-                <div className="row">
+                <div className="question-type-wrap">
                     <div className="question-type-img">
                         {this.props.isQuestionQuiz ? <img src="/img/quiz_icon.png" /> : <img src="/img/true_false_icon.png" />}
                     </div>
