@@ -154,7 +154,7 @@ namespace TestMEApi.Controllers
             }
 
             ut.EarnedXp = xp;
-
+            ut.Finished = DateTime.Today;
             _context.SaveChanges();
 
             return StatusCode(200);
