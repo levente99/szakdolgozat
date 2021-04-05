@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom';
-import { Gameboy } from './Gameboy/Gameboy'
+import React, { Component } from 'react';
+import { Dropdown, DropdownButton, Spinner } from 'react-bootstrap';
+import { Scrollbars } from 'react-custom-scrollbars-2';
+import { Gameboy } from './Gameboy/Gameboy';
+import './MyTests.css';
 
 export default class MyTests extends Component {
     state = {
@@ -23,11 +25,13 @@ export default class MyTests extends Component {
                             "timeLimit": 0,
                             "xp": 0
                         }
-                    ],
-                    finished: ""
-                }
+                    ]
+                },
+                finished: "",
+                earnedXp: 0
             }
-        ]
+        ],
+        order: 0
     }
 
     componentDidMount() {
@@ -49,27 +53,61 @@ export default class MyTests extends Component {
     }
 
     render() {
+        var userTestCopy = [...this.state.usersTests];
+        // this.state.usersTests.map((ut) => ut.finished == null ? ut.finished == "1111-11-11" : null)
+        const orderedTests = () => {
+            switch (this.state.order) {
+                case 0:
+                    userTestCopy.sort((a, b) => a.test.created < b.test.created ? 1 : -1);
+                    break;
+                case 1:
+                    userTestCopy.sort((a, b) => a.test.created > b.test.created ? 1 : -1);
+                    break;
+                case 2:
+                    userTestCopy.sort((a, b) => a.finished > b.finished ? 1 : -1);
+                    break;
+                default:
+                    break;
+            }
+            console.log(userTestCopy.map(ut => console.log(ut)))
+            return userTestCopy.map((userTest, i) =>
+                <Gameboy
+                    key={i}
+                    id={userTest.test.id}
+                    testName={userTest.test.title}
+                    firstName={userTest.user.firstName}
+                    lastName={userTest.user.lastName}
+                    createdTime={userTest.test.created.split('T')[0]}
+                    deadline={userTest.test.deadline.split('T')[0]}
+                    earnedXp={userTest.earnedXp}
+                    finished={userTest.finished}
+                    testTime={this.convertSecToMin(userTest.test.questions.reduce(function (a, b) {
+                        return +a + +b.timeLimit;
+                    }, 0))}
+                    questionNumber={userTest?.test?.questions?.length}
+                    xp={userTest.test.questions.reduce(function (a, b) {
+                        return +a + +b.xp;
+                    }, 0)}
+                />
+            );
+        }
+
+
         return (
             this.state.userId == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be ha meg szeretnéd nézni a tesztjeidet!</div> :
                 this.state.usersTests[0].test.id == "" ? <div className="alert alert-success" role="alert">Nincsennek tesztek</div> :
-                    this.state.usersTests.map((userTest) =>
-                        <Gameboy
-                            id={userTest.test.id}
-                            key={userTest.id}
-                            testName={userTest.test.title}
-                            firstName={userTest.user.firstName}
-                            lastName={userTest.user.lastName}
-                            createdTime={userTest.test.created.split('T')[0]}
-                            deadline={userTest.test.deadline.split('T')[0]}
-                            testTime={this.convertSecToMin(userTest.test.questions.reduce(function (a, b) {
-                                return +a + +b.timeLimit;
-                            }, 0))}
-                            questionNumber={userTest?.test?.questions?.length}
-                            xp={userTest.test.questions.reduce(function (a, b) {
-                                return +a + +b.xp;
-                            }, 0)}
-                        />
-                    )
+                    <div className="mytests-container">
+                        <DropdownButton id="mytests-dropdown-button" title="Rendezés">
+                            <Dropdown.Item onClick={() => this.setState({ order: 0 })}>Legújabb</Dropdown.Item>
+                            <Dropdown.Item onClick={() => this.setState({ order: 1 })}>Legrégebbi</Dropdown.Item>
+                            <Dropdown.Item onClick={() => this.setState({ order: 2 })}>Kitöltetlenek</Dropdown.Item>
+                        </DropdownButton>
+                        <div className="gameboys-container">
+                            <Scrollbars>
+                                {orderedTests()}
+                            </Scrollbars>
+                        </div>
+                    </div>
         )
     }
 

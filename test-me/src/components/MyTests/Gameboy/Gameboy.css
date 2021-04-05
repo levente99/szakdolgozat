@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .gameboy {
+    zoom: 0.8;
     position: relative;
     display: inline-block;
     margin: 20px;
@@ -9,6 +10,24 @@
     background: #eee;
     border-radius: 10px 10px 60px 10px;
     box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-height: 651px) and (max-height: 950px) {
+    .gameboy {
+        zoom: 0.75;
+    }
+}
+
+@media screen and (min-height: 951px) and (max-height: 1200px) {
+    .gameboy {
+        zoom: 1.1;
+    }
+}
+
+@media screen and (min-height: 1200px) and (max-height: 1600px) {
+    .gameboy {
+        zoom: 1.2;
+    }
 }
 
 .gameboy:before {
@@ -121,6 +140,20 @@
     margin-left: 2px;
     font-size: 15px;
     font-family: monospace;
+}
+
+.gameboy-earned-xp-number {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    width: 100%;
+    font-size: 50px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.gameboy-earned-xp-number::after {
+    content: ' XP';
 }
 
 .test-name {
@@ -318,6 +351,17 @@
     -webkit-transform: rotate(-25deg);
 }
 
+.btn-start-finished {
+    position: absolute;
+    top: 205px;
+    left: 204px;
+    height: 12px;
+    width: 60px;
+    background: #999999;
+    border-radius: 10px;
+    -webkit-transform: rotate(-25deg);
+}
+
 .btn-start:hover {
     cursor: pointer;
     background: #0270e6 !important;
@@ -436,4 +480,8 @@
     top: 0;
     right: 0;
     border: 0;
+}
+
+.finished-gameboy-color {
+    background-color: #a5bfa5;
 }
