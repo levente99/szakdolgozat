@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dropdown, DropdownButton, Spinner } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Gameboy } from './Gameboy/Gameboy';
+import configData from '../../config.json';
 import './MyTests.css';
 
 export default class MyTests extends Component {
@@ -35,14 +36,14 @@ export default class MyTests extends Component {
     }
 
     componentDidMount() {
-        fetch(`https://localhost:44369/api/users/fetch-from-session`, {
+        fetch(`${configData.SERVER_URL}/users/fetch-from-session`, {
             method: 'GET', credentials: "include",
             mode: 'cors'
         }).then(function (body) {
             return body.text();
         }).then((response) => {
             this.setState({ userId: response });
-            fetch(`https://localhost:44369/api/users-tests/${response}`, {
+            fetch(`${configData.SERVER_URL}/users-tests/${response}`, {
                 method: 'GET',
             })
                 .then(response => response.json())
@@ -54,7 +55,6 @@ export default class MyTests extends Component {
 
     render() {
         var userTestCopy = [...this.state.usersTests];
-        // this.state.usersTests.map((ut) => ut.finished == null ? ut.finished == "1111-11-11" : null)
         const orderedTests = () => {
             switch (this.state.order) {
                 case 0:
@@ -64,7 +64,7 @@ export default class MyTests extends Component {
                     userTestCopy.sort((a, b) => a.test.created > b.test.created ? 1 : -1);
                     break;
                 case 2:
-                    userTestCopy.sort((a, b) => a.finished > b.finished ? 1 : -1);
+                    userTestCopy.sort((a, b) => a.finished != null ? 1 : -1);
                     break;
                 default:
                     break;

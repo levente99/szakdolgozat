@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ProgressBar } from 'react-bootstrap';
+import configData from '../../config.json';
 import './Home.css';
 
 interface HomeProps {
@@ -45,16 +46,16 @@ export default class Home extends React.Component<HomeProps, HomeState> {
 
 
     componentDidMount() {
-        fetch(`https://localhost:44369/api/users/fetch-from-session`, { method: 'GET', credentials: 'include' })
+        fetch(`${configData.SERVER_URL}/users/fetch-from-session`, { method: 'GET', credentials: 'include' })
             .then(function (body) {
                 return body.text();
             }).then((response) => {
-                fetch(`https://localhost:44369/api/users-tests/status/${response}`, { method: 'GET' })
+                fetch(`${configData.SERVER_URL}/users-tests/status/${response}`, { method: 'GET' })
                     .then(response => response.json())
                     .then(data => {
                         this.setState({ userTestsStatus: data });
                     });
-                fetch(`https://localhost:44369/api/users/${response}`, { method: 'GET' })
+                fetch(`${configData.SERVER_URL}/users/${response}`, { method: 'GET' })
                     .then(response => response.json())
                     .then(data => {
                         this.setState({ user: data });

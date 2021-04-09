@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom';
+import configData from '../../../config.json';
 import confetti from 'canvas-confetti';
 import './Results.css';
 
@@ -36,7 +37,7 @@ export default class Results extends Component<ResultsProps, ResultsState> {
 
     componentDidMount() {
         Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "none";
-        fetch(`https://localhost:44369/api/users-tests/test/${this.props.testId}`)
+        fetch(`${configData.SERVER_URL}/users-tests/test/${this.props.testId}`)
             .then(response => response.json())
             .then(data => {
                 this.setState({ userTests: data });

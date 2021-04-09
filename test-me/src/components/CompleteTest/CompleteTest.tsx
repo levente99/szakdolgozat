@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Spinner } from 'react-bootstrap';
 import QuestionType from './QuestionType/QuestionType';
 import Question from './Question/Question';
+import configData from '../../config.json';
 import Results from './Results/Results';
 
 interface CompleteTestProps {
@@ -89,13 +90,13 @@ export default class CompleteTest extends React.Component<CompleteTestProps, Com
     }
 
     async componentDidMount() {
-        await fetch(`https://localhost:44369/api/users/fetch-from-session`, {
+        await fetch(`${configData.SERVER_URL}/users/fetch-from-session`, {
             method: 'GET', credentials: "include",
             mode: 'cors'
         }).then(function (body) {
             return body.text();
         }).then((response) => {
-            fetch(`https://localhost:44369/api/users-tests/${response}/${window.location.href.substring(window.location.href.lastIndexOf('/') + 1)}`, {
+            fetch(`${configData.SERVER_URL}/users-tests/${response}/${window.location.href.substring(window.location.href.lastIndexOf('/') + 1)}`, {
                 method: 'GET'
             })
                 .then(response => response.json())
@@ -148,11 +149,11 @@ export default class CompleteTest extends React.Component<CompleteTestProps, Com
     }
 
     sendResults = async () => {
-        await fetch(`https://localhost:44369/api/users-tests/${this.state.userTest.id}/update-xp/${this.state.allEarnedXp}`, {
+        await fetch(`${configData.SERVER_URL}/users-tests/${this.state.userTest.id}/update-xp/${this.state.allEarnedXp}`, {
             method: 'PUT'
         }).then(() => {
             this.state.answers.forEach(async (answer, index) => {
-                await fetch('https://localhost:44369/api/answers', {
+                await fetch('${configData.SERVER_URL}/answers', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

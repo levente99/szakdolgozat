@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, OverlayTrigger, Popover, Image, Modal, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import configData from '../../config.json';
 import './CreateTest.css';
 
 interface CreateTestProps {
@@ -76,7 +77,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
     }
 
     componentDidMount() {
-        fetch(`https://localhost:44369/api/users/fetch-from-session`, { method: 'GET', credentials: "include", mode: 'cors' }).then(function (body) {
+        fetch(`${configData.SERVER_URL}/users/fetch-from-session`, { method: 'GET', credentials: "include", mode: 'cors' }).then(function (body) {
             return body.text();
         }).then((response) => {
             this.setState({ userId: response });
@@ -411,7 +412,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
         this.setState({ ...this.state, savingTest: true });
         let questions = this.state.questions.map(({ id, ...keepAttrs }) => keepAttrs)
 
-        await fetch('https://localhost:44369/api/tests', {
+        await fetch('${configData.SERVER_URL}/tests', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -427,7 +428,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
             if (response.ok) return response.json();
         }).then(async json => {
             await this.state.fillingUsers.forEach(async (email) => {
-                await fetch('https://localhost:44369/api/users-tests', {
+                await fetch('${configData.SERVER_URL}/users-tests', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

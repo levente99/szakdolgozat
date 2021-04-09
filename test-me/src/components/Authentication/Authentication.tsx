@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import configData from '../../config.json';
 import './Authentication.css';
 
 interface LoginProps {
@@ -75,7 +76,7 @@ export default class Login extends Component<LoginProps, LoginState> {
     }
 
     getUserId = async () => {
-        let userId = await fetch(`https://localhost:44369/api/users/get-user-id?username=${this.state.loginValue.userName}&password=${this.state.loginValue.password}`).then(function (body) {
+        let userId = await fetch(`${configData.SERVER_URL}/users/get-user-id?username=${this.state.loginValue.userName}&password=${this.state.loginValue.password}`).then(function (body) {
             return body.text();
         }).then(function (response) {
             return response;
@@ -85,7 +86,7 @@ export default class Login extends Component<LoginProps, LoginState> {
 
     submitLogin = async () => {
         this.setState({ ...this.state, loading: true });
-        await fetch(`https://localhost:44369/api/login`, {
+        await fetch(`${configData.SERVER_URL}/login`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -116,7 +117,7 @@ export default class Login extends Component<LoginProps, LoginState> {
                     break;
                 case 200:
                     await this.getUserId().then(async function (userId) {
-                        fetch(`https://localhost:44369/api/users/save-to-session?userId=${userId}`, {
+                        fetch(`${configData.SERVER_URL}/users/save-to-session?userId=${userId}`, {
                             method: 'GET',
                             // mode: 'cors',
                             credentials: 'include'
@@ -142,7 +143,7 @@ export default class Login extends Component<LoginProps, LoginState> {
 
     submitSignin = async () => {
         this.setState({ ...this.state, loading: true });
-        await fetch('https://localhost:44369/api/register', {
+        await fetch('${configData.SERVER_URL}/register', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
