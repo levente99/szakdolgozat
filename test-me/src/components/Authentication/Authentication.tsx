@@ -143,7 +143,7 @@ export default class Login extends Component<LoginProps, LoginState> {
 
     submitSignin = async () => {
         this.setState({ ...this.state, loading: true });
-        await fetch('${configData.SERVER_URL}/register', {
+        await fetch(`${configData.SERVER_URL}/register`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

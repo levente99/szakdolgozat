@@ -153,7 +153,7 @@ export default class CompleteTest extends React.Component<CompleteTestProps, Com
             method: 'PUT'
         }).then(() => {
             this.state.answers.forEach(async (answer, index) => {
-                await fetch('${configData.SERVER_URL}/answers', {
+                await fetch(`${configData.SERVER_URL}/answers`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -412,7 +412,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
         this.setState({ ...this.state, savingTest: true });
         let questions = this.state.questions.map(({ id, ...keepAttrs }) => keepAttrs)
 
-        await fetch('${configData.SERVER_URL}/tests', {
+        await fetch(`${configData.SERVER_URL}/tests`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -428,7 +428,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
             if (response.ok) return response.json();
         }).then(async json => {
             await this.state.fillingUsers.forEach(async (email) => {
-                await fetch('${configData.SERVER_URL}/users-tests', {
+                await fetch(`${configData.SERVER_URL}/users-tests`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
