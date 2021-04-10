@@ -69,7 +69,6 @@ export default class MyTests extends Component {
                 default:
                     break;
             }
-            console.log(userTestCopy.map(ut => console.log(ut)))
             return userTestCopy.map((userTest, i) =>
                 <Gameboy
                     key={i}
@@ -92,10 +91,9 @@ export default class MyTests extends Component {
             );
         }
 
-
         return (
             this.state.userId == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be ha meg szeretnéd nézni a tesztjeidet!</div> :
-                this.state.usersTests[0].test.id == "" ? <div className="alert alert-success" role="alert">Nincsennek tesztek</div> :
+                this.state.usersTests.length == 0 ? <div className="alert alert-success" role="alert">Nincsennek tesztek</div> :
                     <div className="mytests-container">
                         <DropdownButton id="mytests-dropdown-button" title="Rendezés">
                             <Dropdown.Item onClick={() => this.setState({ order: 0 })}>Legújabb</Dropdown.Item>
