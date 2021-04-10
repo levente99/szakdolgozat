@@ -17,10 +17,10 @@ namespace TestMEApi.Services
         public async Task SendEmailAsync(User user, string url)
         {
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.EnableSsl = true;
             smtpClient.Credentials = new System.Net.NetworkCredential("test.me202199@gmail.com", "TUxY!jgvU4p3-z8");
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.EnableSsl = true;
             MailMessage mail = new MailMessage();
 
             //Setting From , To and CC

@@ -141,7 +141,7 @@ namespace TestMEApi.Controllers
                 var tokenGenerated = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(tokenGenerated);
                 var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
-                var url = $"{_configuration["AppUrl"]}/api/confirm-email?email={user.Email}&token={codeEncoded}";
+                var url = $"https://localhost:5001/api/confirm-email?email={user.Email}&token={codeEncoded}";
 
                 await _mailService.SendEmailAsync(user, url);
             }
