@@ -158,7 +158,6 @@ export default class Login extends Component<LoginProps, LoginState> {
 
     submitSignin = async () => {
         if (this.state.registerValue.email.length == 0 ||
-            !this.validateEmail(this.state.registerValue.email) ||
             this.state.registerValue.firstName.length == 0 ||
             this.state.registerValue.lastName.length == 0 ||
             this.state.registerValue.password.length == 0 ||
@@ -167,6 +166,13 @@ export default class Login extends Component<LoginProps, LoginState> {
                 registerValue: {
                     ...prevState.registerValue,
                     registerMessage: "Kérlek tölts ki minden mezőt!"
+                }
+            }));
+        } else if (!this.validateEmail(this.state.registerValue.email)) {
+            this.setState(prevState => ({
+                registerValue: {
+                    ...prevState.registerValue,
+                    registerMessage: "Helytelen e-mail cím!"
                 }
             }));
         } else {
