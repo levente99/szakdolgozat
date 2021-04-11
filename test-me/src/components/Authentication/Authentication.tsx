@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Spinner } from 'react-bootstrap';
+import { Alert, Form, Spinner } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import configData from '../../config.json';
 import './Authentication.css';
@@ -85,105 +85,135 @@ export default class Login extends Component<LoginProps, LoginState> {
     }
 
     submitLogin = async () => {
-        this.setState({ ...this.state, loading: true });
-        await fetch(`${configData.SERVER_URL}/login`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                mode: 'cors',
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                userName: this.state.loginValue.userName,
-                password: this.state.loginValue.password
+        if (this.state.loginValue.userName.length == 0 || this.state.loginValue.password.length == 0) {
+            this.setState(prevState => ({
+                loginValue: {
+                    ...prevState.loginValue,
+                    loginError: "Kérlek tölts ki minden mezőt!"
+                }
+            }))
+        } else {
+            this.setState(prevState => ({
+                loginValue: {
+                    ...prevState.loginValue,
+                    loginError: ""
+                }
+            }))
+            this.setState({ ...this.state, loading: true });
+            await fetch(`${configData.SERVER_URL}/login`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    mode: 'cors',
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userName: this.state.loginValue.userName,
+                    password: this.state.loginValue.password
+                })
+            }).then(async data => {
+                switch (data.status) {
+                    case 403:
+                        this.setState(prevState => ({
+                            loginValue: {
+                                ...prevState.loginValue,
+                                loginError: "Kérlek igazold vissza az email címed."
+                            }
+                        }));
+                        break;
+                    case 500:
+                        this.setState(prevState => ({
+                            loginValue: {
+                                ...prevState.loginValue,
+                                loginError: "Rossz felhasználónév vagy jelszó!"
+                            }
+                        }));
+                        break;
+                    case 200:
+                        await this.getUserId().then(async function (userId) {
+                            fetch(`${configData.SERVER_URL}/users/save-to-session?userId=${userId}`, {
+                                method: 'GET',
+                                // mode: 'cors',
+                                credentials: 'include'
+                            });
+                        })
+
+                        this.setState(prevState => ({
+                            loginValue: {
+                                ...prevState.loginValue,
+                                loggedIn: true
+                            }
+                        }));
+                        break;
+                }
             })
-        }).then(async data => {
-            switch (data.status) {
-                case 403:
-                    this.setState(prevState => ({
-                        loginValue: {
-                            ...prevState.loginValue,
-                            loginError: "Kérlek igazold vissza az email címed."
-                        }
-                    }));
-                    break;
-                case 500:
-                    this.setState(prevState => ({
-                        loginValue: {
-                            ...prevState.loginValue,
-                            loginError: "Rossz felhasználónév vagy jelszó!"
-                        }
-                    }));
-                    break;
-                case 200:
-                    await this.getUserId().then(async function (userId) {
-                        fetch(`${configData.SERVER_URL}/users/save-to-session?userId=${userId}`, {
-                            method: 'GET',
-                            // mode: 'cors',
-                            credentials: 'include'
-                        });
-                    })
 
-                    this.setState(prevState => ({
-                        loginValue: {
-                            ...prevState.loginValue,
-                            loggedIn: true
-                        }
-                    }));
-                    break;
-            }
-        })
-
-        await this.setState(prevState => ({
-            loading: false
-        }));
+            await this.setState(prevState => ({
+                loading: false
+            }));
+        }
     }
 
 
 
     submitSignin = async () => {
-        this.setState({ ...this.state, loading: true });
-        await fetch(`${configData.SERVER_URL}/register`, {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer',
-            body: JSON.stringify({
-                RoleId: this.state.registerValue.userRole == "Diák" ? 1 : 0,
-                FirstName: this.state.registerValue.firstName,
-                LastName: this.state.registerValue.lastName,
-                UserName: this.state.registerValue.userName,
-                Email: this.state.registerValue.email,
-                Password: this.state.registerValue.password
-            })
-        }).then(function (body) {
-            return body.json();
-        }).then((response) => {
-            if (!response.succeeded) {
-                this.setState(prevState => ({
-                    registerValue: {
-                        ...prevState.registerValue,
-                        registerMessage: response.errors.Password == undefined ? response.errors[0].description : response.errors.Password[0]
-                    }
-                }));
-            } else {
-                this.setState(prevState => ({
-                    registerValue: {
-                        ...prevState.registerValue,
-                        registerMessage: "Sikers regisztráció, igazold vissza az e-mail címed és jelentkezz be!"
-                    }
-                }));
-                this.changeContainer();
-            }
-        });
-        await this.setState(prevState => ({
-            loading: false
-        }));
+        if (this.state.registerValue.email.length == 0 ||
+            !this.validateEmail(this.state.registerValue.email) ||
+            this.state.registerValue.firstName.length == 0 ||
+            this.state.registerValue.lastName.length == 0 ||
+            this.state.registerValue.password.length == 0 ||
+            this.state.registerValue.userName.length == 0) {
+            this.setState(prevState => ({
+                registerValue: {
+                    ...prevState.registerValue,
+                    registerMessage: "Kérlek tölts ki minden mezőt!"
+                }
+            }));
+        } else {
+
+            this.setState({ ...this.state, loading: true });
+            await fetch(`${configData.SERVER_URL}/register`, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify({
+                    RoleId: this.state.registerValue.userRole == "Diák" ? 1 : 0,
+                    FirstName: this.state.registerValue.firstName,
+                    LastName: this.state.registerValue.lastName,
+                    UserName: this.state.registerValue.userName,
+                    Email: this.state.registerValue.email,
+                    Password: this.state.registerValue.password
+                })
+            }).then(function (body) {
+                return body.json();
+            }).then((response) => {
+                if (!response.succeeded) {
+                    this.setState(prevState => ({
+                        registerValue: {
+                            ...prevState.registerValue,
+                            registerMessage: response.errors.Password == undefined ? response.errors[0].description : response.errors.Password[0]
+                        }
+                    }));
+                } else {
+                    this.setState(prevState => ({
+                        registerValue: {
+                            ...prevState.registerValue,
+                            registerMessage: "Sikers regisztráció, igazold vissza az e-mail címed és jelentkezz be!"
+                        }
+                    }));
+                    this.changeContainer();
+                }
+            });
+            await this.setState(prevState => ({
+                loading: false
+            }));
+        }
     }
 
     render() {
@@ -233,25 +263,25 @@ export default class Login extends Component<LoginProps, LoginState> {
                                 }
                             </form>
                         </div>
-                        <div className="form-container sign-in-container">
-                            <form className="login-form">
+                        <Form className="form-container sign-in-container">
+                            <Form.Group className="login-form">
                                 <h2 className="login-title mb-5">Jelentkezz be! 🔓</h2>
 
-                                <div className="form-group text-left">
+                                <Form.Group className="form-group text-left">
                                     <label htmlFor="SignInInputUsername">Felhasználónév</label>
-                                    <input className="form-control" id="SignInInputUsername" name="userName" onChange={this.saveInputChange} placeholder="Felhasználónév" />
-                                </div>
-                                <div className="form-group text-left">
+                                    <Form.Control type="input" id="SignInInputUsername" name="userName" onChange={this.saveInputChange} placeholder="Felhasználónév" />
+                                </Form.Group>
+                                <Form.Group className="form-group text-left">
                                     <label htmlFor="SignInInputPassword">Jelszó</label>
-                                    <input type="password" className="form-control" id="SignInInputPassword" name="password" onChange={this.saveInputChange} placeholder="Jelszó" />
-                                </div>
+                                    <Form.Control type="password" id="SignInInputPassword" name="password" onChange={this.saveInputChange} placeholder="Jelszó" />
+                                </Form.Group>
                                 {this.state.loading ? <Spinner animation="border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </Spinner> :
                                     <button type="button" onClick={this.submitLogin} className="btn btn-success">Bejelentkezés</button>
                                 }
-                            </form>
-                        </div>
+                            </Form.Group>
+                        </Form>
                         <div className="overlay-container">
                             <div className="overlay">
                                 <div className="overlay-panel overlay-left">
@@ -280,6 +310,11 @@ export default class Login extends Component<LoginProps, LoginState> {
 
             </>
         )
+    }
+
+    validateEmail(email: string) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     }
 
     changeContainer() {
