@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import { ProgressBar } from 'react-bootstrap';
 import configData from '../../config.json';
+import Navigation from '../common/Navigation';
 import './Home.css';
 
 interface HomeProps {
-    testName: string;
-    firstName: string;
-    lastName: string;
-    createdTime: string;
-    deadline: string;
-    testTime: number;
-    questionNumber: number;
-    xp: number;
 }
 
 interface HomeState {
@@ -44,7 +37,6 @@ export default class Home extends React.Component<HomeProps, HomeState> {
         }
     }
 
-
     componentDidMount() {
         fetch(`${configData.SERVER_URL}/users/fetch-from-session`, { method: 'GET', credentials: 'include' })
             .then(function (body) {
@@ -64,9 +56,6 @@ export default class Home extends React.Component<HomeProps, HomeState> {
     }
 
     render() {
-        type ProgressBarData = {
-            min: number; max: number;
-        }
         const progressBarData = () => {
             var xp = this.state.userTestsStatus.allXp;
             if (xp < 5000) {
@@ -89,28 +78,30 @@ export default class Home extends React.Component<HomeProps, HomeState> {
                 return { min: 40000, max: 50000, minLevel: 9, maxLevel: 10 }
             }
         }
-
         return (
-            this.state.user.firstName == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be ha meg szeretnéd nézni a tesztjeidet!</div> :
-                <div className="home-container">
-                    <div className="home-data">
-                        <div className="home-name">{this.state.user.firstName + " " + this.state.user.lastName}</div>
-                        <div className="home-xp-label">Összegyűjtött pontjaid:</div>
-                        <div className="home-all-earned-xp">
-                            <div className="current-level">{progressBarData().minLevel}</div>
-                            <div className="next-level">{progressBarData().maxLevel}</div>
-                            <ProgressBar className="home-progress" animated now={this.state.userTestsStatus.allXp} min={progressBarData().min} max={progressBarData().max} />
+            <>
+                <Navigation renderNav={true} />
+                {this.state.user.firstName == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be ha meg szeretnéd nézni a tesztjeidet!</div> :
+                    <div className="home-container">
+                        <div className="home-data">
+                            <div className="home-name">{this.state.user.firstName + " " + this.state.user.lastName}</div>
+                            <div className="home-xp-label">Összegyűjtött pontjaid:</div>
+                            <div className="home-all-earned-xp">
+                                <div className="current-level">{progressBarData().minLevel}</div>
+                                <div className="next-level">{progressBarData().maxLevel}</div>
+                                <ProgressBar className="home-progress" animated now={this.state.userTestsStatus.allXp} min={progressBarData().min} max={progressBarData().max} />
+                            </div>
+                            <div className="completed-test-count-container">
+                                <div className="complete-img">✔️</div>
+                                <div className="complete-text">{this.state.userTestsStatus.completed} db kitöltött teszted van</div>
+                            </div>
+                            <div className="not-completed-test-count-container">
+                                <div className="not-complete-img">❌</div>
+                                <div className="not-complete-text">{this.state.userTestsStatus.notCompleted} db kitöltetlen teszted van</div>
+                            </div>
                         </div>
-                        <div className="completed-test-count-container">
-                            <div className="complete-img">✔️</div>
-                            <div className="complete-text">{this.state.userTestsStatus.completed} db kitöltött teszted van</div>
-                        </div>
-                        <div className="not-completed-test-count-container">
-                            <div className="not-complete-img">❌</div>
-                            <div className="not-complete-text">{this.state.userTestsStatus.notCompleted} db kitöltetlen teszted van</div>
-                        </div>
-                    </div>
-                </div>
+                    </div>}
+            </>
         )
     }
 }

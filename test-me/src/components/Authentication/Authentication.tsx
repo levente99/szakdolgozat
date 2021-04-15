@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Form, Spinner } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import configData from '../../config.json';
+import Navigation from '../common/Navigation';
 import './Authentication.css';
 
 interface LoginProps {
@@ -53,14 +54,6 @@ export default class Login extends Component<LoginProps, LoginState> {
         }
 
         this.saveInputChange = this.saveInputChange.bind(this);
-    }
-
-    componentDidMount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "none";
-    }
-
-    componentWillUnmount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "flex";
     }
 
     saveInputChange(e: { currentTarget: { value: any; }; preventDefault: () => void; target: { name: any; value: any; }; }) {
@@ -133,11 +126,9 @@ export default class Login extends Component<LoginProps, LoginState> {
                         await this.getUserId().then(async function (userId) {
                             fetch(`${configData.SERVER_URL}/users/save-to-session?userId=${userId}`, {
                                 method: 'GET',
-                                // mode: 'cors',
                                 credentials: 'include'
                             });
                         })
-
                         this.setState(prevState => ({
                             loginValue: {
                                 ...prevState.loginValue,
@@ -146,11 +137,11 @@ export default class Login extends Component<LoginProps, LoginState> {
                         }));
                         break;
                 }
-            })
 
-            await this.setState(prevState => ({
-                loading: false
-            }));
+                await this.setState(prevState => ({
+                    loading: false
+                }));
+            })
         }
     }
 
@@ -224,10 +215,12 @@ export default class Login extends Component<LoginProps, LoginState> {
 
     render() {
         if (this.state.loginValue.loggedIn) {
-            return <Redirect to='/' />;
+            return <Redirect to={{ pathname: `/` }} />
         }
+
         return (
             <>
+                <Navigation renderNav={false} />
                 <div className="login-background">
                     <div className={this.state.loginSignupSwap ? "right-panel-active container" : "container"} id="container">
                         <div className="form-container sign-up-container">
