@@ -17,14 +17,14 @@ export default class Navigation extends Component<NavigationProps, NavigationSta
     constructor(props: NavigationProps) {
         super(props);
         this.state = {
-            loggedIn: true,
+            loggedIn: false,
             redirect: false
         }
     }
 
     async componentDidMount() {
         await this.fetchSession().then((sessionRes) => {
-            sessionRes == "" ? this.setState({ loggedIn: false }) : this.setState({ loggedIn: true });
+            sessionRes == undefined ? this.setState({ loggedIn: false }) : this.setState({ loggedIn: true });
         })
     }
 
