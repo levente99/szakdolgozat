@@ -5,11 +5,5 @@
 
 .gameboys-container {
     width: 100vw;
-    height: calc(100vh - 140.672px);
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.completed-test * {
-    /* color: rgb(110, 110, 110); */
+    height: calc(100vh - 144px);
 }

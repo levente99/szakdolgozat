@@ -1,7 +1,7 @@
 .home-container {
     position: relative;
     width: 100vw;
-    height: calc(100vh - 63px);
+    height: calc(100vh - 66px);
     background: linear-gradient(90deg, #efedff 21px, transparent 1%) center, linear-gradient(#efedff 21px, transparent 1%) center, #636363;
     background-size: 22px 22px;
 }
