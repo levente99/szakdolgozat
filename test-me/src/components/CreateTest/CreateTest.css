@@ -286,3 +286,18 @@ input::-webkit-datetime-edit-fields-wrapper {
     position: relative;
     left: 15px;
 }
+
+.form-control::-webkit-input-placeholder {
+    color: rgb(0, 0, 0);
+}
+
+.form-control::-webkit-input {
+    color: rgb(0, 0, 0);
+}
+
+form,
+input,
+label,
+p {
+    color: black !important;
+}

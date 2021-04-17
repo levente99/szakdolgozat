@@ -36,7 +36,6 @@ export default class Results extends Component<ResultsProps, ResultsState> {
     }
 
     componentDidMount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "none";
         fetch(`${configData.SERVER_URL}/users-tests/test/${this.props.testId}`)
             .then(response => response.json())
             .then(data => {
@@ -44,11 +43,6 @@ export default class Results extends Component<ResultsProps, ResultsState> {
                 this.tossConfetti();
             });
     }
-
-    componentWillUnmount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "flex";
-    }
-
     render() {
         return (
             <>

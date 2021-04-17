@@ -288,7 +288,7 @@ export default class Login extends Component<LoginProps, LoginState> {
                                         {this.state.registerValue.registerMessage}
                                     </Alert> : null}
                                     <h1 className="login-title">Üdv újra itt!</h1>
-                                    <p>Ahhoz hogy hozzáférj a tesztjeidhez kérlek jelentkezz be!</p>
+                                    <Alert color="primary">Ahhoz hogy hozzáférj a tesztjeidhez kérlek jelentkezz be!</Alert>
                                     <button className="login-button.ghost login-button" onClick={() => this.changeContainer()} id="signIn">Bejelentkezés</button>
                                 </div>
                                 <div className="overlay-panel overlay-right">
@@ -299,7 +299,7 @@ export default class Login extends Component<LoginProps, LoginState> {
                                         {this.state.registerValue.registerMessage}
                                     </Alert> : null}
                                     <h1 className="login-title">Üdv itt!</h1>
-                                    <p>Add meg az adataidat és már kezdheted is a teszt készítést!</p>
+                                    <Alert color="primary">Add meg az adataidat és már kezdheted is a teszt készítést!</Alert>
                                     <button className="login-button.ghost login-button" onClick={() => this.changeContainer()} id="signUp">Regisztráció</button>
                                 </div>
                             </div>

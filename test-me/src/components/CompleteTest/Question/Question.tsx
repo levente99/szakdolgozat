@@ -44,12 +44,7 @@ export default class Question extends React.Component<QuestionProps, QuestionSta
         this.setState({ secondsLeft: this.props.timeLimit });
     }
 
-    componentWillUnmount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "flex";
-    }
-
     componentDidMount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "none";
         this.setState({ secondsLeft: this.props.timeLimit });
 
         let intervalId = setInterval(() => {

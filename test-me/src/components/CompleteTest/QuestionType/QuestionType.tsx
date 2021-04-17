@@ -9,13 +9,6 @@ interface QuestionTypeProps {
 
 
 export default class extends React.Component<QuestionTypeProps>{
-    componentDidMount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "none";
-    }
-
-    componentWillUnmount() {
-        Array.from(document.getElementsByClassName('navbar') as HTMLCollectionOf<HTMLElement>)![0].style.display = "flex";
-    }
     render() {
         return (
             <div className="question-type-container" >

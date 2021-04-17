@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {window.location.pathname == "/" || window.location.pathname == "/auth" ? null : <Navigation renderNav={true} />}
+        {window.location.pathname.includes("play") || window.location.pathname == "/" || window.location.pathname == "/auth" ? null : <Navigation renderNav={true} />}
         <Switch>
           <Route path="/auth" component={Authentication} />
           <Route path="/tests" component={MyTests} />
