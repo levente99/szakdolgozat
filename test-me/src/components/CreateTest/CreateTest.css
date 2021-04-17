@@ -44,6 +44,11 @@
     height: 150px;
 }
 
+.question-list-item img {
+    width: 20px;
+    margin-right: 5px;
+}
+
 .question-item-content {
     width: 85%;
     height: 100%;

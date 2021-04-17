@@ -29,6 +29,7 @@ interface CreateTestState {
     editedQuestion: number;
     saveModalIsOpen: boolean;
     userToFill: string;
+    wrongUserEmail: boolean;
     fillingUsers: string[];
     savingTest: boolean;
     createdTest: boolean;
@@ -61,6 +62,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
             editedQuestion: 0,
             saveModalIsOpen: false,
             userToFill: '',
+            wrongUserEmail: false,
             fillingUsers: [],
             savingTest: false,
             createdTest: false
@@ -117,7 +119,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
                     <div data-key={item.id} onClick={() => this.chooseQuestionToEdit(item.id)} style={{
                         backgroundColor: this.state.editedQuestion == item.id ? '#2b92ff' : 'white',
                     }} className="question-list-item" >
-                        <img src="/img/trash.png" width="25" style={{ cursor: 'pointer' }} onClick={() => this.deleteQuestion(index)} />
+                        <img src="/img/trash.svg" style={{ cursor: 'pointer' }} onClick={() => this.deleteQuestion(index)} />
                         <div data-key={item.id} className="question-item-content" style={{
                             backgroundColor: this.state.editedQuestion == item.id ? 'white' : '#e0efff',
                         }}>
@@ -129,7 +131,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
                     </div>
                 ))
                 : <div data-key="0" onClick={this.chooseQuestionToEdit} style={{ backgroundColor: '#2b92ff' }} className="question-list-item">
-                    <img src="/img/trash.png" width="25" style={{ cursor: 'pointer' }} onClick={() => this.deleteQuestion(0)} />
+                    <img src="/img/trash.svg" style={{ cursor: 'pointer' }} onClick={() => this.deleteQuestion(0)} />
                     <div data-key="0" className="question-item-content" style={{ backgroundColor: 'white' }}>
                         <p data-key="0" className="sidebar-question-number">1</p>
                         <p data-key="0" className="question-type">Kvíz</p>
@@ -256,7 +258,8 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
                         <Modal.Header closeButton >
                             <Modal.Title id="contained-modal-title-vcenter">
                                 Teszt mentése
-                        </Modal.Title>
+                                <Image style={{ width: "25px", marginLeft: "5px" }} src="img/floppy_disk.svg"></Image>
+                            </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Row>
@@ -281,10 +284,11 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
                                 </Col>
                                 <Col className="added-users">
                                     <ListGroup>
+                                        {this.state.wrongUserEmail ? <ListGroup.Item variant="danger">Helytelen email cím!</ListGroup.Item> : null}
                                         <ListGroup.Item variant="primary">Hozzáadott felhasználók:</ListGroup.Item>
                                         {this.state.fillingUsers.map((item, index) => (
                                             <ListGroup.Item>{item} <img
-                                                src="/img/trash.png"
+                                                src="/img/trash.svg"
                                                 width="25"
                                                 // data-key={index}
                                                 style={{ float: 'right', cursor: 'pointer' }}
@@ -381,11 +385,19 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
         }
     }
 
+    validateEmail(email: string) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
     addUsersToTheTest() {
-        this.setState(previousState => ({
-            fillingUsers: [...previousState.fillingUsers, this.state.userToFill],
-            userToFill: ""
-        }));
+        this.setState({ wrongUserEmail: false })
+        this.validateEmail(this.state.userToFill) ?
+            this.setState(previousState => ({
+                fillingUsers: [...previousState.fillingUsers, this.state.userToFill],
+                userToFill: ""
+            })) : this.setState({ wrongUserEmail: true })
+
     }
 
     handleSaveInputs(e: { target: { name: any; value: any; }; }) {

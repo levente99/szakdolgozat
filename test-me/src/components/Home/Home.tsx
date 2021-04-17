@@ -92,11 +92,15 @@ export default class Home extends React.Component<HomeProps, HomeState> {
                                 <ProgressBar className="home-progress" animated now={this.state.userTestsStatus.allXp} min={progressBarData().min} max={progressBarData().max} />
                             </div>
                             <div className="completed-test-count-container">
-                                <div className="complete-img">✔️</div>
+                                <div className="complete-img">
+                                    <img className="img-fluid" src="img/checkmark.svg" alt="checkmark" />
+                                </div>
                                 <div className="complete-text">{this.state.userTestsStatus.completed} db kitöltött teszted van</div>
                             </div>
                             <div className="not-completed-test-count-container">
-                                <div className="not-complete-img">❌</div>
+                                <div className="not-complete-img">
+                                    <img className="img-fluid" src="img/remove.svg" alt="remove" />
+                                </div>
                                 <div className="not-complete-text">{this.state.userTestsStatus.notCompleted} db kitöltetlen teszted van</div>
                             </div>
                         </div>
