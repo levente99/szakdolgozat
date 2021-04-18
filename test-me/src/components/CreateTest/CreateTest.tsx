@@ -88,7 +88,7 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
 
     render() {
         if (this.state.createdTest) {
-            return <Redirect to='/' />;
+            return <Redirect to='/create/done' />;
         }
         const selectQuestionType = (
             <Popover id="popover" >

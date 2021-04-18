@@ -78,6 +78,7 @@ export default class Home extends React.Component<HomeProps, HomeState> {
                 return { min: 40000, max: 50000, minLevel: 9, maxLevel: 10 }
             }
         }
+
         return (
             <>
                 <Navigation renderNav={true} />

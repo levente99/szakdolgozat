@@ -215,7 +215,7 @@ export default class Login extends Component<LoginProps, LoginState> {
 
     render() {
         if (this.state.loginValue.loggedIn) {
-            return <Redirect to={{ pathname: `/` }} />
+            return <Redirect to='/auth/done' />;
         }
 
         return (

@@ -25,6 +25,10 @@ export default class Navigation extends Component<NavigationProps, NavigationSta
     async componentDidMount() {
         await this.fetchSession().then((sessionRes) => {
             sessionRes == undefined ? this.setState({ loggedIn: false }) : this.setState({ loggedIn: true });
+        }).then(async () => {
+            await this.fetchSession().then((sessionRes) => {
+                sessionRes == undefined ? this.setState({ loggedIn: false }) : this.setState({ loggedIn: true });
+            })
         })
     }
 
