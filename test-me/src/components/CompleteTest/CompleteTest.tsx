@@ -117,7 +117,7 @@ export default class CompleteTest extends React.Component<CompleteTestProps, Com
                     this.state.showQuestionType ?
                         <QuestionType
                             problem={this.state.userTest.test.questions[this.state.showedQuestion].problem}
-                            isQuestionQuiz={this.state.userTest.test.questions[this.state.showedQuestion].answerFour == null ? true : false}
+                            isQuestionQuiz={this.state.userTest.test.questions[this.state.showedQuestion].answerFour != null}
                         /> :
                         this.state.userTest.test.title != '' ? <Question
                             id={this.state.userTest.test.questions[this.state.showedQuestion].id}

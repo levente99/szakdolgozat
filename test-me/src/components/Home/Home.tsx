@@ -90,7 +90,7 @@ export default class Home extends React.Component<HomeProps, HomeState> {
                             <div className="home-all-earned-xp">
                                 <div className="current-level">{progressBarData().minLevel}</div>
                                 <div className="next-level">{progressBarData().maxLevel}</div>
-                                <ProgressBar className="home-progress" animated now={this.state.userTestsStatus.allXp} min={progressBarData().min} max={progressBarData().max} />
+                                <ProgressBar className="home-progress" animated now={this.state.userTestsStatus.allXp} label={this.state.userTestsStatus.allXp + " XP"} min={progressBarData().min} max={progressBarData().max} />
                             </div>
                             <div className="completed-test-count-container">
                                 <div className="complete-img">
