@@ -15,6 +15,7 @@ namespace TestMEApi.Models
 
         [ForeignKey("User")]
         public string UserId { get; set; }
+        public User User { get; set; }
 
         public string Title { get; set; }
 

@@ -63,6 +63,14 @@ namespace TestMEApi.Controllers
             return user.Id;
         }
 
+        [HttpGet("get-user-email/{userId}")]
+        public async Task<string> GetUserEmail(string userId)
+        {
+            var user = await _userManager.Users.SingleAsync(u => u.Id == userId);
+
+            return user.Email;
+        }
+
         [HttpGet]
         [Route("save-to-session")]
         public IActionResult SaveToSession(string userId)
