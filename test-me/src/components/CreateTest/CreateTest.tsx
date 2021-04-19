@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Form, OverlayTrigger, Popover, Image, Modal, ListGroup, Row, Col, Spinner } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import configData from '../../config.json';
+import Navigation from '../common/Navigation';
 import './CreateTest.css';
 
 interface CreateTestProps {
@@ -78,10 +79,15 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
         this.deleteUser = this.deleteUser.bind(this);
     }
 
-    componentDidMount() {
-        fetch(`${configData.SERVER_URL}/users/fetch-from-session`, { method: 'GET', credentials: "include", mode: 'cors' }).then(function (body) {
+    async componentDidMount() {
+        await fetch(`${configData.SERVER_URL}/users/fetch-from-session`, { method: 'GET', credentials: "include", mode: 'cors' }).then(function (body) {
             return body.text();
-        }).then((response) => {
+        }).then(async (response) => {
+            await fetch(`${configData.SERVER_URL}/users/get-user-email/${response}`, { method: 'GET' }).then(function (body) {
+                return body.text();
+            }).then((email) => {
+                this.setState({ fillingUsers: this.state.fillingUsers.concat(`${email}`) })
+            })
             this.setState({ userId: response });
         });
     }
@@ -142,175 +148,180 @@ export default class CreateTest extends Component<CreateTestProps, CreateTestSta
         )
 
         return (
-            this.state.userId == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be hogy tesztet készíthess!</div> :
-                <div className="edit-container full-height">
-                    <div className="sidebar-container">
-                        <div className="sidebar">
-                            {questionList}
-                            <Form.Group>
-                                <OverlayTrigger
-                                    rootClose={true} trigger="click" placement="right" overlay={selectQuestionType}>
-                                    <Button className="new-question-button w-75" variant="primary">Új kérdés</Button>
-                                </OverlayTrigger>
-                            </Form.Group>
-                        </div>
+            <>
+                <Navigation renderNav={true} />
+                {
+                    this.state.userId == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be hogy tesztet készíthess!</div> :
+                        <div className="edit-container full-height">
+                            <div className="sidebar-container">
+                                <div className="sidebar">
+                                    {questionList}
+                                    <Form.Group>
+                                        <OverlayTrigger
+                                            rootClose={true} trigger="click" placement="right" overlay={selectQuestionType}>
+                                            <Button className="new-question-button w-75" variant="primary">Új kérdés</Button>
+                                        </OverlayTrigger>
+                                    </Form.Group>
+                                </div>
 
-                        <Form.Group className="save-exit-button w-100">
-                            <Button className="cancel-test-button" variant="danger" onClick={() => this.setState({ createdTest: true })}>Kilépés</Button>
-                            <Button variant="success" onClick={this.openModal}> Mentés</Button>{' '}
-                        </Form.Group>
-                    </div>
+                                <Form.Group className="save-exit-button w-100">
+                                    <Button className="cancel-test-button" variant="danger" onClick={() => this.setState({ createdTest: true })}>Kilépés</Button>
+                                    <Button variant="success" onClick={this.openModal}> Mentés</Button>{' '}
+                                </Form.Group>
+                            </div>
 
-                    <div className="create">
-                        <Form.Group className="question-text">
-                            <Form.Control type="text" onChange={(e) => { this.handleQuestionInputs(e) }} name="problem" id="question-text-input" placeholder="Írd ide a kérdésed..." value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.problem}>
-                            </Form.Control>
-                        </Form.Group>
+                            <div className="create">
+                                <Form.Group className="question-text">
+                                    <Form.Control type="text" onChange={(e) => { this.handleQuestionInputs(e) }} name="problem" id="question-text-input" placeholder="Írd ide a kérdésed..." value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.problem}>
+                                    </Form.Control>
+                                </Form.Group>
 
-                        <div className="question-details">
-                            <Form.Group className="time-limit" controlId="formBasicRange">
-                                <Form.Label className="time-label">Idő: </Form.Label>
-                                <Form.Label className="time-number-label">{this.state.questions.find(q => q.id == this.state.editedQuestion)?.timeLimit}</Form.Label>
-                                <Form.Control min="5" max="200" size="lg" step={5} name="timeLimit" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.timeLimit} onChange={(e) => this.handleQuestionInputs(e)} type="range" />
-                            </Form.Group>
-                            <Form.Group className="question-xp" controlId="formBasicRange">
-                                <Form.Label className="xp-label">Xp: </Form.Label>
-                                <Form.Label className="xp-slider-number-label">{this.state.questions.find(q => q.id == this.state.editedQuestion)?.xp}</Form.Label>
-                                <Form.Control min="0" max="1000" size="sm" step={100} name="xp" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.xp} onChange={(e) => this.handleQuestionInputs(e)} type="range" />
-                            </Form.Group>
-                        </div>
+                                <div className="question-details">
+                                    <Form.Group className="time-limit" controlId="formBasicRange">
+                                        <Form.Label className="time-label">Idő: </Form.Label>
+                                        <Form.Label className="time-number-label">{this.state.questions.find(q => q.id == this.state.editedQuestion)?.timeLimit}</Form.Label>
+                                        <Form.Control min="5" max="200" size="lg" step={5} name="timeLimit" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.timeLimit} onChange={(e) => this.handleQuestionInputs(e)} type="range" />
+                                    </Form.Group>
+                                    <Form.Group className="question-xp" controlId="formBasicRange">
+                                        <Form.Label className="xp-label">Xp: </Form.Label>
+                                        <Form.Label className="xp-slider-number-label">{this.state.questions.find(q => q.id == this.state.editedQuestion)?.xp}</Form.Label>
+                                        <Form.Control min="0" max="1000" size="sm" step={100} name="xp" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.xp} onChange={(e) => this.handleQuestionInputs(e)} type="range" />
+                                    </Form.Group>
+                                </div>
 
-                        {this.state.questions.find(q => q.id == this.state.editedQuestion)?.hasOwnProperty("answerThree") ?
-                            <Form.Group className="answers">
-                                <Form.Group className="answers-one">
-                                    <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerOne} name="answerOne" placeholder="Első válasz" />
-                                    <Form.Check
-                                        type="radio"
-                                        checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 0 ? true : false}
-                                        name="answers-radio"
-                                        id="0"
-                                        onChange={(e) => { this.handleQuestionInputs(e) }}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="answers-two">
-                                    <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerTwo} name="answerTwo" placeholder="Második válasz" />
-                                    <Form.Check
-                                        type="radio"
-                                        checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 1 ? true : false}
-                                        name="answers-radio"
-                                        id="1"
-                                        onChange={(e) => { this.handleQuestionInputs(e) }}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="answers-three">
-                                    <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} name="answerThree" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerThree} placeholder="Harmadik válasz" />
-                                    <Form.Check
-                                        type="radio"
-                                        checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 2 ? true : false}
-                                        name="answers-radio"
-                                        id="2"
-                                        onChange={(e) => { this.handleQuestionInputs(e) }}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="answers-four">
-                                    <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} name="answerFour" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerFour} placeholder="Negyedik válasz" />
-                                    <Form.Check
-                                        type="radio"
-                                        checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 3 ? true : false}
-                                        name="answers-radio"
-                                        id="3"
-                                        onChange={(e) => { this.handleQuestionInputs(e) }}
-                                    />
-                                </Form.Group>
-                            </Form.Group> :
-                            <Form.Group className="answers">
-                                <Form.Group className="answers-one">
-                                    <Form.Label className="answers-true-label">Igaz</Form.Label>
-                                    <Form.Check
-                                        type="radio"
-                                        checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 0 ? true : false}
-                                        name="answers-radio"
-                                        id="0"
-                                        onChange={(e) => { this.handleQuestionInputs(e) }}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="answers-two">
-                                    <Form.Label className="answers-false-label">Hamis</Form.Label>
-                                    <Form.Check
-                                        type="radio"
-                                        checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 1 ? true : false}
-                                        name="answers-radio"
-                                        id="1"
-                                        onChange={(e) => { this.handleQuestionInputs(e) }}
-                                    />
-                                </Form.Group>
-                            </Form.Group>
-                        }
-                    </div>
+                                {this.state.questions.find(q => q.id == this.state.editedQuestion)?.hasOwnProperty("answerThree") ?
+                                    <Form.Group className="answers">
+                                        <Form.Group className="answers-one">
+                                            <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerOne} name="answerOne" placeholder="Első válasz" />
+                                            <Form.Check
+                                                type="radio"
+                                                checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 0 ? true : false}
+                                                name="answers-radio"
+                                                id="0"
+                                                onChange={(e) => { this.handleQuestionInputs(e) }}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="answers-two">
+                                            <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerTwo} name="answerTwo" placeholder="Második válasz" />
+                                            <Form.Check
+                                                type="radio"
+                                                checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 1 ? true : false}
+                                                name="answers-radio"
+                                                id="1"
+                                                onChange={(e) => { this.handleQuestionInputs(e) }}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="answers-three">
+                                            <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} name="answerThree" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerThree} placeholder="Harmadik válasz" />
+                                            <Form.Check
+                                                type="radio"
+                                                checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 2 ? true : false}
+                                                name="answers-radio"
+                                                id="2"
+                                                onChange={(e) => { this.handleQuestionInputs(e) }}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="answers-four">
+                                            <Form.Control onChange={(e) => { this.handleQuestionInputs(e) }} name="answerFour" value={this.state.questions.find(q => q.id == this.state.editedQuestion)?.answerFour} placeholder="Negyedik válasz" />
+                                            <Form.Check
+                                                type="radio"
+                                                checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 3 ? true : false}
+                                                name="answers-radio"
+                                                id="3"
+                                                onChange={(e) => { this.handleQuestionInputs(e) }}
+                                            />
+                                        </Form.Group>
+                                    </Form.Group> :
+                                    <Form.Group className="answers">
+                                        <Form.Group className="answers-one">
+                                            <Form.Label className="answers-true-label">Igaz</Form.Label>
+                                            <Form.Check
+                                                type="radio"
+                                                checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 0 ? true : false}
+                                                name="answers-radio"
+                                                id="0"
+                                                onChange={(e) => { this.handleQuestionInputs(e) }}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="answers-two">
+                                            <Form.Label className="answers-false-label">Hamis</Form.Label>
+                                            <Form.Check
+                                                type="radio"
+                                                checked={this.state.questions.find(q => q.id == this.state.editedQuestion)?.correctAnswer == 1 ? true : false}
+                                                name="answers-radio"
+                                                id="1"
+                                                onChange={(e) => { this.handleQuestionInputs(e) }}
+                                            />
+                                        </Form.Group>
+                                    </Form.Group>
+                                }
+                            </div>
 
-                    <Modal
-                        show={this.state.saveModalIsOpen}
-                        size="lg"
-                        aria-labelledby="contained-modal-title-vcenter"
-                        centered
-                        onHide={this.closeModal}
-                    >
-                        <Modal.Header closeButton >
-                            <Modal.Title id="contained-modal-title-vcenter">
-                                Teszt mentése
+                            <Modal
+                                show={this.state.saveModalIsOpen}
+                                size="lg"
+                                aria-labelledby="contained-modal-title-vcenter"
+                                centered
+                                onHide={this.closeModal}
+                            >
+                                <Modal.Header closeButton >
+                                    <Modal.Title id="contained-modal-title-vcenter">
+                                        Teszt mentése
                                 <Image style={{ width: "25px", marginLeft: "5px" }} src="img/floppy_disk.svg"></Image>
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Row>
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Teszt címe:</Form.Label>
-                                        <Form.Control type="text" name="title" placeholder="Cím" onChange={(e) => { this.handleSaveInputs(e) }} />
-                                    </Form.Group>
-                                    <Form.Group className="user-email-input">
-                                        <Form.Label>Kitöltők hozzáadása:</Form.Label>
-                                        <Form.Control type="text" name="userToFill" value={this.state.userToFill} placeholder="E-mail cím" onChange={(e) => { this.handleSaveInputs(e) }} />
-                                        <Button variant="success" className="add-user-button" onClick={this.addUsersToTheTest}> Hozzáadás</Button>{' '}
-                                    </Form.Group>
-                                    <Form.Group className="test-date-input">
-                                        <Form.Label>Kitöltési határidő:</Form.Label>
-                                        <Form.Control type="date" name='deadline' onChange={(e) => { this.handleSaveInputs(e) }} />
-                                    </Form.Group>
-                                    <Form.Group>
-                                        <Form.Label>Leírás</Form.Label>
-                                        <Form.Control as="textarea" rows={3} name='description' onChange={(e) => { this.handleSaveInputs(e) }} />
-                                    </Form.Group>
-                                </Col>
-                                <Col className="added-users">
-                                    <ListGroup>
-                                        {this.state.wrongUserEmail ? <ListGroup.Item variant="danger">Helytelen email cím!</ListGroup.Item> : null}
-                                        <ListGroup.Item variant="primary">Hozzáadott felhasználók:</ListGroup.Item>
-                                        {this.state.fillingUsers.map((item, index) => (
-                                            <ListGroup.Item>{item} <img
-                                                src="/img/trash.svg"
-                                                width="25"
-                                                // data-key={index}
-                                                style={{ float: 'right', cursor: 'pointer' }}
-                                                onClick={() => this.deleteUser(index)}
-                                            /></ListGroup.Item>
-                                        ))}
-                                    </ListGroup>
-                                </Col>
-                            </Row>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            {this.state.savingTest ? <Spinner animation="border" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </Spinner> :
-                                <>
-                                    <Button onClick={this.closeModal}>Bezárás</Button>
-                                    <Button variant="success" onClick={() => this.saveTest()}>Mentés</Button>
-                                </>
-                            }
-                        </Modal.Footer>
-                    </Modal>
-                </div >
+                                    </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <Row>
+                                        <Col>
+                                            <Form.Group>
+                                                <Form.Label>Teszt címe:</Form.Label>
+                                                <Form.Control type="text" name="title" placeholder="Cím" onChange={(e) => { this.handleSaveInputs(e) }} />
+                                            </Form.Group>
+                                            <Form.Group className="user-email-input">
+                                                <Form.Label>Kitöltők hozzáadása:</Form.Label>
+                                                <Form.Control type="text" name="userToFill" value={this.state.userToFill} placeholder="E-mail cím" onChange={(e) => { this.handleSaveInputs(e) }} />
+                                                <Button variant="success" className="add-user-button" onClick={this.addUsersToTheTest}> Hozzáadás</Button>{' '}
+                                            </Form.Group>
+                                            <Form.Group className="test-date-input">
+                                                <Form.Label>Kitöltési határidő:</Form.Label>
+                                                <Form.Control type="date" name='deadline' onChange={(e) => { this.handleSaveInputs(e) }} />
+                                            </Form.Group>
+                                            <Form.Group>
+                                                <Form.Label>Leírás</Form.Label>
+                                                <Form.Control as="textarea" rows={3} name='description' onChange={(e) => { this.handleSaveInputs(e) }} />
+                                            </Form.Group>
+                                        </Col>
+                                        <Col className="added-users">
+                                            <ListGroup>
+                                                {this.state.wrongUserEmail ? <ListGroup.Item variant="danger">Helytelen email cím!</ListGroup.Item> : null}
+                                                <ListGroup.Item variant="primary">Hozzáadott felhasználók:</ListGroup.Item>
+                                                {this.state.fillingUsers.map((item, index) => (
+                                                    item != this.state.fillingUsers[0] ?
+                                                        <ListGroup.Item>{item} <img
+                                                            src="/img/trash.svg"
+                                                            width="25"
+                                                            style={{ float: 'right', cursor: 'pointer' }}
+                                                            onClick={() => this.deleteUser(index)}
+                                                        /></ListGroup.Item> : null
+                                                ))}
+                                            </ListGroup>
+                                        </Col>
+                                    </Row>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    {this.state.savingTest ? <Spinner animation="border" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </Spinner> :
+                                        <>
+                                            <Button onClick={this.closeModal}>Bezárás</Button>
+                                            <Button variant="success" onClick={() => this.saveTest()}>Mentés</Button>
+                                        </>
+                                    }
+                                </Modal.Footer>
+                            </Modal>
+                        </div >
+                }
+            </>
         )
     }
 

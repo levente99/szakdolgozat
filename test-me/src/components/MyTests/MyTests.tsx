@@ -4,6 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Gameboy } from './Gameboy/Gameboy';
 import configData from '../../config.json';
 import './MyTests.css';
+import Navigation from '../common/Navigation';
 
 export default class MyTests extends Component {
     state = {
@@ -17,6 +18,11 @@ export default class MyTests extends Component {
                 },
                 test: {
                     id: "",
+                    userId: "",
+                    user: {
+                        firstName: "",
+                        lastName: ""
+                    },
                     description: "",
                     title: "",
                     created: "",
@@ -74,8 +80,8 @@ export default class MyTests extends Component {
                     key={i}
                     id={userTest.test.id}
                     testName={userTest.test.title}
-                    firstName={userTest.user.firstName}
-                    lastName={userTest.user.lastName}
+                    firstName={userTest.test.user.firstName}
+                    lastName={userTest.test.user.lastName}
                     createdTime={userTest.test.created.split('T')[0]}
                     deadline={userTest.test.deadline.split('T')[0]}
                     earnedXp={userTest.earnedXp}
@@ -87,25 +93,29 @@ export default class MyTests extends Component {
                     xp={userTest.test.questions.reduce(function (a, b) {
                         return +a + +b.xp;
                     }, 0)}
+                    thisIsMyTest={userTest.test.userId == this.state.userId}
                 />
             );
         }
 
         return (
-            this.state.userId == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be ha meg szeretnéd nézni a tesztjeidet!</div> :
-                this.state.usersTests.length == 0 ? <div className="alert alert-success" role="alert">Nincsennek tesztek</div> :
-                    <div className="mytests-container">
-                        <DropdownButton id="mytests-dropdown-button" title="Rendezés">
-                            <Dropdown.Item onClick={() => this.setState({ order: 0 })}>Legújabb</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.setState({ order: 1 })}>Legrégebbi</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.setState({ order: 2 })}>Kitöltetlenek</Dropdown.Item>
-                        </DropdownButton>
-                        <div className="gameboys-container">
-                            <Scrollbars>
-                                {orderedTests()}
-                            </Scrollbars>
-                        </div>
-                    </div>
+            <>
+                <Navigation renderNav={true} />
+                {this.state.userId == "" ? <div className="alert alert-danger" role="alert">Jelentkezz be ha meg szeretnéd nézni a tesztjeidet!</div> :
+                    this.state.usersTests.length == 0 ? <div className="alert alert-success" role="alert">Nincsennek tesztek</div> :
+                        <div className="mytests-container">
+                            <DropdownButton id="mytests-dropdown-button" title="Rendezés">
+                                <Dropdown.Item onClick={() => this.setState({ order: 0 })}>Legújabb</Dropdown.Item>
+                                <Dropdown.Item onClick={() => this.setState({ order: 1 })}>Legrégebbi</Dropdown.Item>
+                                <Dropdown.Item onClick={() => this.setState({ order: 2 })}>Kitöltetlenek</Dropdown.Item>
+                            </DropdownButton>
+                            <div className="gameboys-container">
+                                <Scrollbars>
+                                    {orderedTests()}
+                                </Scrollbars>
+                            </div>
+                        </div>}
+            </>
         )
     }
 

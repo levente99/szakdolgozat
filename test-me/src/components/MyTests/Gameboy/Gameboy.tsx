@@ -14,9 +14,10 @@ interface GameboyProps {
     xp: number;
     finished: string;
     earnedXp: number;
+    thisIsMyTest: boolean;
 }
 
-export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastName, createdTime, deadline, testTime, questionNumber, xp, finished, earnedXp }: GameboyProps) => {
+export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastName, createdTime, deadline, testTime, questionNumber, xp, finished, earnedXp, thisIsMyTest }: GameboyProps) => {
     return (
         <div className={finished == null ? "gameboy" : "gameboy finished-gameboy-color"}>
             <div className="screen-cont">
@@ -43,9 +44,29 @@ export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastN
                     <div className="xp-number-label">XP</div>
                 </div>
                 <div className="btn-select"></div>
-                {finished == null ? <Link to={`/play/${id}`} className="btn-start" /> : <div className="btn-start-finished" />}
+                {
+                    thisIsMyTest ? (
+                        <>
+                            <Link to={`/results/${id}`} className="btn-start-finished" />
+                            <div className="btn-start-label">Eredmények</div>
+                        </>
+                    ) : (
+                        finished == null ? (
+                            <>
+                                <Link to={`/play/${id}`} className="btn-start" />
+                                <div className="btn-start-label">Kezdés</div>
+                            </>
+                        ) : (
+                            <>
+                                <Link to={`/results/${id}`} className="btn-start-finished" />
+                                <div className="btn-start-label">Eredmények</div>
+                            </>
+                        )
+                    )
 
-                <div className="btn-start-label">Kezdés</div>
+                }
+
+
             </div>
             <div className="speakers"></div>
             <div className="on-off">off-on</div>

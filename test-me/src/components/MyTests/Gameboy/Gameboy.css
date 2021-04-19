@@ -357,9 +357,14 @@
     left: 204px;
     height: 12px;
     width: 60px;
-    background: #999999;
+    background: #217b36;
     border-radius: 10px;
     -webkit-transform: rotate(-25deg);
+}
+
+.btn-start-finished:hover {
+    cursor: pointer;
+    background: #1d6d2f;
 }
 
 .btn-start:hover {
@@ -367,7 +372,8 @@
     background: #0270e6 !important;
 }
 
-.btn-start:active {
+.btn-start:active,
+.btn-start-finished:active {
     box-shadow: inset 4px 4px rgba(0, 0, 0, 0.356);
 }
 

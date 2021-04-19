@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import configData from '../../../config.json';
 import confetti from 'canvas-confetti';
 import './Results.css';
+import Navigation from '../../common/Navigation';
 
 interface ResultsProps {
     testId: string
@@ -36,19 +37,26 @@ export default class Results extends Component<ResultsProps, ResultsState> {
     }
 
     componentDidMount() {
-        fetch(`${configData.SERVER_URL}/users-tests/test/${this.props.testId}`)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ userTests: data });
-                this.tossConfetti();
-            });
+        window.location.href.indexOf("play") > -1 ?
+            fetch(`${configData.SERVER_URL}/users-tests/test/${this.props.testId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({ userTests: data });
+                    this.tossConfetti();
+                }) :
+            fetch(`${configData.SERVER_URL}/users-tests/test/${window.location.href.substring(window.location.href.lastIndexOf('/') + 1)}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({ userTests: data });
+                })
     }
     render() {
         return (
             <>
+                <Navigation renderNav={false} />
                 <div className="results-background">
                     <div className="podium-charts-full-width">
-                        <Link to="/" className="go-home-button">Kilépés</Link>
+                        <Link to="/tests" className="go-home-button">Kilépés</Link>
                         <div className="podium-charts-container-center">
                             <div className="podium-charts-container">
                                 <div data-functional-selector="place-1" className="first-podium-container">
