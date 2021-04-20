@@ -200,7 +200,6 @@ Itt láthatjuk \ref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel 
 
 Ezen a képen \ref{fig:new_quiz_question} a tesztkészítési felület látható amelyhez majd csak a tanárok férhetnek hozzá. Egy tesztnél meghatározható hogy mi legyen a kérdés, mennyi idő legyen rá, mennyi jutalmat lehessen érte kapni, vagyis xp-t és hogy mik legyenek a válaszok és azok közül melyik a jó.
 
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/make_test2_wireframe.png}
@@ -330,6 +329,7 @@ Annyiban tér el a tanárétól hogy nem tud tesztet létrehozni csak a hozzáre
 
 
 \Section{Adatmodell}
+\label{Adatmodell}
 
 Az adatokat egyed-kapcsolat diagrammon ábrázoltam így a teljes kép könnyebben áttekinthető ezen rendszervázlat alapján.
 
@@ -342,27 +342,28 @@ A diagramm 5 táblából áll, melyek az alábbiak:
 \begin{itemize}
     \item {User}
           \begin{addmargin}[\parindent]{0pt}
-              Ez a tábla egy felhasználót reprezentál akinek az alap létfontosságú adatait bekérjük regisztrációkor, ilyen például a név, email cím, jelszó. Majd ezen felül még meg kell határoznia milyen szerepkörben szeretné használni az oldalt és miután töltött ki tesztet növekedni fog az xp-je mennyisége így van egy Xp adattag is.
+              Ez a tábla egy felhasználót reprezentál akinek az alap adatait bekérjük regisztrációkor, ilyen például a keresztnév, vezetéknév, email cím, jelszó. Majd ezen felül még van regisztráció dátuma és hogy visszaigazolta-e az e-mail címét. Valamint meg kell határoznia milyen szerepkörben szeretné használni az oldalt és miután töltött ki tesztet, növekedni fog az xp-je mennyisége így van egy Xp adattag is.
           \end{addmargin}
 
     \item {Test}
           \begin{addmargin}[\parindent]{0pt}
-              A Test tábla egy tanár által készített tesztet reprezentál. Egy teszten belül két típusú kérdés lehet az egyik a kvíz a másik az igaz/hamis. Ezenkívül benne van a teszt címe, hogy mikor készült és hogy mi a kitöltési határidő.
+              A Test tábla egy felhasználó által készített tesztet reprezentál. Egy teszten belül két típusú kérdés lehet az egyik a kvíz a másik az igaz/hamis. Ezenkívül benne van a teszt leírása, a készítő azonosítója, a teszt címe, hogy mikor készült és hogy mi a kitöltési határidő.
           \end{addmargin}
 
     \item {Question}
           \begin{addmargin}[\parindent]{0pt}
-              A Question egy kérdés adatait tárolja amibe beletartozik a kérdés, a négy válasz, az idő, hogy mennyi pontot ér és hogy melyik a helyes válasz.
+              A Question egy kérdés adatait tárolja amibe beletartozik a kérdés szövege, a négy válasz, az idő, hogy mennyi pontot ér és hogy melyik a helyes válasz.
+          \end{addmargin}
+
+
+    \item {UsersTest}
+          \begin{addmargin}[\parindent]{0pt}
+              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz a Test és User tábla idegen kulcsa. Valamint itt tárolódik el hogy felhasználó kitöltötte-e már a tesztet és ha kitöltötte akkor mikor és hogy mennyi pontot ért el. Ez a legtöbbet használt tábla az oldal működése során, hiszen innen szedjük ki az adatokat ha megszeretnénk nézni milyen tesztjeink vannak és ha kitöltjük itt módosítjuk a pontot és a dátumot.
           \end{addmargin}
 
     \item {Answer}
           \begin{addmargin}[\parindent]{0pt}
-              Ez a tábla egy kérdés válaszát tárolja el. Ebben a táblában benne van az előbb említett táblák azonosítója, emellett hogy mennyi pontot kapott a felhasználó a kérdésre.
-          \end{addmargin}
-
-    \item {UsersTest}
-          \begin{addmargin}[\parindent]{0pt}
-              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz a Test és User tábla idegen kulcsa. Erre azért van szükség hogy le tudjuk kérni hogy egy felhasználóhoz melyik tesztek tartoznak.
+              Ez a tábla egy kérdés válaszát tárolja el. Ebben a táblában benne van a kérdés és a UsersTest tábla id-ja, emellett hogy meny idő alatt válaszolt a felhasználó a kérdésre és hogy mi volt a válasza.
           \end{addmargin}
 
 \end{itemize}
@@ -374,43 +375,28 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/users:}}
           \begin{addmargin}[\parindent]{0pt}
-              Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor egy \url{GET} hívással és regisztrációkor ide tudjuk elküldeni az adatait \url{POST}-tal. Bejelentkezéskor a felhasználó email címét és jelszavát elküldve kikeressük hogy valóban létező, mentett email címet és jelszót küldött el és visszaküldjük a felhasználó adatait.
-
+              Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor, elmenteni a felhasználó session-jét, lekérni a session-t, az id-ját és az email címét. Ezeket mind egy \url{GET} hívással tehetjük meg. Valamint regisztrációkor ide tudjuk elküldeni a felhasználó adatait, a bejelentkezési adatokat és azt hogy ki szeretne jelentkezni egy \url{POST}-tal. Bejelentkezéskor a felhasználó email címét és jelszavát elküldve kikeressük hogy valóban létező, mentett email címet és jelszót küldött el és visszaküldjük a felhasználó adatait.
               \begin{json}
-{
-    "Email": "teszt@teszt.hu",
-    "Password": "jelszo000"
-}
+                  {
+                      "email": "teszt@teszt.hu",
+                      "password": "jelszo000"
+                  }
               \end{json}
-
-              Visszaküldött adatok:
-              \begin{json}
-{
-    "id": 3,
-    "roleId": 0,
-    "firstName": "Makszimus",
-    "lastName": "Levente",
-    "email": "teszt@teszt.hu",
-    "password": "jelszo000",
-    "xp": 0,
-    "registrationDate": "2021-01-22T00:00:00",
-    "activated": false
-}
-            \end{json}
 
               Regisztrációkor pedig elküldődnek a felhasználó adatait és bejelentkezteti az oldal. Az elküldött adatok az alábbiak:
 
               \begin{json}
-{
-    "RoleId": 0,
-    "FirstName": "Makszimus",
-    "LastName": "Levente",
-    "Email": "teszt@teszt.hu",
-    "Password": "jelszo000"
-}
-            \end{json}
+                  {
+                      "roleId": 0,
+                      "userName": "Levente1999",
+                      "firstName": "Makszimus",
+                      "lastName": "Levente",
+                      "email": "teszt@teszt.hu",
+                      "password": "Jelszo_.000"
+                  }
+              \end{json}
 
-              Valamint lehet egy felhasználó adatait módosítani, \url{PUT} és törölni, \url{DELETE} hívással ugyan azon az endpointon: \url{api/users/id}.
+              Valamint lehet egy felhasználó adatait módosítani, \url{PUT} és törölni, \url{DELETE} hívással ugyan azon az endpointon: \url{/api/users/{userId}}.
           \end{addmargin}
 \end{itemize}
 
@@ -421,140 +407,113 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
               Ha a diák ki akarja tölteni a tesztet innen tudjuk lekérni a kérdésekkel együtt. Illetve ha valaki készít egyet akkor ide küldi el az újat.
               Egy elkészített teszt így néz ki ha elküldjük \url{POST}-tal:
               \begin{json}
-{
-    "Title": "Mesterséges intelligencia alapok 2 teszt",
-    "Created": "2021-01-12",
-    "Deadline": "2021-01-22",
-    "Creator": "Makszimus Levente",
-    "Description": "Mesterséges intelligencia alapok második zárthelyi dolgozat",
-    "Questions": [
-        {
-            "Problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
-            "AnswerOne": "110",
-            "AnswerTwo": "120",
-            "AnswerThree": "130",
-            "AnswerFour": "140",
-            "Time": 10,
-            "Xp": 5,
-            "CorrectAnswer": 0
-        },
-        {
-            "Problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
-            "AnswerOne": "true",
-            "AnswerTwo": "false",
-            "Time": 5,
-            "Xp": 3,
-            "CorrectAnswer": 0
-        }
-    ]
-}
-                \end{json}
-
-              Ha pedig a felhasználó ki szeretné tölteni akkor egy \url{GET} hívással a \url{/api/tests/3} endpontra ezt kapnánk:
-              \begin{json}
-{
-    "id": 3,
-    "description": "Ez egy új teszt",
-    "creator": "Makszimus Levente",
-    "title": "Mesterséges intelligencia alapok első zárthelyi dolgozat",
-    "created": "2021-01-12T00:00:00",
-    "deadline": "2021-01-22T00:00:00",
-    "questions": [
-        {
-            "id": 5,
-            "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
-            "answerOne": "110",
-            "answerTwo": "120",
-            "answerThree": "130",
-            "answerFour": "140",
-            "time": 10,
-            "xp": 5,
-            "correctAnswer": 0
-        },
-        {
-            "id": 6,
-            "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
-            "answerOne": "true",
-            "answerTwo": "false",
-            "answerThree": null,
-            "answerFour": null,
-            "time": 5,
-            "xp": 3,
-            "correctAnswer": 0
-        }
-    ]
-}
-                    \end{json}
+                  {
+                  "description": "Mesterséges intelligencia alapok második zárthelyi dolgozat",
+                  "userId": "165",
+                  "title": "Mesterséges intelligencia alapok 2 teszt",
+                  "created": "2021-01-12",
+                  "deadline": "2021-01-22",
+                  "creator": "Makszimus Levente",
+                  "questions": [
+                  {
+                          "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+                          "answerOne": "true",
+                          "answerTwo": "false",
+                          "timeLimit": 5,
+                          "xp": 3,
+                          "correctAnswer": 0
+                      }
+                  ]
+                  }
+              \end{json}
           \end{addmargin}
 \end{itemize}
 
-
-\subsubsection{Válaszok}
+\subsubsection{Kérdések}
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/tests/answers:}}
           \begin{addmargin}[\parindent]{0pt}
-              Itt egy teszt kérdés válasza tárolódik amely kötődik a teszthez és magához a kérdéshez.
+              A kérdést két tábla hivatkozza, az egyik a Teszt mivel egy teszthez tartoznak kérdések. A másik pedig a válasz, azért hogy be tudjuk azonosítani hogy egy válasz melyik kérdéshez érkezett.
+              \begin{json}
+                  {
+                      "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+                      "answerOne": "110",
+                      "answerTwo": "120",
+                      "answerThree": "130",
+                      "answerFour": "140",
+                      "timeLimit": 10,
+                      "xp": 5,
+                      "correctAnswer": 0
+                  }
+              \end{json}
+          \end{addmargin}
+\end{itemize}
+
+\subsubsection{Válaszok}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\url{api/answers:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Itt egy teszt kérdés válasza tárolódik amely kötődik a felhasználói teszthez és magához a kérdéshez.
 
               \begin{json}
-[
-    {
-        "QuestionId": 1,
-        "UsersTestId": 2,
-        "Time": 5,
-        "userAnswer": 4
-    }
-]
-                \end{json}
+                  {
+                      "questionId": 1,
+                      "usersTestId": 2,
+                      "responseTime": 5,
+                      "userAnswer": 4
+                  }
+              \end{json}
           \end{addmargin}
 \end{itemize}
 
 \subsection{Felhasználó tesztjei}
-\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=0pt]
-    \item[] {\url{api/UsersTests:}}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\url{api/users-tests:}}
           \begin{addmargin}[\parindent]{0pt}
-              Ha egy diák meg akarja nézni a saját tesztjeit hogy miket kell kitöltenie és miket töltött eddig ki akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal hogy befejezték-e már és hogy mennyi pontot kaptak általa. A lekérés a felhasználó id-jának elküldésével történne, és ezt kell visszakapnunk:
+              Ha egy diák meg akarja nézni a saját tesztjeit hogy miket kell kitöltenie és miket töltött eddig ki,  akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal hogy befejezték-e már és hogy mennyi pontot kaptak általa. A lekérés a felhasználó id-jának elküldésével történne, és ezt kell visszakapnunk:
 
               \begin{json}
-{
-    "id": 1,
-    "userId": 1,
-    "testId": 1,
-    "test": {
-        "id": 1,
-        "title": "Mesterséges intelligencia alapok 2 teszt",
-        "created": "2021-01-12T00:00:00",
-        "deadline": "2021-01-22T00:00:00",
-        "questions": [
-            {
-                "id": 1,0
-                "title": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
-                "answerOne": "110",
-                "answerTwo": "120",
-                "answerThree": "130",
-                "answerFour": "140",
-                "time": 10,
-                "xp": 5,
-                "correctAnswer": 0
-            },
-            {
-                "id": 2,
-                "title": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
-                "answerOne": "true",
-                "answerTwo": "false",
-                "answerThree": null,
-                "answerFour": null,
-                "time": 5,
-                "xp": 3,
-                "correctAnswer": 0
-            }
-        ]
-    },
-    "finished": "2021-01-13T00:00:00",
-    "earnedXp": 6
-}
-                \end{json}
+                  {
+                  "id": 1,
+                  "userId": 1,
+                  "testId": 1,
+                  "test": {
+                  "id": 1,
+                  "description": "A tesztben csak kvíz kérdések szerepelnek, tehát 4 választási lehetőség közül kell majd választaniuk. Eredményes munkát kívánok!",
+                  "userId": "152",
+                  "title": "Mesterséges intelligencia alapok 2 teszt",
+                  "created": "2021-01-12T00:00:00",
+                  "deadline": "2021-01-22T00:00:00",
+                  "questions": [
+                  {
+                          "id": 1,
+                          "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+                          "answerOne": "110",
+                          "answerTwo": "120",
+                          "answerThree": "130",
+                          "answerFour": "140",
+                          "timeLimit": 10,
+                          "xp": 5,
+                          "correctAnswer": 0
+                      },
+                  {
+                          "id": 2,
+                          "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+                          "answerOne": "true",
+                          "answerTwo": "false",
+                          "answerThree": null,
+                          "answerFour": null,
+                          "timeLimit": 5,
+                          "xp": 3,
+                          "correctAnswer": 0
+                      }
+                  ]
+                  },
+                  "finished": "2021-01-13T00:00:00",
+                  "earnedXp": 6
+                  }
+              \end{json}
 
-              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor megjelenik egy rangsor hogy ki hány pontot ért el ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/id} endpoint-on.
+              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor hogy ki hány pontot ért el, ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
           \end{addmargin}
 \end{itemize}
-
