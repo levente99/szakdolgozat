@@ -85,6 +85,31 @@ Itt egy-több kapcsolat van melyet úgy valósítottam meg hogy a Test osztályb
 
 Az Answer táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a UserTest azonosítója így vissza tudjuk keresni hogy melyik tesztre érkezett a válasz és hogy ki adta a választ, mivel a UserTest-ben benne van a felhasználó azonosítója.
 
+\Section{Session kezelés}
+
+A régi ASP.NET-től eltérően az ASP.NET Core nem rendelkezik \lstinline{Cache} objektummal. Az ASP.NET Core azonban számos különféle gyorsítótár-támogatást nyújt ilyen lehet a memóriában, az elosztott gyorsítótárban vagy a válasz-gyorsítótárban tárolt.
+
+
+Az elosztott SQL Server-es gyorsítótár megvalósítása lehetővé teszi az elosztott gyorsítótár számára, hogy az SQL Server adatbázist használja háttértárként. Először ezt hozzá kell adni a \lstinline{Startup.cs} file-hoz:
+
+\begin{cpp}
+    services.AddDistributedSqlServerCache(options => {
+    options.ConnectionString =
+    Configuration.GetConnectionString("TestMEApiContext");
+    options.SchemaName = "dbo";
+    options.TableName = "Session";
+    });
+\end{cpp}
+
+SQL Server gyorsítótárazott cache létrehozásához egy SQL Server példányban használni kell az \lstinline{sql-cache} eszközt. Először létre kell hozni egy táblázatot az SQL Server kiszolgálón az \lstinline{sql-cache create} parancs futtatásával. Meg kell adni az SQL Server példányt, az adatbázist, a sémát (például dbo) és a tábla nevét (például Session):
+
+\begin{cpp}
+    dotnet sql-cache create "Data Source=(localdb)\MSSQLLocalDB;Initial
+    Catalog=DistCache;Integrated Security=True;" dbo Session
+\end{cpp}
+
+Így hoztam létre a táblát amiben az összes bejelentkezett felhasználó session-je tárolódik.
+
 \Section{Frontend}
 
 A felület létrehozásához TypeScript programozási nyelvet használtam és React könyvtárat.

@@ -85,8 +85,7 @@
 % TODO: Érdemes lenne részletezni magát az adatmodellt is, tehát hogy egy felhasználóhoz, feladathoz mik tartoznak. (Lehet a felületi tervek előtt vagy után is, szokták így-is úgy-is.)
 
 \Section{Kinézet}
-A kinézetet játékos, egyszerű és átláthatóra szeretném csinálni.
-Mindenhol játékos ikonokat és színvilágot szeretnék használni, az oldal ikonja az alábbi lenne:
+A kinézetet játékos, egyszerű és átláthatóra szeretném csinálni, valamint mindenhol játékos ikonokat és színvilágot szeretnék használni. Az oldal ikonja az alábbi lett mivel minden teszt egy Game Boy-ként fog megjelenni:
 
 \begin{figure}[h]
     \centering
@@ -94,65 +93,12 @@ Mindenhol játékos ikonokat és színvilágot szeretnék használni, az oldal i
 \end{figure}
 
 
-Minden grafikus elem szeretném hogy egységes legyen így törekedtem arra hogy hasonló stílusú legyen minden. Az egyéb funkciókhoz vagy oldalakhoz társított ikonok, amelyek az oldalt még játékosabbá tennék pedig az alábbiak lennének:
-
-\begin{figure}[h]
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/003-swords.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/005-fists.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/006-gamer.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/007-gamer.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/014-computer.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/028-trophy.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/030-flag.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/052-rank.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/053-sword.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/054-sword.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/057-computer.png}
-    \end{subfigure}
-    \begin{subfigure}{.1\textwidth}
-        \centering
-        \includegraphics[width=.8\linewidth]{images/icons/058-potion.png}
-    \end{subfigure}
-\end{figure}
+Minden grafikus elemnél szeretném ha egységes lenne, így törekszem arra hogy hasonló stílusú legyen minden. Az egyéb funkciókhoz vagy oldalakhoz társított ikonok is élénkek, színesek, egyszerűek és vidámak lesznek hogy passzoljon az oldalhoz.
 
 Az ikonokat a Flaticon nevű oldalról töltöttem le \ref{competitiveGamingIcon}.
 % TODO: Leírni, hogy az ikonok honnan származnak.
 
 Valamint Bootstrap-et szeretnék használni ami egy olyan keretrendszer, amely segít a weboldalak gyorsabb és könnyebb megtervezésében. HTML és CSS alapú tervezősablonokat tartalmaz a tipográfiához, űrlapokat, gombokat, táblázatokat, navigációt, modelleket stb. Ez segítene abban hogy az oldalon egységes kinézetet hozhassak létre valamit a Bootstrap CSS-je alkalmazkodik a telefonokhoz, táblagépekhez és asztali számítógépekhez is.
-
-Ehhez egy ingyenes Bootstrap témát választottam ami szerintem menne a weboldal témájához, ezt a témát Litera-nak\ref{litera} hívják.
 
 \Section{Az oldal felépítése}
 
@@ -198,7 +144,7 @@ Itt láthatjuk \ref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel 
     \label{fig:new_quiz_question}
 \end{figure}
 
-Ezen a képen \ref{fig:new_quiz_question} a tesztkészítési felület látható amelyhez majd csak a tanárok férhetnek hozzá. Egy tesztnél meghatározható hogy mi legyen a kérdés, mennyi idő legyen rá, mennyi jutalmat lehessen érte kapni, vagyis xp-t és hogy mik legyenek a válaszok és azok közül melyik a jó.
+Ezen a képen \ref{fig:new_quiz_question} a tesztkészítési felület látható. Egy tesztnél meghatározható hogy mi legyen a kérdés, mennyi idő legyen rá, mennyi jutalmat lehessen érte kapni, vagyis xp-t, és hogy mik legyenek a válaszok és azok közül melyik a jó.
 
 \begin{figure}[H]
     \centering
@@ -235,7 +181,7 @@ Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megj
     \label{fig:my_tests}
 \end{figure}
 
-Ezen a képen \ref{fig:my_tests} a diákhoz rendelt teszteket látjuk. Itt azok az adatok láthatóak amiket tesztkészítéskor adott meg a tanár. Tehát a kitöltési határidő, mi a teszt címe, mennyi idő van rá, hány kérdés van és hogy mennyi pontot lehet szerezni. Ezenkívül láthatjuk még hogy mikor lett kiírva és egy kezdés gombot amivel kitölthetjük.
+Ezen a képen \ref{fig:my_tests} a diákhoz rendelt teszteket látjuk. Itt azok az adatok láthatóak amiket tesztkészítéskor adtunk meg. Tehát a kitöltési határidő, a teszt címe, mennyi idő van rá, hány kérdés van és hogy mennyi pontot lehet szerezni. Ezenkívül láthatjuk még hogy mikor lett kiírva és egy kezdés gombot amivel kitölthetjük.
 
 \subsection{Teszt kitöltése}
 
@@ -272,11 +218,13 @@ Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk 
 \begin{itemize}
     \item {Bejelentkezés/Regisztráció}
           \begin{addmargin}[\parindent]{0pt}
-              Az weboldal megnyitásakor a felhasználónak be kell jelentkeznie vagy egy helyes e-mail címmel és egy kellően biztonságos jelszóval, regisztrálni kell ha használni szeretné az oldalt.
+              Az oldalon lévő minden funkciót csak regisztráció vagy bejelentkezés után lehet használni. Ez azért fontos hiszen csak így lehet a felhasználónak tesztet küldeni és kitöltés után csak így lehet hozzáadni a profiljához a pontokat és megjeleníteni a nevét a ranglistán. Az weboldal megnyitásakor a felhasználónak be kell jelentkeznie vagy egy helyes e-mail címmel és egy kellően biztonságos jelszóval, regisztrálni kell ha használni szeretné az oldalt.
           \end{addmargin}
     \item {Tesztkészítés}
           \begin{addmargin}[\parindent]{0pt}
               Kahoot!-hoz hasonló teszt készítési felületet szeretnék létrehozni ahol az elkészített teszteket hozzá lehet rendelni diákokhoz és ezután kitölthetik azokat.
+
+              A két következő funkció az egyik legalapvető eleme a játékosításnak, viszont egy jó teszt nélkül értékét vesztik. A fejlődés és a teljesíteni vágyás a belső motiváció számunkra hogy kihívásokat teljesítsünk. Viszont kihívások nélkül a pontok és a jelvények vagy bármi féle jutalmak feleslegesnek tűnnek. Emiatt fontos hogy a tesztek kellő kihívást nyújtsanak hogy aztán a jó eredménnyel járó hasznokat is jutalomnak érezzük.
           \end{addmargin}
     \item {Pontgyűjtés}
           \begin{addmargin}[\parindent]{0pt}
@@ -286,11 +234,7 @@ Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk 
           \begin{addmargin}[\parindent]{0pt}
               Ranglista a teszt teljes kitöltését követően alakul ki a legtöbbet szerzett pontok alapján.
           \end{addmargin}
-    \item {Felhasználói szerepkörök kezelése}
-          \begin{addmargin}[\parindent]{0pt}
-              Különböző szerepkörök lennének amik azzal bírnának hogy egy tanár jogosultságú felhasználó hozhat létre tesztet és hozzá rendelheti diákokhoz. A diák pedig csak kitölthetné azt.
-          \end{addmargin}
-    \item {Tesztek diákhoz rendelése}
+    \item {Tesztek diákokhoz rendelése}
           \begin{addmargin}[\parindent]{0pt}
               Teszt létrehozása során email cím vagy valamilyen más egyedi azonosító segítségével hozzá lehetne rendelni diákokhoz a tesztet és így értesülnének róla hogy ki kell tölteniük.
           \end{addmargin}
@@ -302,31 +246,18 @@ Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk 
 
 % TODO: Külön szakaszban érdemes lenne a szerepköröket is részletezni, az azokhoz tartozó jogosultságokat. (Lehet inkább ehhez tartozna inkább a use case diagram.)
 
-\subsection{Szerepkörök és használati eset}
+% \subsection{Szerepkörök és használati eset}
 
-Itt látható egy kezdetleges használati eset-modell (use case diagram) ebben benne van a felhasználók információs igényeinek elemzése, funkcionális követelmények elemzése és a modell tartalmazza a rendszerrel szemben támasztott felhasználói követelményeket.
-Látszik hogy kik (esetünkben tanár és diák) és mire akarják használni a rendszert.
+% Itt látható egy kezdetleges használati eset-modell (use case diagram) ebben benne van a felhasználók információs igényeinek elemzése, funkcionális követelmények elemzése és a modell tartalmazza a rendszerrel szemben támasztott felhasználói követelményeket.
+% Látszik hogy kik (esetünkben tanár és diák) és mire akarják használni a rendszert.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=12cm]{images/use_case.png}
-    \caption{Használati eset-modell}
-\end{figure}
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=12cm]{images/use_case.png}
+%     \caption{Használati eset-modell}
+% \end{figure}
 
-\vspace{5mm}
-
-Az oldalon lévő minden funkciót csak regisztráció vagy bejelentkezés után lehet használni. Ez azért fontos hiszen csak így lehet a felhasználónak tesztet küldeni és kitöltés után csak így lehet hozzáadni a profiljához a pontokat és megjeleníteni a nevét a ranglistán.
-
-\vspace{5mm}
-
-\noindent Regisztrálni lehet majd tanár és diákként. Ez a kettő azért van szétválasztva hogy a diákok jogosultsági körét korlátozni lehessen, például hogy egy diák ne írhasson egy tesztet és rendelje hozzá a tanárjához. Tehát ez a két funkció csak tanárok számára elérhető.
-
-\subsubsection{Tanár szerepkör}
-Egy tanár tud teszteket létrehozni és azokat hozzárendelni diákokhoz.
-
-\subsubsection{Diák szerepkör}
-Annyiban tér el a tanárétól hogy nem tud tesztet létrehozni csak a hozzárendelteket megtekinteni és kitölteni.
-
+% \vspace{5mm}
 
 \Section{Adatmodell}
 \label{Adatmodell}
@@ -396,7 +327,7 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
                   }
               \end{json}
 
-              Valamint lehet egy felhasználó adatait módosítani, \url{PUT} és törölni, \url{DELETE} hívással ugyan azon az endpointon: \url{/api/users/{userId}}.
+              Valamint lehet egy felhasználó adatait módosítani, \url{PUT} és törölni, \url{DELETE} hívással ugyan azon az endpoint-on: \url{/api/users/{userId}}.
           \end{addmargin}
 \end{itemize}
 
@@ -514,6 +445,6 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
                   }
               \end{json}
 
-              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor hogy ki hány pontot ért el, ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
+              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor hogy ki hány pontot ért el. Ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
           \end{addmargin}
 \end{itemize}
