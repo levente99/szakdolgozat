@@ -35,8 +35,7 @@ namespace TestMEApi.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<List<UsersTest>>> GetUsersTests(string userId)
         {
-            var usersTest = await _context.UsersTest.Include(ut => ut.User).Include(ut => ut.Test).Include(ut => ut.Test.Questions).Where(ut => ut.UserId == userId).ToListAsync();
-
+            var usersTest = await _context.UsersTest.Include(ut => ut.Test).Include(ut => ut.Test.Questions).Include(ut => ut.Test.User).Where(ut => ut.UserId == userId).ToListAsync();
             if (usersTest == null)
             {
                 return NotFound();
@@ -45,7 +44,6 @@ namespace TestMEApi.Controllers
             {
                 usersTest[i].Test.Deadline = usersTest[i].Test.Deadline.Date;
             }
-
             return usersTest;
         }
 
@@ -85,7 +83,7 @@ namespace TestMEApi.Controllers
             {
                 Completed = usersTest.Count(ut => ut.Finished != null),
                 NotCompleted = usersTest.Count(ut => ut.Finished == null),
-                AllXp= usersTest.Sum(ut => ut.EarnedXp)
+                AllXp = usersTest.Sum(ut => ut.EarnedXp)
             };
 
             return userTestStatus;
@@ -98,13 +96,13 @@ namespace TestMEApi.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<List<UsersTest>>> GetAllUsersTestResult(int testId)
         {
-            var usersTest = await _context.UsersTest.Include(ut=> ut.User).Where(ut => ut.TestId == testId).OrderByDescending(ut=> ut.EarnedXp).ToListAsync();
+            var usersTest = await _context.UsersTest.Include(ut => ut.User).Where(ut => ut.TestId == testId).OrderByDescending(ut => ut.EarnedXp).ToListAsync();
 
             if (usersTest == null)
             {
                 return NotFound();
             }
-           
+
 
             return usersTest;
         }
@@ -168,14 +166,14 @@ namespace TestMEApi.Controllers
         public ActionResult<UsersTest> PostUsersTest(UsersTest usersTest)
         {
             usersTest.User = _context.User.FirstOrDefault(u => u.Email == usersTest.User.Email);
-            if(usersTest.User == null)
+            if (usersTest.User == null)
             {
                 return StatusCode(404);
             }
             usersTest.UserId = usersTest.User.Id;
             _context.UsersTest.Add(usersTest);
             var result = _context.SaveChanges();
-            if(result == 0)
+            if (result == 0)
             {
                 return StatusCode(500);
             }
