@@ -95,7 +95,7 @@ A kinézetet játékos, egyszerű és átláthatóra szeretném csinálni, valam
 
 Minden grafikus elemnél szeretném ha egységes lenne, így törekszem arra hogy hasonló stílusú legyen minden. Az egyéb funkciókhoz vagy oldalakhoz társított ikonok is élénkek, színesek, egyszerűek és vidámak lesznek hogy passzoljon az oldalhoz.
 
-Az ikonokat a Flaticon nevű oldalról töltöttem le \ref{competitiveGamingIcon}.
+Az ikonokat a Flaticon nevű oldalról töltöttem le \cite{falcon}.
 % TODO: Leírni, hogy az ikonok honnan származnak.
 
 Valamint Bootstrap-et szeretnék használni ami egy olyan keretrendszer, amely segít a weboldalak gyorsabb és könnyebb megtervezésében. HTML és CSS alapú tervezősablonokat tartalmaz a tipográfiához, űrlapokat, gombokat, táblázatokat, navigációt, modelleket stb. Ez segítene abban hogy az oldalon egységes kinézetet hozhassak létre valamit a Bootstrap CSS-je alkalmazkodik a telefonokhoz, táblagépekhez és asztali számítógépekhez is.
@@ -121,7 +121,7 @@ Először azt az oldalt mutatom be amivel mindenki először találkozik az olda
     \label{fig:signin_wireframe}
 \end{figure}
 
-Bejelentkezni \ref{fig:login_wireframe} email cím és jelszóval lehet. Regisztrációkor \ref{fig:signin_wireframe} pedig ki kell választani hogy tanár vagy diákként szeretnénk regisztrálni majd meg kell adni az alapvető adatokat.
+Bejelentkezni \prettyref{fig:login_wireframe} email cím és jelszóval lehet. Regisztrációkor \prettyref{fig:signin_wireframe} pedig ki kell választani, hogy tanár vagy diákként szeretnénk regisztrálni majd meg kell adni az alapvető adatokat.
 Ezután ha sikeresen beléptünk vagy regisztráltunk akkor hozzáférhetünk az oldalhoz.
 
 \subsection{Főoldal}
@@ -133,7 +133,7 @@ Ezután ha sikeresen beléptünk vagy regisztráltunk akkor hozzáférhetünk az
     \label{fig:main_page}
 \end{figure}
 
-Itt láthatjuk \ref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel rendelkezünk, hanyas szintűek vagyunk, és hogy hány darab kitöltött és kitöltetlen tesztünk van még.
+Itt láthatjuk \prettyref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel rendelkezünk, hányas szintűek vagyunk és hogy hány darab kitöltött és kitöltetlen tesztünk van még.
 
 \subsection{Teszt készítés}
 
@@ -144,7 +144,7 @@ Itt láthatjuk \ref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel 
     \label{fig:new_quiz_question}
 \end{figure}
 
-Ezen a képen \ref{fig:new_quiz_question} a tesztkészítési felület látható. Egy tesztnél meghatározható hogy mi legyen a kérdés, mennyi idő legyen rá, mennyi jutalmat lehessen érte kapni, vagyis xp-t, és hogy mik legyenek a válaszok és azok közül melyik a jó.
+Ezen a képen \prettyref{fig:new_quiz_question} a tesztkészítési felület látható. Egy tesztnél meghatározható maga a kérdés, ideje, illetve a jutalmazása, mely xp-ként van rögzítve. A választ kiválaszthatjuk az általunk írtak közül és beállíthatjuk melyik legyen a helyes megoldás.
 
 \begin{figure}[H]
     \centering
@@ -153,7 +153,7 @@ Ezen a képen \ref{fig:new_quiz_question} a tesztkészítési felület látható
     \label{fig:new_question}
 \end{figure}
 
-Ezután ha elkészítettünk egy kérdést az "Új kérdés" gomb megnyomásával lehet majd új kérdést hozzáadni, itt választhatunk hogy igaz/hamis vagy kvíz típusú kérdést szeretnénk feltenni \ref{fig:new_question}.
+Ezután ha elkészült a kérdés az "Új kérdés" gomb megnyomásával lehet hozzáadni a kérdések sorába. Itt választhatunk igaz/hamis, vagy kvíz típusú alternatíva közül, hogy milyet szeretnénk feltenni \prettyref{fig:new_question}.
 
 \begin{figure}[H]
     \centering
@@ -162,7 +162,7 @@ Ezután ha elkészítettünk egy kérdést az "Új kérdés" gomb megnyomásáva
     \label{fig:test_true_false}
 \end{figure}
 
-Az igaz/hamis típusú kérdésnél csak annyi változik hogy nem lehet válasz lehetőséget írni csak azt hogy az állítás igaz vagy hamis \ref{fig:test_true_false}.
+Az igaz/hamis típusú kérdésnél csak annyi változik hogy nem lehet válasz lehetőséget írni, csak egy állítást amiről el kell dönteni, hogy valótlan vagy sem \prettyref{fig:test_true_false}.
 
 \begin{figure}[H]
     \centering
@@ -171,7 +171,7 @@ Az igaz/hamis típusú kérdésnél csak annyi változik hogy nem lehet válasz 
     \label{fig:save_test}
 \end{figure}
 
-Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megjelenni majd a diákoknak. Ezután hozzáadunk tetszőleges számú diákot akiktől szeretnénk hogy töltsék ki majd, egy kitöltési határidőt, és elkészült a tesztünk \ref{fig:save_test}.
+Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megjelenni majd a diákoknak. Ezután hozzáadunk tetszőleges számú diákot akiktől szeretnénk hogy töltsék ki majd, egy kitöltési határidőt, és elkészült a tesztünk \prettyref{fig:save_test}.
 
 \subsection{Saját tesztek}
 \begin{figure}[H]
@@ -181,7 +181,7 @@ Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megj
     \label{fig:my_tests}
 \end{figure}
 
-Ezen a képen \ref{fig:my_tests} a diákhoz rendelt teszteket látjuk. Itt azok az adatok láthatóak amiket tesztkészítéskor adtunk meg. Tehát a kitöltési határidő, a teszt címe, mennyi idő van rá, hány kérdés van és hogy mennyi pontot lehet szerezni. Ezenkívül láthatjuk még hogy mikor lett kiírva és egy kezdés gombot amivel kitölthetjük.
+Ezen a képen \prettyref{fig:my_tests} a diákhoz rendelt teszteket látjuk. Itt azok az adatok láthatóak amiket tesztkészítéskor adtunk meg. Tehát a kitöltési határidő, a teszt címe, mennyi idő van rá, hány kérdés van és hogy mennyi pontot lehet szerezni. Ezenkívül láthatjuk még hogy mikor lett kiírva és egy kezdés gombot amivel kitölthetjük.
 
 \subsection{Teszt kitöltése}
 
@@ -192,7 +192,7 @@ Ezen a képen \ref{fig:my_tests} a diákhoz rendelt teszteket látjuk. Itt azok 
     \label{fig:test_question}
 \end{figure}
 
-Itt \ref{fig:test_question} egy kérdést látható teszt indítás után. Minden kérdésnél egy stopper órában láthatjuk hány másodpercünk van még válaszolni.
+Itt \prettyref{fig:test_question} egy kérdést látható teszt indítás után. Minden kérdésnél egy stopper órában láthatjuk hány másodpercünk van még válaszolni.
 
 \begin{figure}[H]
     \centering
@@ -201,7 +201,7 @@ Itt \ref{fig:test_question} egy kérdést látható teszt indítás után. Minde
     \label{fig:test_answer}
 \end{figure}
 
-Válasz adás után pedig láthatjuk \ref{fig:test_answer} hogy ha válaszolunk egy kérdésre akkor melyik volt a jó és hogy válaszunk rossz vagy jó.
+Válasz adás után pedig láthatjuk \prettyref{fig:test_answer} hogy ha válaszolunk egy kérdésre akkor melyik volt a jó és hogy válaszunk rossz vagy jó.
 
 \begin{figure}[H]
     \centering
@@ -210,7 +210,7 @@ Válasz adás után pedig láthatjuk \ref{fig:test_answer} hogy ha válaszolunk 
     \label{fig:test_finished}
 \end{figure}
 
-Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk és hogy kik lettek a legjobbak. \ref{fig:test_finished}
+Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk és hogy kik lettek a legjobbak. \prettyref{fig:test_finished}
 
 
 \Section{Funkciók}
@@ -267,9 +267,11 @@ Az adatokat egyed-kapcsolat diagrammon ábrázoltam így a teljes kép könnyebb
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/TestME_ER.png}
+    \caption{ER modell}
+    \label{fig:TestME_ER}
 \end{figure}
 
-A diagramm 5 táblából áll, melyek az alábbiak:
+A diagramm \prettyref{fig:TestME_ER} 5 táblából áll, melyek az alábbiak:
 \begin{itemize}
     \item {User}
           \begin{addmargin}[\parindent]{0pt}
@@ -308,23 +310,23 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
           \begin{addmargin}[\parindent]{0pt}
               Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor, elmenteni a felhasználó session-jét, lekérni a session-t, az id-ját és az email címét. Ezeket mind egy \url{GET} hívással tehetjük meg. Valamint regisztrációkor ide tudjuk elküldeni a felhasználó adatait, a bejelentkezési adatokat és azt hogy ki szeretne jelentkezni egy \url{POST}-tal. Bejelentkezéskor a felhasználó email címét és jelszavát elküldve kikeressük hogy valóban létező, mentett email címet és jelszót küldött el és visszaküldjük a felhasználó adatait.
               \begin{json}
-                  {
-                      "email": "teszt@teszt.hu",
-                      "password": "jelszo000"
-                  }
+{
+    "email": "teszt@teszt.hu",
+    "password": "jelszo000"
+}
               \end{json}
 
               Regisztrációkor pedig elküldődnek a felhasználó adatait és bejelentkezteti az oldal. Az elküldött adatok az alábbiak:
 
               \begin{json}
-                  {
-                      "roleId": 0,
-                      "userName": "Levente1999",
-                      "firstName": "Makszimus",
-                      "lastName": "Levente",
-                      "email": "teszt@teszt.hu",
-                      "password": "Jelszo_.000"
-                  }
+{
+    "roleId": 0,
+    "userName": "Levente1999",
+    "firstName": "Makszimus",
+    "lastName": "Levente",
+    "email": "teszt@teszt.hu",
+    "password": "Jelszo_.000"
+}
               \end{json}
 
               Valamint lehet egy felhasználó adatait módosítani, \url{PUT} és törölni, \url{DELETE} hívással ugyan azon az endpoint-on: \url{/api/users/{userId}}.
@@ -338,24 +340,24 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
               Ha a diák ki akarja tölteni a tesztet innen tudjuk lekérni a kérdésekkel együtt. Illetve ha valaki készít egyet akkor ide küldi el az újat.
               Egy elkészített teszt így néz ki ha elküldjük \url{POST}-tal:
               \begin{json}
-                  {
-                  "description": "Mesterséges intelligencia alapok második zárthelyi dolgozat",
-                  "userId": "165",
-                  "title": "Mesterséges intelligencia alapok 2 teszt",
-                  "created": "2021-01-12",
-                  "deadline": "2021-01-22",
-                  "creator": "Makszimus Levente",
-                  "questions": [
-                  {
-                          "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
-                          "answerOne": "true",
-                          "answerTwo": "false",
-                          "timeLimit": 5,
-                          "xp": 3,
-                          "correctAnswer": 0
-                      }
-                  ]
-                  }
+{
+    "description":"Mesterséges intelligencia alapok második zárthelyi dolgozat",
+    "userId":"165",
+    "title":"Mesterséges intelligencia alapok 2 teszt",
+    "created":"2021-01-12",
+    "deadline":"2021-01-22",
+    "creator":"Makszimus Levente",
+    "questions":[
+        {
+            "problem":"A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+            "answerOne":"true",
+            "answerTwo":"false",
+            "timeLimit":5,
+            "xp":3,
+            "correctAnswer":0
+        }
+    ]
+}
               \end{json}
           \end{addmargin}
 \end{itemize}
@@ -366,16 +368,16 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
           \begin{addmargin}[\parindent]{0pt}
               A kérdést két tábla hivatkozza, az egyik a Teszt mivel egy teszthez tartoznak kérdések. A másik pedig a válasz, azért hogy be tudjuk azonosítani hogy egy válasz melyik kérdéshez érkezett.
               \begin{json}
-                  {
-                      "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
-                      "answerOne": "110",
-                      "answerTwo": "120",
-                      "answerThree": "130",
-                      "answerFour": "140",
-                      "timeLimit": 10,
-                      "xp": 5,
-                      "correctAnswer": 0
-                  }
+{
+    "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+    "answerOne": "110",
+    "answerTwo": "120",
+    "answerThree": "130",
+    "answerFour": "140",
+    "timeLimit": 10,
+    "xp": 5,
+    "correctAnswer": 0
+}
               \end{json}
           \end{addmargin}
 \end{itemize}
@@ -387,12 +389,12 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
               Itt egy teszt kérdés válasza tárolódik amely kötődik a felhasználói teszthez és magához a kérdéshez.
 
               \begin{json}
-                  {
-                      "questionId": 1,
-                      "usersTestId": 2,
-                      "responseTime": 5,
-                      "userAnswer": 4
-                  }
+{
+    "questionId": 1,
+    "usersTestId": 2,
+    "responseTime": 5,
+    "userAnswer": 4
+}
               \end{json}
           \end{addmargin}
 \end{itemize}
@@ -404,45 +406,45 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
               Ha egy diák meg akarja nézni a saját tesztjeit hogy miket kell kitöltenie és miket töltött eddig ki,  akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal hogy befejezték-e már és hogy mennyi pontot kaptak általa. A lekérés a felhasználó id-jának elküldésével történne, és ezt kell visszakapnunk:
 
               \begin{json}
-                  {
-                  "id": 1,
-                  "userId": 1,
-                  "testId": 1,
-                  "test": {
-                  "id": 1,
-                  "description": "A tesztben csak kvíz kérdések szerepelnek, tehát 4 választási lehetőség közül kell majd választaniuk. Eredményes munkát kívánok!",
-                  "userId": "152",
-                  "title": "Mesterséges intelligencia alapok 2 teszt",
-                  "created": "2021-01-12T00:00:00",
-                  "deadline": "2021-01-22T00:00:00",
-                  "questions": [
-                  {
-                          "id": 1,
-                          "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
-                          "answerOne": "110",
-                          "answerTwo": "120",
-                          "answerThree": "130",
-                          "answerFour": "140",
-                          "timeLimit": 10,
-                          "xp": 5,
-                          "correctAnswer": 0
-                      },
-                  {
-                          "id": 2,
-                          "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
-                          "answerOne": "true",
-                          "answerTwo": "false",
-                          "answerThree": null,
-                          "answerFour": null,
-                          "timeLimit": 5,
-                          "xp": 3,
-                          "correctAnswer": 0
-                      }
-                  ]
-                  },
-                  "finished": "2021-01-13T00:00:00",
-                  "earnedXp": 6
-                  }
+{
+    "id": 1,
+    "userId": 1,
+    "testId": 1,
+    "test": {
+        "id": 1,
+        "description": "A tesztben csak kvíz kérdések szerepelnek, tehát 4 választási lehetőség közül kell majd választaniuk. Eredményes munkát kívánok!",
+        "userId": "152",
+        "title": "Mesterséges intelligencia alapok 2 teszt",
+        "created": "2021-01-12T00:00:00",
+        "deadline": "2021-01-22T00:00:00",
+        "questions": [
+            {
+                "id": 1,
+                "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+                "answerOne": "110",
+                "answerTwo": "120",
+                "answerThree": "130",
+                "answerFour": "140",
+                "timeLimit": 10,
+                "xp": 5,
+                "correctAnswer": 0
+            },
+            {
+                "id": 2,
+                "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+                "answerOne": "true",
+                "answerTwo": "false",
+                "answerThree": null,
+                "answerFour": null,
+                "timeLimit": 5,
+                "xp": 3,
+                "correctAnswer": 0
+            }
+        ]
+},
+"finished": "2021-01-13T00:00:00",
+"earnedXp": 6
+}
               \end{json}
 
               Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor hogy ki hány pontot ért el. Ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
