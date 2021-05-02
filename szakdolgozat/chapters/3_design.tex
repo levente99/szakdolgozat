@@ -85,6 +85,7 @@
 % TODO: Érdemes lenne részletezni magát az adatmodellt is, tehát hogy egy felhasználóhoz, feladathoz mik tartoznak. (Lehet a felületi tervek előtt vagy után is, szokták így-is úgy-is.)
 
 \Section{Kinézet}
+
 A kinézetet játékos, egyszerű és átláthatóra szeretném csinálni, valamint mindenhol játékos ikonokat és színvilágot szeretnék használni. Az oldal ikonja az alábbi lett mivel minden teszt egy Game Boy-ként fog megjelenni:
 
 \begin{figure}[h]
@@ -93,16 +94,15 @@ A kinézetet játékos, egyszerű és átláthatóra szeretném csinálni, valam
 \end{figure}
 
 
-Minden grafikus elemnél szeretném ha egységes lenne, így törekszem arra hogy hasonló stílusú legyen minden. Az egyéb funkciókhoz vagy oldalakhoz társított ikonok is élénkek, színesek, egyszerűek és vidámak lesznek hogy passzoljon az oldalhoz.
+Minden grafikus elemnél szeretném ha egységes lenne, így törekszem arra hogy hasonló stílusú legyen minden. Az egyéb funkciókhoz vagy oldalakhoz társított ikonok is élénkek, színesek, egyszerűek és vidámak lesznek, hogy passzoljon az oldalhoz. \newline
 
-Az ikonokat a Flaticon nevű oldalról töltöttem le \cite{falcon}.
-% TODO: Leírni, hogy az ikonok honnan származnak.
+Az ikonokat a Flaticon nevű oldalról töltöttem le \cite{flaticon}.  \newline
 
-Valamint Bootstrap-et szeretnék használni ami egy olyan keretrendszer, amely segít a weboldalak gyorsabb és könnyebb megtervezésében. HTML és CSS alapú tervezősablonokat tartalmaz a tipográfiához, űrlapokat, gombokat, táblázatokat, navigációt, modelleket stb. Ez segítene abban hogy az oldalon egységes kinézetet hozhassak létre valamit a Bootstrap CSS-je alkalmazkodik a telefonokhoz, táblagépekhez és asztali számítógépekhez is.
+Valamint Bootstrap-et szeretnék használni ami egy olyan keretrendszer, amely segít a weboldalak gyorsabb és könnyebb megtervezésében. HTML és CSS alapú tervezősablonokat tartalmaz a tipográfiához, űrlapokat, gombokat, táblázatokat, navigációt, modelleket stb. Ez segítene abban hogy az oldalon egységes kinézetet hozhassak létre, valamit a Bootstrap CSS-je alkalmazkodik a telefonokhoz, táblagépekhez és asztali számítógépekhez is.
 
 \Section{Az oldal felépítése}
 
-A funkciók elrendezésének és felépítésének bemutatására képernyőterv vázlatot (magyarul drótváznak, angolul wireframe vagy mockup-nak is nevezzük) készítettem a MockFlow \ref{mockflow} nevű oldalon.
+A funkciók elrendezésének és felépítésének bemutatására képernyőterv vázlatot (magyarul drótváznak, angolul wireframe vagy mockup-nak is nevezzük) készítettem a MockFlow \cite{mockflow} nevű oldalon.
 Először azt az oldalt mutatom be amivel mindenki először találkozik az oldal megnyitásakor, ez pedig a bejelentkezési és regisztrációs felület.
 
 \subsection{Bejelentkezés és regisztráció}
@@ -114,6 +114,8 @@ Először azt az oldalt mutatom be amivel mindenki először találkozik az olda
     \label{fig:login_wireframe}
 \end{figure}
 
+Bejelentkezni \prettyref{fig:login_wireframe} email cím és jelszóval lehet.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/signin_wireframe.png}
@@ -121,7 +123,7 @@ Először azt az oldalt mutatom be amivel mindenki először találkozik az olda
     \label{fig:signin_wireframe}
 \end{figure}
 
-Bejelentkezni \prettyref{fig:login_wireframe} email cím és jelszóval lehet. Regisztrációkor \prettyref{fig:signin_wireframe} pedig ki kell választani, hogy tanár vagy diákként szeretnénk regisztrálni majd meg kell adni az alapvető adatokat.
+Regisztrációkor \prettyref{fig:signin_wireframe} pedig ki kell választani, hogy tanár vagy diákként szeretnénk regisztrálni majd meg kell adni az alapvető adatokat.
 Ezután ha sikeresen beléptünk vagy regisztráltunk akkor hozzáférhetünk az oldalhoz.
 
 \subsection{Főoldal}
@@ -133,7 +135,7 @@ Ezután ha sikeresen beléptünk vagy regisztráltunk akkor hozzáférhetünk az
     \label{fig:main_page}
 \end{figure}
 
-Itt láthatjuk \prettyref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel rendelkezünk, hányas szintűek vagyunk és hogy hány darab kitöltött és kitöltetlen tesztünk van még.
+Itt láthatjuk \prettyref{fig:main_page} a felhasználónevünket, hogy mennyi xp-vel rendelkezünk, hányas szintűek vagyunk és, hogy hány darab kitöltött és kitöltetlen tesztünk van még.
 
 \subsection{Teszt készítés}
 
@@ -162,7 +164,7 @@ Ezután ha elkészült a kérdés az "Új kérdés" gomb megnyomásával lehet h
     \label{fig:test_true_false}
 \end{figure}
 
-Az igaz/hamis típusú kérdésnél csak annyi változik hogy nem lehet válasz lehetőséget írni, csak egy állítást amiről el kell dönteni, hogy valótlan vagy sem \prettyref{fig:test_true_false}.
+Az igaz/hamis típusú kérdésnél csak annyi változik, hogy nem lehet válasz lehetőséget írni, csak egy állítást, amiről el kell dönteni, hogy valótlan vagy sem \prettyref{fig:test_true_false}.
 
 \begin{figure}[H]
     \centering
@@ -171,7 +173,7 @@ Az igaz/hamis típusú kérdésnél csak annyi változik hogy nem lehet válasz 
     \label{fig:save_test}
 \end{figure}
 
-Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megjelenni majd a diákoknak. Ezután hozzáadunk tetszőleges számú diákot akiktől szeretnénk hogy töltsék ki majd, egy kitöltési határidőt, és elkészült a tesztünk \prettyref{fig:save_test}.
+Az utolsó lépés pedig az hogy adunk címet a tesztnek, ilyen névvel fog megjelenni majd a tanulóknak. Ezután hozzáadunk tetszőleges számú diákot akiktől szeretnénk hogy töltsék ki majd, egy kitöltési határidőt, és elkészült a tesztünk \prettyref{fig:save_test}.
 
 \subsection{Saját tesztek}
 \begin{figure}[H]
@@ -201,7 +203,7 @@ Itt \prettyref{fig:test_question} egy kérdést látható teszt indítás után.
     \label{fig:test_answer}
 \end{figure}
 
-Válasz adás után pedig láthatjuk \prettyref{fig:test_answer} hogy ha válaszolunk egy kérdésre akkor melyik volt a jó és hogy válaszunk rossz vagy jó.
+Válasz adás után pedig láthatjuk \prettyref{fig:test_answer}, hogy ha válaszolunk egy kérdésre akkor melyik volt a jó.
 
 \begin{figure}[H]
     \centering
@@ -210,7 +212,7 @@ Válasz adás után pedig láthatjuk \prettyref{fig:test_answer} hogy ha válasz
     \label{fig:test_finished}
 \end{figure}
 
-Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk és hogy kik lettek a legjobbak. \prettyref{fig:test_finished}
+Miután válaszoltunk minden kérdésre, megnézhetjük mennyi pontot gyűjtöttünk és a kitöltők közül, kik lettek a legjobbak. \prettyref{fig:test_finished}
 
 
 \Section{Funkciók}
@@ -218,7 +220,7 @@ Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk 
 \begin{itemize}
     \item {Bejelentkezés/Regisztráció}
           \begin{addmargin}[\parindent]{0pt}
-              Az oldalon lévő minden funkciót csak regisztráció vagy bejelentkezés után lehet használni. Ez azért fontos hiszen csak így lehet a felhasználónak tesztet küldeni és kitöltés után csak így lehet hozzáadni a profiljához a pontokat és megjeleníteni a nevét a ranglistán. Az weboldal megnyitásakor a felhasználónak be kell jelentkeznie vagy egy helyes e-mail címmel és egy kellően biztonságos jelszóval, regisztrálni kell ha használni szeretné az oldalt.
+              Az oldalon lévő minden funkciót csak regisztráció vagy bejelentkezés után lehet használni. Ez azért fontos hiszen, csak így lehet a felhasználónak tesztet küldeni és kitöltés után hozzáadni a profiljához a pontokat és megjeleníteni a nevét a ranglistán. Az weboldal megnyitásakor a felhasználónak be kell jelentkeznie, egy helyes e-mail címmel és egy kellően biztonságos jelszóval vagy regisztrálni kell ha használni szeretné az oldalt.
           \end{addmargin}
     \item {Tesztkészítés}
           \begin{addmargin}[\parindent]{0pt}
@@ -240,7 +242,7 @@ Miután válaszoltunk minden kérdésre láthatjuk mennyi pontot gyűjtöttünk 
           \end{addmargin}
     \item {Összes hozzárendelt teszt megtekintése}
           \begin{addmargin}[\parindent]{0pt}
-              Diákként meg lehet nézni az összes olyan tesztet amit valaki hozzá rendelt a profilhoz. És ezzel együtt a régiek eredményét is, hogy az hogy sikerült mindenkinek.
+              Diákként meg lehet nézni az összes olyan tesztet amit valaki hozzá rendelt a profilhoz. És ezzel együtt a régiek eredményét is, azért hogy lássuk hogy sikerült mindenkinek.
           \end{addmargin}
 \end{itemize}
 
@@ -285,13 +287,12 @@ A diagramm \prettyref{fig:TestME_ER} 5 táblából áll, melyek az alábbiak:
 
     \item {Question}
           \begin{addmargin}[\parindent]{0pt}
-              A Question egy kérdés adatait tárolja amibe beletartozik a kérdés szövege, a négy válasz, az idő, hogy mennyi pontot ér és hogy melyik a helyes válasz.
+              A Question egy kérdés adatait tárolja amibe beletartozik a kérdés szövege, a négy válasz, az idő, hogy mennyi pontot ér és, hogy melyik a helyes válasz.
           \end{addmargin}
-
 
     \item {UsersTest}
           \begin{addmargin}[\parindent]{0pt}
-              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz a Test és User tábla idegen kulcsa. Valamint itt tárolódik el hogy felhasználó kitöltötte-e már a tesztet és ha kitöltötte akkor mikor és hogy mennyi pontot ért el. Ez a legtöbbet használt tábla az oldal működése során, hiszen innen szedjük ki az adatokat ha megszeretnénk nézni milyen tesztjeink vannak és ha kitöltjük itt módosítjuk a pontot és a dátumot.
+              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz a Test és User tábla idegen kulcsa. Valamint itt tárolódik el, hogy felhasználó kitöltötte-e már a tesztet és ha kitöltötte akkor mikor és mennyi pontot ért el. Ez a legtöbbet használt tábla az oldal működése során, hiszen innen szedjük ki az adatokat ha megszeretnénk nézni milyen tesztjeink vannak és ha kitöltjük itt módosítjuk a pontot és a dátumot.
           \end{addmargin}
 
     \item {Answer}
@@ -308,7 +309,7 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/users:}}
           \begin{addmargin}[\parindent]{0pt}
-              Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor, elmenteni a felhasználó session-jét, lekérni a session-t, az id-ját és az email címét. Ezeket mind egy \url{GET} hívással tehetjük meg. Valamint regisztrációkor ide tudjuk elküldeni a felhasználó adatait, a bejelentkezési adatokat és azt hogy ki szeretne jelentkezni egy \url{POST}-tal. Bejelentkezéskor a felhasználó email címét és jelszavát elküldve kikeressük hogy valóban létező, mentett email címet és jelszót küldött el és visszaküldjük a felhasználó adatait.
+              Ezen az endpoint-on tudunk lekérni egy felhasználót bejelentkezéskor, elmenteni a felhasználó session-jét, lekérni a session-t, az id-ját és az email címét. Ezeket mind egy \url{GET} hívással tehetjük meg. Valamint regisztrációkor ide tudjuk elküldeni a felhasználó adatait, a bejelentkezési adatokat és azt, hogy ki szeretne jelentkezni egy \url{POST}-tal. Bejelentkezéskor a felhasználó email címét és jelszavát elküldve kikeressük, hogy valóban létező, mentett email címet és jelszót küldött el és visszaküldjük a felhasználó adatait.
               \begin{json}
 {
     "email": "teszt@teszt.hu",
@@ -403,8 +404,7 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/users-tests:}}
           \begin{addmargin}[\parindent]{0pt}
-              Ha egy diák meg akarja nézni a saját tesztjeit hogy miket kell kitöltenie és miket töltött eddig ki,  akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal hogy befejezték-e már és hogy mennyi pontot kaptak általa. A lekérés a felhasználó id-jának elküldésével történne, és ezt kell visszakapnunk:
-
+              Ha egy diák meg akarja nézni a saját tesztjeit, hogy miket kell kitöltenie és miket töltött eddig ki, akkor azt innen tudjuk lekérdezni. Ezáltal kiírathatjuk őket, azokkal az információkkal, hogy befejezték-e már és mennyi pontot kaptak általa. A lekérés a felhasználó id-jának elküldésével történne, és ezt kell visszakapnunk:
               \begin{json}
 {
     "id": 1,
@@ -447,6 +447,6 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
 }
               \end{json}
 
-              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor hogy ki hány pontot ért el. Ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
+              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor, hogy ki hány pontot ért el. Ehhez le kell kérni az összes játékost akik kitöltötték az a tesztet. Ezt megtehetjük a \url{api/UsersTests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
           \end{addmargin}
 \end{itemize}

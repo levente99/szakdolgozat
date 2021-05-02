@@ -61,7 +61,7 @@
 
 \Section{Adatmodellek leképzése}
 
-Az adatbázisban a táblák létrehozásához "Code First" megközelítést alkalmaztam, ahelyett hogy először megterveznénk az adatbázist, majd létrehozná azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít, és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz hogy ez létrejöhessen kell egy úgynevezett ORM (Object-Relational Mapping) eszköz. Az én választásom az Entity Framework-re esett mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Tehát Entity Framework az, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
+Az adatbázisban a táblák létrehozásához "Code First" megközelítést alkalmaztam, ahelyett hogy először megterveznénk az adatbázist, majd létrehozná azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz hogy ez létrejöhessen kell egy úgynevezett ORM (Object-Relational Mapping) eszköz. Az én választásom az Entity Framework-re esett mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Tehát Entity Framework az, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
 
 Az api kódjában 6 osztályt hoztam létre amelyekből létre fognak jönni a táblák ezek adattagjait részleteztem az \nameref{Adatmodell} fejezetben.
 Viszont a közöttük lévő kapcsolat látszik az említett fejezetben lévő ábrán de a megvalósításáról kód szinten még nem beszéltem. \newline
@@ -83,7 +83,7 @@ A Test-hez értelem szerűen hivatkozva van maga a kérdés.
 \end{cpp}
 Itt egy-több kapcsolat van melyet úgy valósítottam meg, hogy a Test osztályban létrehoztam egy gyűjteményt, ami egy generikus típus, és ennek a típusparamétere a Question osztály így hivatkozunk rá hogy itt több kérdés fog tartozni egy teszthez. A másik azonosító pedig a UserId, ami a teszt készítőjének egyedi azonosítóját tartalmazza. \newline
 
-Az Answer táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a UserTest azonosítója így vissza tudjuk keresni hogy melyik tesztre érkezett a válasz és hogy ki adta a választ, mivel a UserTest-ben benne van a felhasználó azonosítója.
+Az Answer táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt, hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a UserTest azonosítója így vissza tudjuk keresni,  melyik tesztre érkezett a válasz és ki adta a választ, mivel a UserTest-ben benne van a felhasználó azonosítója.
 
 \Section{Session tárolása}
 
@@ -115,15 +115,15 @@ A felület létrehozásához TypeScript \cite{typescript} programozási nyelvet 
 
 \subsection{TypeScript}
 
-A TypeScript egy nyílt forráskódú nyelv, amely a JavaScriptre, a világ egyik leggyakrabban használt nyelvére épít rá, statikus típusdefiníciók hozzáadásával. Tehát minden jól működő JavaScript kód egyben jó TypeScript kód is. Viszont lehet hogy kapunk pár típussokkal kapcsolatos hibát de pont emiatt szerettem volna használni hogy átláthatóbb kódot írjak és kevesebb időt kelljen töltenem debug-olással. \bigskip
+A TypeScript egy nyílt forráskódú nyelv, amely a JavaScriptre, a világ egyik leggyakrabban használt nyelvére épít rá, statikus típusdefiníciók hozzáadásával. Tehát minden jól működő JavaScript kód egyben jó TypeScript kód is. Viszont lehet kapunk pár típussokkal kapcsolatos hibát de pont emiatt szerettem volna használni, hogy átláthatóbb kódot írjak és kevesebb időt kelljen töltenem debug-olással. \bigskip
 
-A típusok lehetővé teszik az objektum alakjának leírását, jobb dokumentációt nyújtanak, és lehetővé teszik a TypeScript számára hogy ellenőrizze, hogy a kód megfelelően működik.\bigskip
+A típusok biztosítják nekünk az objektum alakjának leírását, jobb dokumentációt nyújtanak, és elősegíti a TypeScript számára, hogy ellenőrizze, a kód megfelelően működik.\bigskip
 
-Az típusok definiálása opcionális TypeScript-ben, de azért jó ha írunk típusokat mert lehetővé teszi hogy sok energiát spóroljunk anélkül, hogy több kódot írnánk.
+Az típusok definiálása opcionális TypeScript-ben, de azért jó ha írunk típusokat mert lehetővé teszi, hogy sok energiát spóroljunk anélkül, hogy több kódot írnánk.
 
 \subsection{React}
 
-Az eredetileg a Facebook számára kifejlesztett React egy JavaScript könyvtár, amely single-page alkalmazások készítésére szokás használni, azáltal hogy a UI-t komponensekre osztja fel. Mivel csak a HTML és a JavaScript  minimális megértését igényli, a React mint front-end webfejlesztő eszköz egyre népszerűbb, ma már talán a legelterjedtebb JavaScript könyvtár. \bigskip
+Az eredetileg a Facebook számára kifejlesztett React egy JavaScript könyvtár, amely single-page alkalmazások készítésére szokás használni, azáltal, hogy a UI-t komponensekre osztja fel. Mivel csak a HTML és a JavaScript  minimális megértését igényli, a React mint front-end webfejlesztő eszköz egyre népszerűbb, ma már talán a legelterjedtebb JavaScript könyvtár. \bigskip
 
 Pont emiatt esett rá a választásom, mert rendkívül felkapott és rengeteg ember használja így sok helyen lehet hozzá forrást találni, valamint nagyon gyors.
 
@@ -154,7 +154,7 @@ Legelőször is regisztrálni \prettyref{fig:signin} kell. Ehhez szükséges meg
 \end{figure}
 
 Ezután ha sikeresen megerősítettük az email címünket, bejelentkezhetünk \prettyref{fig:login} a felhasználónevünkkel és jelszavunkkal.
-A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők üresek nem küldi el az adatokat. Ha helytelen az email cím nem enged regisztrálni vele. Valamint hibaüzenetet ír ki, ha úgy próbálunk bejelentkezni, hogy nincs visszaigazolva az email címünk vagy ha rossz felhasználónevet vagy jelszót próbáltunk beírni.
+A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők üresek nem küldi el az adatokat, emellett ha helytelen az email cím nem enged regisztrálni vele. Valamint hibaüzenetet ír ki, ha úgy próbálunk bejelentkezni, hogy nincs visszaigazolva az email címünk vagy ha rossz felhasználónevet vagy jelszót próbáltunk beírni.
 
 \subsubsection{Home}
 
@@ -165,7 +165,7 @@ A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők ü
     \label{fig:home}
 \end{figure}
 
-Bejelentkezés után automatikusan átkerülünk a főoldalra \prettyref{fig:home} ahol láthatjuk a teljes nevünket, hanyas szintűek vagyunk a pontjaink alapján, és hogy hány darab kitöltött és kitöltetlen tesztünk van. Itt láthatjuk egyben a főbb fontos adatokat. A szint meghatározása úgy történik hogy 5000 pontoként lehet egy szintet lépni, tehát például az itt szereplő képen 8 és 9-es szint között vagyok. Ez azt jelenti hogy 35000-től több de 40000-től kevesebb pontom van.
+Bejelentkezés után automatikusan átkerülünk a főoldalra \prettyref{fig:home} ahol láthatjuk a teljes nevünket, hanyas szintűek vagyunk a pontjaink alapján és, hogy hány darab kitöltött és kitöltetlen tesztünk van. Itt láthatjuk egyben a főbb fontos adatokat. A szint meghatározása úgy történik hogy 5000 pontoként lehet egy szintet lépni, tehát például az itt szereplő képen 8 és 9-es szint között vagyok. Ez azt jelenti, hogy 35000-től több de 40000-től kevesebb pontom van.
 
 \subsubsection{CreateTest}
 
@@ -178,7 +178,7 @@ Ebben a komponenseben történik a tesztek létrehozása.
     \label{fig:make_test1}
 \end{figure}
 
-Két részre van osztva a felület \prettyref{fig:make_test1}. A bal oldali sávban vannak az eddig hozzáadott kérdéseink amiket tudunk létrehozni, törölni, kiválasztani majd szerkeszteni. A téglalapokban látszódik a feltett kérdésünk, fölötte pedig, hogy hányadik és hogy milyen típusú. A jobb oldali részen pedig, ha rákattintunk egy létrehozott kérdésre ide tölti be a kérdés adatait. Így tudjuk kitölteni vagy módosítani. Itt adjuk meg hogy mi legyen a kérdés, mik a lehetséges válaszok, ezek közül melyik a jó, mennyi időt engedünk hogy válaszoljanak rá és hogy mennyi pontot adunk érte. Ez a pont viszont teszt kitöltésnél idő és válasz alapján dől el hogy mennyit kap belőle a kitöltő. Tehát például ezt a 700 pontot akkor kapja meg ha azonnali jó választ ad, minél többet gondolkodik a kérdésen annál kevesebbet kap meg belőle. Tehát itt, egy maximum értéket kell meghatározni.
+Két részre van osztva a felület \prettyref{fig:make_test1}. A bal oldali sávban vannak az eddig hozzáadott kérdéseink amiket tudunk létrehozni, törölni, kiválasztani majd szerkeszteni. A téglalapokban látszódik a feltett kérdésünk, fölötte pedig, hogy hányadik és milyen típusú. A jobb oldali részen pedig, ha rákattintunk egy létrehozott kérdésre ide tölti be a kérdés adatait. Így tudjuk kitölteni vagy módosítani. Itt adjuk meg mi legyen a kérdés, mik a lehetséges válaszok, ezek közül melyik a jó, mennyi időt engedünk, hogy válaszoljanak rá és mennyi pontot adunk érte. Ez a pont viszont teszt kitöltésnél idő és válasz alapján dől el, hogy mennyit kap belőle a kitöltő. Tehát például ezt a 700 pontot akkor kapja meg ha azonnali jó választ ad, minél többet gondolkodik a kérdésen annál kevesebbet kap meg belőle. Tehát itt, egy maximum értéket kell meghatározni.
 
 \begin{figure}[H]
     \centering
@@ -197,7 +197,7 @@ Kétféle kérdés típus közül lehet választani \prettyref{fig:make_test2}. 
     \label{fig:make_test3}
 \end{figure}
 
-Ezután ha mindennel megvagyunk és rákattintunk a mentés gombra, majd felugrik egy űrlap \prettyref{fig:make_test3} ahova be kell írni az alap teszthez tartozó adatokat. Ezek közé tartozik a teszt címe, kitöltési határideje, leírása és a felhasználók email címe, akiknek ki kell töltenie a tesztet. Az utóbbit úgy tudjuk megtenni, hogy beírjuk a mezőbe és a hozzáadás gombbal tudjuk hozzáadni az oldalsó listához. Emellett törölni is tudjuk őket, ha véletlenül helytelenül írtunk volna be egy email-t.
+Ezután, ha mindennel megvagyunk és rákattintunk a mentés gombra, majd felugrik egy űrlap \prettyref{fig:make_test3} ahova be kell írni az alap teszthez tartozó adatokat. Ezek közé tartozik a teszt címe, kitöltési határideje, leírása és a felhasználók email címe, akiknek ki kell töltenie a tesztet. Az utóbbit úgy tudjuk megtenni, hogy beírjuk a mezőbe és a hozzáadás gombbal tudjuk hozzáadni az oldalsó listához. Emellett törölni is tudjuk őket, ha véletlenül helytelenül írtunk volna be egy email-t.
 
 \subsubsection{MyTests}
 
@@ -209,17 +209,16 @@ Ezután ha mindennel megvagyunk és rákattintunk a mentés gombra, majd felugri
     \label{fig:my_tests}
 \end{figure}
 
-Ezt követően ha elmentettük a tesztet átkerülünk a "Tesztjeim" nevű oldalra \prettyref{fig:my_tests}, ahol megnézhetjük a tesztjeinket amiket ki kell töltenünk vagy amiket mi kreáltunk. Itt a játékosság szemléltetése végett minden tesztet egy Game Boy ábrázol. Itt látszódik rajta a teszt címe, hogy ki készítette és mikor, mi a kitöltési határidő, mennyi idő van az összes kérdésre egybevéve, hány kérdés van, és hogy mennyi pont jár az az összes kérdésre ha hibátlanul és gyorsan válaszolunk. \newline
+Ezt követően ha elmentettük a tesztet átkerülünk a "Tesztjeim" nevű oldalra \prettyref{fig:my_tests}, ahol megnézhetjük a tesztjeinket amiket ki kell töltenünk vagy amiket mi kreáltunk. Itt a játékosság szemléltetése végett minden tesztet egy Game Boy ábrázol. Itt látszódik rajta a teszt címe, hogy ki készítette és mikor, mi a kitöltési határidő, mennyi idő van az összes kérdésre egybevéve, hány kérdés van és, hogy mennyi pont jár az az összes kérdésre ha hibátlanul és gyorsan válaszolunk. \newline
 
-Azt hogy melyik kérdést hoztuk mi létre és melyik az amelyiket nekünk kell kitölteni, azt két helyen is észre lehet venni. Először is látjuk hogy a teszt címe alatt a saját nevük van, második pedig hogy a "Kezdés" gomb helyett rögtön azt látjuk hogy "Eredmények". Viszont ugyan ez az "Eredmények" gomb lesz ott akkor is, ha egy tesztet már kitöltöttünk és később vissza szeretnénk nézni hogy mások hogy teljesítettek. Igy össze tudjuk hasonlítani az eredményünket másokéval, de elsősorban ez a teszt kitöltőjének jelent fontos információt, hogy tudja ki hány pontot szerzett. \newline
+Azt hogy melyik kérdést hoztuk mi létre és melyik az amelyiket nekünk kell kitölteni, azt két helyen is észre lehet venni. Először is látjuk hogy a teszt címe alatt a saját nevük van, második pedig hogy a "Kezdés" gomb helyett rögtön azt látjuk hogy "Eredmények". Viszont ugyan ez az "Eredmények" gomb lesz ott akkor is, ha egy tesztet már kitöltöttünk és később vissza szeretnénk nézni mások, hogy teljesítettek. Igy össze tudjuk hasonlítani az eredményünket másokéval, de elsősorban ez a teszt kitöltőjének jelent fontos információt, hogy tudja ki hány pontot szerzett. \newline
 
-A kérdéseket tudjuk rendezni is úgy hogy a legújabb vagy a legrégebben kiírt teszt legyen elől vagy hogy a kitöltetlenek legyenek az elsők.
+A kérdéseket tudjuk rendezni is úgy, hogy a legújabb, a legrégebben vagy a kitöltetlen tesztek legyenek elől.
 A kitöltött tesztek kitöltés után zöld színűek lesznek és a Game Boy kijelzőjén látjuk az elért pontunkat.
-
 
 \subsubsection{CompleteTest}
 
-Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitöltése és betöltődik a CompleteTest komponens. A CompleteTest-nek 3 további gyerek elemi vannak. Az egyik a QuestionType, ez az ami megjelenik a kérdés előtt hogy segítse a felhasználót. A következő maga a kérdés ami a kérdést hozza fel a válaszlehetőségekkel, legyen az igaz-hamis vagy kvíz. Az utolsó pedig az Results ami az eredményeket sorolja fel. A CompleteTest pedig ezeket a komponenseket váltogatja addig amíg véget nem ér a teszt.
+Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitöltése és betöltődik a CompleteTest komponens. A CompleteTest-nek 3 további gyerek elemi vannak. Az egyik a QuestionType, ez az ami megjelenik a kérdés előtt, hogy segítse a felhasználót. A következő maga a kérdés ami a kérdést hozza fel a válaszlehetőségekkel, legyen az igaz-hamis vagy kvíz. Az utolsó pedig az Results ami az eredményeket sorolja fel. A CompleteTest pedig ezeket a komponenseket váltogatja addig amíg véget nem ér a teszt.
 
 \begin{figure}[H]
     \centering
@@ -228,7 +227,7 @@ Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitölt�
     \label{fig:question_type}
 \end{figure}
 
-Azért hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van, a kérdés szövege \prettyref{fig:question_type}. Így hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni és jó pontot kapni a rá. A kérdés alatt pedig megy egy visszaszámláló hogy mennyi ideje van még elolvasni.
+Azért hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van, a kérdés szövege \prettyref{fig:question_type}. Így, hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni és jó pontot kapni a rá. A kérdés alatt pedig megy egy visszaszámláló, ami mutatja mennyi ideje van még elolvasni.
 
 \begin{figure}[H]
     \centering
@@ -265,7 +264,7 @@ Egy igaz-hamis kérdés is ugyan így működik, viszont itt csak 2 lehetőség 
     \label{fig:question_good_wrong}
 \end{figure}
 
-Egy kérdés 3 féleképpen fejeződhet be. Az első az, ahogy a kép is mutatja \prettyref{fig:question_good_wrong}, hogy jó választ kapunk a kérdésre és megkapjuk a kiérdemelt pontot. A második hogy rosszul válaszolunk és nem kapunk semmit. Az utolsó pedig hogy nem válaszolunk, ilyenkor az idő lejárta után, autómatikusan rossz válasznak veszi a rendszer és tovább lép a következő kérdésre. \newline
+Egy kérdés 3 féleképpen fejeződhet be. Az első az, ahogy a kép is mutatja \prettyref{fig:question_good_wrong}, hogy jó választ kapunk a kérdésre és megkapjuk a kiérdemelt pontot. A második, hogy rosszul válaszolunk és nem kapunk semmit. Az utolsó pedig hogy nem válaszolunk, ilyenkor az idő lejárta után, autómatikusan rossz válasznak veszi a rendszer és tovább lép a következő kérdésre. \newline
 
 Az XP értéke a helyesség és a sebesség alapján számolódik ki.
 Jó válasz esetén a pontszámítás az alábbi képlet szerint működik:
@@ -280,46 +279,4 @@ Viszont ha azonnali jó választ adunk, akkor a képleten látható számítás 
     \label{fig:results}
 \end{figure}
 
-Majd ha az összes kérdés elfogyott, összeadjuk a felhasználó összesen elért pontját és megjelenítjük a többiekével együtt \prettyref{fig:results}. Így megnézhetjük, hogy hányadikok lettünk. Ezután a "Kilépés" gombra kattintva vissza kerülünk a tesztjeinkhez és a főoldalon látjuk hogy több pontunk lett, ha értünk el pontot a teszt kitöltése során. \newline
-
-\subsection{Eredmények és következtetés}
-
-Az eddig leimplementált, előbb felsorolt funkciók, elsőre jól hangzanak és bele is eshetünk abba a csapdába hogy úgy gondolhatjuk hogy ez elég is ahhoz, hogy rengeteg lelkes felhasználót gyűjtsünk és hogy sok általános iskolás mostantól imádnia fogja, ha közeleg egy adott dolgozat. Nyilván ez nem igaz, hisz ez nem ennyire egyszerű. Nem elég az, hogy pontokat, rangsorokat és kitűzőket rakunk bele egy koncepcióba és bízunk benne, hogy attól az garantáltan sokkal jobb lesz. Legalábbis hosszú távon, nagy hatást, biztos nem fog gyakorolni ránk. \newline
-
-Azt is fontos lehet megérteni, hogy attól hogy valamit máshogy hívunk nem jelenti azt hogy az elvégzendő feladat attól jobb lesz. Ha az egyetemen a számkérést nem zárthelyinek hívnák, hanem küldetéseknek, attól még ugyan úgy azt éreznénk hogy zárthelyit írunk bárki, bárhogy hívja. Úgy gondolom, hogy az átnevezés akkor lehet sikeres csak ha a cselekedet sorozat amit tenni kell a sikerért, megváltozik. Emellett ha valamit játékosítani szeretnénk úgy, hogy az hosszútávon motiváló és érdekes maradjon akkor ahhoz még több elemet kéne belevinni. Ha csak visszatérünk a bevezetésnél említett Duolingo-ra, azt például 2012 óta fejlesztik, ma már több mint 200 alkalmazottal. Tehát ez több éves munka eredménye, hogy egy ilyen játékos környezetet kialakítsunk és felépítsünk hiszen sok összetevő játszik számot benne. \newline
-
-Azt hogy mik ezek az összetevők, azt hogy Yu-Kai Chou korábban említett könyvében \cite{actionablegamification} megfogalmazta. Megfigyelte, hogy játékok nagy részét ugyan az a 8 hajtóerő (core drives) ír le. Ezek azok az elemek amelyek képesek arra hogy a játékost lekössék és a játékba tartsák.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{images/gamification-framework.jpg}
-    \caption{Yu-Kai Chou oktalízis rendszere}
-    \label{fig:gamification-framework}
-\end{figure}
-
-Az oktalízis rendszer \prettyref{fig:gamification-framework} egybefoglalja és számszerűsíti ezeket a játékon belül megtalálható motivációs tényezőket. \newline
-
-Itt 8 hajtőerőt sorol fel amik egy rendszert játékossá tesznek. Így egyben látható, hogy ez rengeteg összetevő és funkció sokasága amit egy felhasználót be tud szippantani. Tehát egy komoly rendszer fejlesztése nem kevés időt és energiát igényel. Viszont azokat amiket nekem, sikerült beleraknom azokat felsorolnám.
-
-\begin{itemize}
-    \item {Teljesítmény (Accomplishment)}
-          \begin{addmargin}[\parindent]{0pt}
-              Ezek azok a dolgok amik hajtanak minket abba az irányba hogy kihívásokkal szembenézzünk és teljesítsük őket. Ilyen a pontszerzés, szintlépés és tesztek végén lévő rangsor.
-          \end{addmargin}
-    \item {Kiszámíthatatlanság (Unpredictability)}
-          \begin{addmargin}[\parindent]{0pt}
-              Ez abban segít a felhasználó izgatott legyen az oldal használata közben. Nyilván ez tulajdonság adja magát hiszen minden tesztet csak a készítője ismer.
-          \end{addmargin}
-    \item {Társadalmi befolyás (Social Influence)}
-          \begin{addmargin}[\parindent]{0pt}
-              Ha meglátjuk, hogy az egyik barátunk nagyon jól teljesített egy teszten, akkor késztetést érzünk arra mi is, hogy ugyan úgy elérjük. Ezért is van teszt végén rangsorolás.
-          \end{addmargin}
-    \item {Fejlődés (Empowerment)}
-          \begin{addmargin}[\parindent]{0pt}
-            Az embereknek látniuk kell munkájuk eredményét, visszajelzéseket kell kapniuk. Ezt a fejlődést a szintek indikálják.
-          \end{addmargin}
-    \item {Magasabb jelentés (Epic meaning)}
-          \begin{addmargin}[\parindent]{0pt}
-              A magasabb jelentés az amikor valaki olyat teszi ami nála nagyobb, egy magasabb érdeket elégít ki. Ez a mi esetünkben az lehet, hogy elvégezze az egyetemet, vagy érettségit szerezzen. Ahhoz, hogy ez valóra váljon, a tesztjeinek sikereseknek kell lennie. Ez ösztönözheti az oldal használatára.
-          \end{addmargin}
-\end{itemize}
+Majd ha az összes kérdés elfogyott, összeadjuk a felhasználó összesen elért pontját és megjelenítjük a többiekével együtt \prettyref{fig:results}. Így megnézhetjük, hányadikok lettünk. Ezután a "Kilépés" gombra kattintva vissza kerülünk a tesztjeinkhez és a főoldalon látjuk, hogy az XP száma növekedett, ha értünk el pontot a teszt kitöltése során.
