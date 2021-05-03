@@ -61,7 +61,7 @@
 
 \Section{Adatmodellek leképzése}
 
-Az adatbázisban a táblák létrehozásához "Code First" megközelítést alkalmaztam, ahelyett hogy először megterveznénk az adatbázist, majd létrehozná azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz hogy ez létrejöhessen kell egy úgynevezett ORM (Object-Relational Mapping) eszköz. Az én választásom az Entity Framework-re esett mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Tehát Entity Framework az, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
+Az adatbázisban a táblák létrehozásához "Code First" megközelítést alkalmaztam, ahelyett hogy először megterveznénk az adatbázist, majd létrehozná azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz, hogy ez létrejöhessen kell egy úgynevezett ORM (Object-Relational Mapping) eszköz. Az én választásom az Entity Framework-re esett mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Tehát Entity Framework az, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
 
 Az api kódjában 6 osztályt hoztam létre amelyekből létre fognak jönni a táblák ezek adattagjait részleteztem az \nameref{Adatmodell} fejezetben.
 Viszont a közöttük lévő kapcsolat látszik az említett fejezetben lévő ábrán de a megvalósításáról kód szinten még nem beszéltem. \newline
@@ -69,7 +69,6 @@ Viszont a közöttük lévő kapcsolat látszik az említett fejezetben lévő �
 A UsersTest táblával kezdeném, hiszen ez a fő tábla amely a többit összeköti.
 A UsersTest-ben két idegen kulcs van, az egyik a UserId, másik pedig a TestId. Ezekkel kapcsolódik a két legfontosabb tábla, a felhasználó és a teszt. Így a UsersTest segítségével tudjuk azt létrehozni, hogy az, aki az oldalt használja és hozzáadtak egy tesztet, az kap egy példányt a tesztből, így el tudjuk menteni az eredményeit egyesével a meghívottaknak.
 Tehát egy UsersTest-hez egy felhasználó és egy teszt tartozik, viszont felhasználókhoz és tesztekhez is több ilyen UsersTest tábla tartozik mivel több ember használja az oldalt és több teszt is van. \newline
-
 
 A User táblának csak egy idegen kulcsa van ez pedig a RoleId, mivel minden felhasználóhoz tartozik egy jogosultság.\newline
 
@@ -81,7 +80,7 @@ A Test-hez értelem szerűen hivatkozva van maga a kérdés.
 
     public ICollection<Question> Questions { get; set; }
 \end{cpp}
-Itt egy-több kapcsolat van melyet úgy valósítottam meg, hogy a Test osztályban létrehoztam egy gyűjteményt, ami egy generikus típus, és ennek a típusparamétere a Question osztály így hivatkozunk rá hogy itt több kérdés fog tartozni egy teszthez. A másik azonosító pedig a UserId, ami a teszt készítőjének egyedi azonosítóját tartalmazza. \newline
+Itt egy-több kapcsolat van melyet úgy valósítottam meg, hogy a Test osztályban létrehoztam egy gyűjteményt, ami egy generikus típus, és ennek a típusparamétere a Question osztály így hivatkozunk rá, hogy itt több kérdés fog tartozni egy teszthez. A másik azonosító pedig a UserId, ami a teszt készítőjének egyedi azonosítóját tartalmazza. \newline
 
 Az Answer táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt, hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a UserTest azonosítója így vissza tudjuk keresni,  melyik tesztre érkezett a válasz és ki adta a választ, mivel a UserTest-ben benne van a felhasználó azonosítója.
 
@@ -154,7 +153,7 @@ Legelőször is regisztrálni \prettyref{fig:signin} kell. Ehhez szükséges meg
 \end{figure}
 
 Ezután ha sikeresen megerősítettük az email címünket, bejelentkezhetünk \prettyref{fig:login} a felhasználónevünkkel és jelszavunkkal.
-A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők üresek nem küldi el az adatokat, emellett ha helytelen az email cím nem enged regisztrálni vele. Valamint hibaüzenetet ír ki, ha úgy próbálunk bejelentkezni, hogy nincs visszaigazolva az email címünk vagy ha rossz felhasználónevet vagy jelszót próbáltunk beírni.
+A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők üresek nem küldi el az adatokat, emellett ha helytelen az email cím nem enged regisztrálni vele. Valamint hibaüzenetet ír ki, ha úgy próbálunk bejelentkezni, hogy nincs visszaigazolva az email címünk vagy rossz felhasználónevet, jelszót próbáltunk beírni.
 
 \subsubsection{Home}
 
@@ -227,7 +226,7 @@ Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitölt�
     \label{fig:question_type}
 \end{figure}
 
-Azért hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van, a kérdés szövege \prettyref{fig:question_type}. Így, hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni és jó pontot kapni a rá. A kérdés alatt pedig megy egy visszaszámláló, ami mutatja mennyi ideje van még elolvasni.
+Azért hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van, a kérdés szövege \prettyref{fig:question_type}. Így, hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni és jó pontot kapni rá. A kérdés alatt pedig megy egy visszaszámláló, ami mutatja mennyi ideje van még elolvasni.
 
 \begin{figure}[H]
     \centering
@@ -264,13 +263,12 @@ Egy igaz-hamis kérdés is ugyan így működik, viszont itt csak 2 lehetőség 
     \label{fig:question_good_wrong}
 \end{figure}
 
-Egy kérdés 3 féleképpen fejeződhet be. Az első az, ahogy a kép is mutatja \prettyref{fig:question_good_wrong}, hogy jó választ kapunk a kérdésre és megkapjuk a kiérdemelt pontot. A második, hogy rosszul válaszolunk és nem kapunk semmit. Az utolsó pedig hogy nem válaszolunk, ilyenkor az idő lejárta után, autómatikusan rossz válasznak veszi a rendszer és tovább lép a következő kérdésre. \newline
+Egy kérdés 3 féleképpen fejeződhet be. Az első az, ahogy a kép is mutatja \prettyref{fig:question_good_wrong}, hogy jó választ kapunk a kérdésre és megkapjuk a kiérdemelt pontot. A második, hogy rosszul válaszolunk és nem kapunk semmit. Az utolsó pedig, hogy nem válaszolunk. Ilyenkor az idő lejárta után, autómatikusan rossz válasznak veszi a rendszer és tovább lép a következő kérdésre. \newline
 
 Az XP értéke a helyesség és a sebesség alapján számolódik ki.
 Jó válasz esetén a pontszámítás az alábbi képlet szerint működik:
 \[ \left\lfloor\left(\frac{\left(\frac{\left( \text{időkorlát} - \text{maradék idő}\right)}{ \text{időkorlát}}\right)}{2}\right)\cdot xp\right\rfloor \]
 Viszont ha azonnali jó választ adunk, akkor a képleten látható számítás nem megy végbe, hanem megkapjuk az összes lehetséges pontot amit a kérdésre lehet.
-
 
 \begin{figure}[H]
     \centering

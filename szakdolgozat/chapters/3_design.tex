@@ -86,7 +86,7 @@
 
 \Section{Kinézet}
 
-A kinézetet játékos, egyszerű és átláthatóra szeretném csinálni, valamint mindenhol játékos ikonokat és színvilágot szeretnék használni. Az oldal ikonja az alábbi lett mivel minden teszt egy Game Boy-ként fog megjelenni:
+A kinézetet játékos, egyszerű és átláthatóra szeretném csinálni, valamint mindenhol vidám ikonokat és színvilágot szeretnék használni. Az oldal ikonja az alábbi lett, mivel a tesztek egy Game Boy-ként fognak megjelenni:
 
 \begin{figure}[h]
     \centering
@@ -98,12 +98,12 @@ Minden grafikus elemnél szeretném ha egységes lenne, így törekszem arra hog
 
 Az ikonokat a Flaticon nevű oldalról töltöttem le \cite{flaticon}.  \newline
 
-Valamint Bootstrap-et szeretnék használni ami egy olyan keretrendszer, amely segít a weboldalak gyorsabb és könnyebb megtervezésében. HTML és CSS alapú tervezősablonokat tartalmaz a tipográfiához, űrlapokat, gombokat, táblázatokat, navigációt, modelleket stb. Ez segítene abban hogy az oldalon egységes kinézetet hozhassak létre, valamit a Bootstrap CSS-je alkalmazkodik a telefonokhoz, táblagépekhez és asztali számítógépekhez is.
+Valamint Bootstrap-et szeretnék használni ami egy olyan keretrendszer, amely segít a weboldalak gyorsabb és könnyebb megtervezésében. HTML és CSS alapú tervezősablonokat tartalmaz a tipográfiához, űrlapokat, gombokat, táblázatokat, navigációt, modelleket stb. Ez segítene abban, hogy az oldalon egységes kinézetet hozhassak létre, valamit a Bootstrap CSS-je alkalmazkodik a telefonokhoz, táblagépekhez és asztali számítógépekhez is.
 
 \Section{Az oldal felépítése}
 
 A funkciók elrendezésének és felépítésének bemutatására képernyőterv vázlatot (magyarul drótváznak, angolul wireframe vagy mockup-nak is nevezzük) készítettem a MockFlow \cite{mockflow} nevű oldalon.
-Először azt az oldalt mutatom be amivel mindenki először találkozik az oldal megnyitásakor, ez pedig a bejelentkezési és regisztrációs felület.
+Elsődlegesen azt az oldalt mutatom be amivel mindenki először találkozik a megnyitáskor, ez pedig a bejelentkezési és regisztrációs felület.
 
 \subsection{Bejelentkezés és regisztráció}
 
@@ -226,7 +226,7 @@ Miután válaszoltunk minden kérdésre, megnézhetjük mennyi pontot gyűjtött
           \begin{addmargin}[\parindent]{0pt}
               Kahoot!-hoz hasonló teszt készítési felületet szeretnék létrehozni ahol az elkészített teszteket hozzá lehet rendelni diákokhoz és ezután kitölthetik azokat.
 
-              A két következő funkció az egyik legalapvető eleme a játékosításnak, viszont egy jó teszt nélkül értékét vesztik. A fejlődés és a teljesíteni vágyás a belső motiváció számunkra hogy kihívásokat teljesítsünk. Viszont kihívások nélkül a pontok és a jelvények vagy bármi féle jutalmak feleslegesnek tűnnek. Emiatt fontos hogy a tesztek kellő kihívást nyújtsanak hogy aztán a jó eredménnyel járó hasznokat is jutalomnak érezzük.
+              A két következő funkció az egyik legalapvető eleme a játékosításnak, viszont egy jó teszt nélkül értékét vesztik. A fejlődés és a teljesíteni vágyás a belső motiváció számunkra, hogy kihívásokat teljesítsünk. Viszont kihívások nélkül a pontok és a jelvények vagy bármi féle jutalmak feleslegesnek tűnnek. Emiatt fontos, hogy a tesztek kellő kihívást nyújtsanak, hogy aztán a jó eredménnyel járó hasznokat is jutalomnak érezzük.
           \end{addmargin}
     \item {Pontgyűjtés}
           \begin{addmargin}[\parindent]{0pt}
@@ -292,12 +292,12 @@ A diagramm \prettyref{fig:TestME_ER} 5 táblából áll, melyek az alábbiak:
 
     \item {UsersTest}
           \begin{addmargin}[\parindent]{0pt}
-              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz a Test és User tábla idegen kulcsa. Valamint itt tárolódik el, hogy felhasználó kitöltötte-e már a tesztet és ha kitöltötte akkor mikor és mennyi pontot ért el. Ez a legtöbbet használt tábla az oldal működése során, hiszen innen szedjük ki az adatokat ha megszeretnénk nézni milyen tesztjeink vannak és ha kitöltjük itt módosítjuk a pontot és a dátumot.
+              Ez egy kapcsolótáblát képez a Test és a User tábla között. A kapcsolótábla azonosítója a két idegen kulcsból képzett összetett kulcs lesz. Tehát ebbe benne lesz a Test és User tábla idegen kulcsa. Valamint itt tárolódik el, hogy felhasználó kitöltötte már a tesztet és ha igen akkor mikor és mennyi pontot ért el. Ez a legtöbbet használt tábla az oldal működése során, hiszen innen szedjük ki az adatokat ha megszeretnénk nézni milyen tesztjeink vannak és ha kitöltjük itt módosítjuk a pontot és a dátumot.
           \end{addmargin}
 
     \item {Answer}
           \begin{addmargin}[\parindent]{0pt}
-              Ez a tábla egy kérdés válaszát tárolja el. Ebben a táblában benne van a kérdés és a UsersTest tábla id-ja, emellett hogy meny idő alatt válaszolt a felhasználó a kérdésre és hogy mi volt a válasza.
+              Ez a tábla egy kérdés válaszát tárolja el. Ebben benne van a kérdés és a UsersTest tábla id-ja, emellett hogy meny idő alatt válaszolt a felhasználó a kérdésre és, hogy mi volt a válasza.
           \end{addmargin}
 
 \end{itemize}
@@ -305,6 +305,7 @@ A diagramm \prettyref{fig:TestME_ER} 5 táblából áll, melyek az alábbiak:
 \Section{API}
 
 Az alábbi endpointokat szeretném használni az adatok lekérésére és tárolására:
+
 \subsection{Felhasználók}
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/users:}}
@@ -367,7 +368,7 @@ Az alábbi endpointokat szeretném használni az adatok lekérésére és tárol
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\url{api/tests/answers:}}
           \begin{addmargin}[\parindent]{0pt}
-              A kérdést két tábla hivatkozza, az egyik a Teszt mivel egy teszthez tartoznak kérdések. A másik pedig a válasz, azért hogy be tudjuk azonosítani hogy egy válasz melyik kérdéshez érkezett.
+              A kérdést két tábla hivatkozza, az egyik a Teszt mivel egy teszthez tartoznak kérdések. A másik pedig a válasz azért, hogy be tudjuk azonosítani, hogy egy válasz melyik kérdéshez érkezett.
               \begin{json}
 {
     "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
