@@ -1,113 +1,5 @@
 \Chapter{Megvalósítás}
 
-% Ez a fejezet mutatja be a megvalósítás lépéseit.
-% Itt lehet az esetlegesen előforduló technikai nehézségeket említeni.
-% Be lehet már mutatni a program elkészült részeit.
-
-% Meg lehet mutatni az elkészített programkód érdekesebb részeit.
-% (Az érdekesebb részek bemutatására kellene szorítkozni.
-% Többségében a szöveges leírásnak kellene benne lennie.
-% Abból lehet kiindulni, hogy a forráskód a dolgozathoz elérhető, azt nem kell magába a dolgozatba bemásolni, elegendő csak behivatkozni.)
-
-% A dolgozatban szereplő forráskódrészletekhez külön vannak programnyelvenként stílusok.
-% Python esetében például így néz ki egy formázott kódrészlet.
-% \begin{python}
-% import sys
-
-% if __name__ == '__main__':
-%     pass
-% \end{python}
-
-% A stílusfájlok a \texttt{styles} jegyzékben találhatók.
-% A stílusok között szerepel még C++, Java és Rust stílusfájl.
-% Ezek használatához a \texttt{dolgozat.tex} fájl elején \texttt{usepackage} paranccsal hozzá kell adni a stílust, majd a stílusfájl nevével megegyező környezetet lehet használni.
-% További példaként C++ forráskód esetében ez így szerepel.
-% \begin{cpp}
-% #include <iostream>
-
-% class Sample : public Object
-% {
-%     // An empty class definition
-% }
-% \end{cpp}
-% Stílusfájlokból elegendő csak annyit meghagyni, amennyire a dolgozatban szükség van.
-% Más, C szintaktikájú nyelvekhez (mint például a JavaScript és C\#) a Java vagy C++ stílusfájlok átszerkesztésére van szükség.
-% (Elegendő lehet csak a fájlnevet átírni, és a fájlban a környezet nevét.)
-
-% Nyers adatok, parancssori kimenetek megjelenítéséhez a \texttt{verbatim} környezetet lehet használni.
-% \begin{verbatim}
-% $ some commands with arguments
-% 1 2 3 4 5
-% $ _
-% \end{verbatim}
-
-% A kutatás jellegű témáknál ez a fejezet gyakorlatilag kimaradhat.
-% Helyette inkább a fő vizsgálati módszerek, kutatási irányok kaphatnak külön-külön fejezeteket.
-
-
-
-% Az API leírását aktualizálni
-% A megvalósítást kellene kifejteni, például:
-
-% • az adatok validálását, EF-fel való kezelését nagyvonalakban
-
-% • a kliens elkészítésének a menetét, annak működését
-
-% • minél több példát kellene bemutatni arra
-% vonatkozóan, hogy hogy működik az alkalmazás. Például használattal
-% kapcsolatos eredményeket, tapasztalatokat, további fejlesztési
-% lehetőségeket.
-
-
-\Section{Adatmodellek leképzése}
-
-Az adatbázisban a táblák létrehozásához "Code First" megközelítést alkalmaztam, ahelyett hogy először megterveznénk az adatbázist, majd létrehozná azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz, hogy ez létrejöhessen kell egy úgynevezett ORM (Object-Relational Mapping) eszköz. Az én választásom az Entity Framework-re esett mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Tehát Entity Framework az, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
-
-Az api kódjában 6 osztályt hoztam létre amelyekből létre fognak jönni a táblák ezek adattagjait részleteztem az \nameref{Adatmodell} fejezetben.
-Viszont a közöttük lévő kapcsolat látszik az említett fejezetben lévő ábrán de a megvalósításáról kód szinten még nem beszéltem. \newline
-
-A UsersTest táblával kezdeném, hiszen ez a fő tábla amely a többit összeköti.
-A UsersTest-ben két idegen kulcs van, az egyik a UserId, másik pedig a TestId. Ezekkel kapcsolódik a két legfontosabb tábla, a felhasználó és a teszt. Így a UsersTest segítségével tudjuk azt létrehozni, hogy az, aki az oldalt használja és hozzáadtak egy tesztet, az kap egy példányt a tesztből, így el tudjuk menteni az eredményeit egyesével a meghívottaknak.
-Tehát egy UsersTest-hez egy felhasználó és egy teszt tartozik, viszont felhasználókhoz és tesztekhez is több ilyen UsersTest tábla tartozik mivel több ember használja az oldalt és több teszt is van. \newline
-
-A User táblának csak egy idegen kulcsa van ez pedig a RoleId, mivel minden felhasználóhoz tartozik egy jogosultság.\newline
-
-
-A Test-hez értelem szerűen hivatkozva van maga a kérdés.
-\begin{cpp}
-    [ForeignKey("User")]
-    public string UserId { get; set; }
-
-    public ICollection<Question> Questions { get; set; }
-\end{cpp}
-Itt egy-több kapcsolat van melyet úgy valósítottam meg, hogy a Test osztályban létrehoztam egy gyűjteményt, ami egy generikus típus, és ennek a típusparamétere a Question osztály így hivatkozunk rá, hogy itt több kérdés fog tartozni egy teszthez. A másik azonosító pedig a UserId, ami a teszt készítőjének egyedi azonosítóját tartalmazza. \newline
-
-Az Answer táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt, hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a UserTest azonosítója így vissza tudjuk keresni,  melyik tesztre érkezett a válasz és ki adta a választ, mivel a UserTest-ben benne van a felhasználó azonosítója.
-
-\Section{Session tárolása}
-
-A régi ASP.NET-től eltérően az ASP.NET Core nem rendelkezik \lstinline{Cache} objektummal. Az ASP.NET Core azonban számos különféle gyorsítótár-támogatást nyújt ilyen lehet a memóriában, az elosztott gyorsítótárban vagy a válasz-gyorsítótárban tárolt. \newline
-
-Az elosztott SQL Server-es gyorsítótár megvalósítása lehetővé teszi az elosztott gyorsítótár számára, hogy az SQL Server adatbázist használja háttértárként. Először ezt hozzá kell adni a \lstinline{Startup.cs} file-hoz:
-
-\begin{cpp}
-    services.AddDistributedSqlServerCache(options => {
-        options.ConnectionString =
-            Configuration.GetConnectionString("TestMEApiContext");
-        options.SchemaName = "dbo";
-        options.TableName = "Session";
-    });
-\end{cpp}
-
-SQL Server gyorsítótárazott cache létrehozásához egy SQL Server példányban használni kell az \lstinline{sql-cache} eszközt. Először létre kell hozni egy táblázatot az SQL Server kiszolgálón az \lstinline{sql-cache create} parancs futtatásával. Meg kell adni az SQL Server példányt, az adatbázist, a sémát (például dbo) és a tábla nevét (például Session) \cite{distributedSQLServerCache}:
-
-\begin{cpp}
-    dotnet sql-cache create "Data Source=(localdb)\MSSQLLocalDB;Initial
-    Catalog=DistCache;Integrated Security=True;" dbo Session
-\end{cpp}
-
-Így hoztam létre a táblát amiben az összes bejelentkezett felhasználó session-je tárolódik.
-
 \Section{Frontend}
 
 A felület létrehozásához TypeScript \cite{typescript} programozási nyelvet használtam és React \cite{react} könyvtárat.
@@ -152,7 +44,7 @@ Legelőször is regisztrálni \prettyref{fig:signin} kell. Ehhez szükséges meg
     \label{fig:login}
 \end{figure}
 
-Ezután ha sikeresen megerősítettük az email címünket, bejelentkezhetünk \prettyref{fig:login} a felhasználónevünkkel és jelszavunkkal.
+Ezután, ha sikeresen megerősítettük az email címünket, bejelentkezhetünk \prettyref{fig:login} a felhasználónevünkkel és jelszavunkkal.
 A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők üresek nem küldi el az adatokat, emellett ha helytelen az email cím nem enged regisztrálni vele. Valamint hibaüzenetet ír ki, ha úgy próbálunk bejelentkezni, hogy nincs visszaigazolva az email címünk vagy rossz felhasználónevet, jelszót próbáltunk beírni.
 
 \subsubsection{Home}
@@ -177,7 +69,7 @@ Ebben a komponenseben történik a tesztek létrehozása.
     \label{fig:make_test1}
 \end{figure}
 
-Két részre van osztva a felület \prettyref{fig:make_test1}. A bal oldali sávban vannak az eddig hozzáadott kérdéseink amiket tudunk létrehozni, törölni, kiválasztani majd szerkeszteni. A téglalapokban látszódik a feltett kérdésünk, fölötte pedig, hogy hányadik és milyen típusú. A jobb oldali részen pedig, ha rákattintunk egy létrehozott kérdésre ide tölti be a kérdés adatait. Így tudjuk kitölteni vagy módosítani. Itt adjuk meg mi legyen a kérdés, mik a lehetséges válaszok, ezek közül melyik a jó, mennyi időt engedünk, hogy válaszoljanak rá és mennyi pontot adunk érte. Ez a pont viszont teszt kitöltésnél idő és válasz alapján dől el, hogy mennyit kap belőle a kitöltő. Tehát például ezt a 700 pontot akkor kapja meg ha azonnali jó választ ad, minél többet gondolkodik a kérdésen annál kevesebbet kap meg belőle. Tehát itt, egy maximum értéket kell meghatározni.
+Két részre van osztva a felület \prettyref{fig:make_test1}. A bal oldali sávban vannak az eddig hozzáadott kérdéseink amiket tudunk létrehozni, törölni, kiválasztani majd szerkeszteni. A téglalapokban látszódik a feltett kérdésünk, fölötte pedig, hogy hányadik és milyen típusú. A jobb oldali részen pedig, ha rákattintunk egy létrehozott kérdésre ide tölti be a kérdés adatait. Így tudjuk kitölteni vagy módosítani. Itt adjuk meg mi legyen a kérdés, mik a lehetséges válaszok, ezek közül melyik a jó, mennyi időt engedünk, hogy válaszoljanak rá és mennyi pontot adunk érte. Ez a pont viszont teszt kitöltésnél idő és válasz alapján dől el, hogy mennyit kap belőle a kitöltő. Tehát például ezt a 700 pontot akkor kapja meg, ha azonnali jó választ ad. Minél többet gondolkodik a kérdésen annál kevesebbet kap meg belőle. Tehát itt, egy maximum értéket kell meghatározni.
 
 \begin{figure}[H]
     \centering
@@ -210,7 +102,7 @@ Ezután, ha mindennel megvagyunk és rákattintunk a mentés gombra, majd felugr
 
 Ezt követően ha elmentettük a tesztet átkerülünk a "Tesztjeim" nevű oldalra \prettyref{fig:my_tests}, ahol megnézhetjük a tesztjeinket amiket ki kell töltenünk vagy amiket mi kreáltunk. Itt a játékosság szemléltetése végett minden tesztet egy Game Boy ábrázol. Itt látszódik rajta a teszt címe, hogy ki készítette és mikor, mi a kitöltési határidő, mennyi idő van az összes kérdésre egybevéve, hány kérdés van és, hogy mennyi pont jár az az összes kérdésre ha hibátlanul és gyorsan válaszolunk. \newline
 
-Azt hogy melyik kérdést hoztuk mi létre és melyik az amelyiket nekünk kell kitölteni, azt két helyen is észre lehet venni. Először is látjuk hogy a teszt címe alatt a saját nevük van, második pedig hogy a "Kezdés" gomb helyett rögtön azt látjuk hogy "Eredmények". Viszont ugyan ez az "Eredmények" gomb lesz ott akkor is, ha egy tesztet már kitöltöttünk és később vissza szeretnénk nézni mások, hogy teljesítettek. Igy össze tudjuk hasonlítani az eredményünket másokéval, de elsősorban ez a teszt kitöltőjének jelent fontos információt, hogy tudja ki hány pontot szerzett. \newline
+Azt, hogy melyik kérdést hoztuk mi létre és melyik az amelyiket nekünk kell kitölteni, azt két helyen is észre lehet venni. Először is látjuk, hogy a teszt címe alatt a saját nevük van, második pedig hogy a "Kezdés" gomb helyett rögtön azt látjuk hogy "Eredmények". Viszont ugyan ez az "Eredmények" gomb lesz ott akkor is, ha egy tesztet már kitöltöttünk és később vissza szeretnénk nézni mások, hogy teljesítettek. Igy össze tudjuk hasonlítani az eredményünket másokéval, de elsősorban ez a teszt kitöltőjének jelent fontos információt, hogy tudja ki hány pontot szerzett. \newline
 
 A kérdéseket tudjuk rendezni is úgy, hogy a legújabb, a legrégebben vagy a kitöltetlen tesztek legyenek elől.
 A kitöltött tesztek kitöltés után zöld színűek lesznek és a Game Boy kijelzőjén látjuk az elért pontunkat.
@@ -226,7 +118,7 @@ Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitölt�
     \label{fig:question_type}
 \end{figure}
 
-Azért hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van, a kérdés szövege \prettyref{fig:question_type}. Így, hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni és jó pontot kapni rá. A kérdés alatt pedig megy egy visszaszámláló, ami mutatja mennyi ideje van még elolvasni.
+Azért, hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van, a kérdés szövege \prettyref{fig:question_type}. Így, hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni és jó pontot kapni rá. A kérdés alatt pedig megy egy visszaszámláló, ami mutatja mennyi ideje van még elolvasni.
 
 \begin{figure}[H]
     \centering
@@ -278,3 +170,212 @@ Viszont ha azonnali jó választ adunk, akkor a képleten látható számítás 
 \end{figure}
 
 Majd ha az összes kérdés elfogyott, összeadjuk a felhasználó összesen elért pontját és megjelenítjük a többiekével együtt \prettyref{fig:results}. Így megnézhetjük, hányadikok lettünk. Ezután a "Kilépés" gombra kattintva vissza kerülünk a tesztjeinkhez és a főoldalon látjuk, hogy az XP száma növekedett, ha értünk el pontot a teszt kitöltése során.
+
+\Section{Backend}
+
+\subsubsection{ASP.NET Core}
+
+Az ASP.NET Core egy nagy teljesítményű, nyílt forráskódú, modern, felhőalapú, internetes alkalmazások felépítéséhez használt keretrendszer. Azért jó ez a keretrendszer mert így készen kapom az eszközöket a HTTP-szolgáltatások kiépítéséhez, amelyek bármely kliensről elérhetőek, beleértve a böngészőket és a mobileszközöket is. Egy ideális környeztetett biztosít a RESTful alkalmazások felépítéséhez a .NET Framework-el. \newline
+
+Az ASP.NET Core számos fejlesztést kínál az ASP.NET MVC / Web API-hoz képest. Azért választottam, mert a core egy olyan platformokon átívelő webes keretrendszer, amely Windows, macOS, Linux-ra is telepíthető. Így egy elég rugalmas keretrendszer webes és mobilalkalmazásokat vezérlő webes API-k fejlesztésére. Azért is döntöttem az ASP.NET Core mellett, mert biztosítja a megfelelő architektúrát amihez alkalmazkodva elég gyorsan lehet API-t kreálni. A project létrehozásakor kiválasztottam a Web API projekt sablon-t és így már csak annyi dolgom volt, hogy létrehozzam a modelleket amikre szükségem van és megírjak a hozzájuk tartozó kontrollereket.
+
+\subsection{Adatmodellek leképzése}
+
+Az adatbázisban a táblák létrehozásához "Code First" megközelítést alkalmaztam, ahelyett, hogy először megterveznénk az adatbázist, majd létrehozná azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz, hogy ez létrejöhessen kell egy úgynevezett ORM (Object-Relational Mapping) eszköz. Az én választásom az Entity Framework-re esett mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Tehát Entity Framework az, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
+
+Az api kódjában 6 osztályt hoztam létre amelyekből létre fognak jönni a táblák ezek adattagjait részleteztem az \nameref{Adatmodell} fejezetben.
+Viszont a közöttük lévő kapcsolat látszik az említett fejezetben lévő ábrán de a megvalósításáról kód szinten még nem beszéltem. \newline
+
+A UsersTest táblával kezdeném, hiszen ez a fő tábla amely a többit összeköti.
+A UsersTest-ben két idegen kulcs van, az egyik a UserId, másik pedig a TestId. Ezekkel kapcsolódik a két legfontosabb tábla, a felhasználó és a teszt. Így a UsersTest segítségével tudjuk azt létrehozni, hogy az, aki az oldalt használja és hozzáadtak egy tesztet, az kap egy példányt a tesztből, így el tudjuk menteni az eredményeit egyesével a meghívottaknak.
+Tehát egy UsersTest-hez egy felhasználó és egy teszt tartozik, viszont felhasználókhoz és tesztekhez is több ilyen UsersTest tábla tartozik mivel több ember használja az oldalt és több teszt is van. \newline
+
+A User táblának csak egy idegen kulcsa van ez pedig a RoleId, mivel minden felhasználóhoz tartozik egy jogosultság.\newline
+
+
+A Test-hez értelem szerűen hivatkozva van maga a kérdés.
+\begin{cpp}
+    [ForeignKey("User")]
+    public string UserId { get; set; }
+
+    public ICollection<Question> Questions { get; set; }
+\end{cpp}
+Itt egy-több kapcsolat van melyet úgy valósítottam meg, hogy a Test osztályban létrehoztam egy gyűjteményt, ami egy generikus típus, és ennek a típusparamétere a Question osztály így hivatkozunk rá, hogy itt több kérdés fog tartozni egy teszthez. A másik azonosító pedig a UserId, ami a teszt készítőjének egyedi azonosítóját tartalmazza. \newline
+
+Az Answer táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt, hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a UserTest azonosítója így vissza tudjuk keresni,  melyik tesztre érkezett a válasz és ki adta a választ, mivel a UserTest-ben benne van a felhasználó azonosítója.
+
+\subsection{API}
+
+Azt, hogy milyen endpoint-okat szeretnék és mi a szerepük, az \nameref{API} fejezetben kifejtettem. Viszont így megvalósítás után, be szeretném mutatni néhány fontosabb elküldött adatot, hogy lássuk mik kerülnek a kontrollerhez és miket adunk vissza. 
+
+\subsubsection{Felhasználók}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\nolinkurl{api/users:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Bejelentkezéskor a felhasználó email címét és jelszavát elküldve kikeressük, hogy valóban létező, mentett email címet és jelszót küldött el és visszaküldjük a felhasználó adatait. 
+              \begin{json}
+{
+    "email": "teszt@teszt.hu",
+    "password": "jelszo000"
+}
+              \end{json}
+              Ha nincs visszaigazolva az e-mail cím \nolinkurl{403}-as, ha rossz adatokat írunk be \nolinkurl{500}-as és ha minden jó akkor \nolinkurl{201}-es kódot kapunk vissza. \newline
+
+              A regisztrációkor elküldött adatok az alábbiak:
+
+              \begin{json}
+{
+    "roleId": 0,
+    "userName": "Levente1999",
+    "firstName": "Makszimus",
+    "lastName": "Levente",
+    "email": "teszt@teszt.hu",
+    "password": "Jelszo_.000"
+}
+              \end{json}
+
+              Miután elküldődnek a felhasználó adatai és vissza lett igazolva az email cím, ami egy link megnyitással jár csak, be is jelentkezhetünk. Ez a link az \nolinkurl{/api/confirm-email} endpoint-ot hívja meg. \newline
+
+              Valamint lehet egy felhasználó adatait módosítani, \nolinkurl{PUT} és törölni, \nolinkurl{DELETE} hívással ugyan azon az endpoint-on: \nolinkurl{/api/users/{userId}}.
+          \end{addmargin}
+\end{itemize}
+
+\subsubsection{Teszt}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\nolinkurl{api/tests:}}
+          \begin{addmargin}[\parindent]{0pt}
+              
+              Egy elkészített teszt így néz ki ha elküldjük \nolinkurl{POST}-tal:
+              \begin{json}
+{
+    "title":"Mesterséges intelligencia alapok 2 teszt",
+    "description":"Mesterséges intelligencia alapok második zárthelyi dolgozat",
+    "userId":"165",
+    "created":"2021-01-12",
+    "deadline":"2021-01-22",
+    "questions":[
+        {
+            "problem":"A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+            "answerOne":"true",
+            "answerTwo":"false",
+            "timeLimit":5,
+            "xp":3,
+            "correctAnswer":0
+        }
+    ]
+}
+              \end{json}
+          \end{addmargin}
+\end{itemize}
+
+\subsubsection{Kérdések}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\nolinkurl{api/questions:}}
+          \begin{addmargin}[\parindent]{0pt}
+              A teszt készítésekor minden kérdést egyesével küldünk el ide, a következő adattagokkal:
+              \begin{json}
+{
+    "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+    "answerOne": "110",
+    "answerTwo": "120",
+    "answerThree": "130",
+    "answerFour": "140",
+    "timeLimit": 10,
+    "xp": 5,
+    "correctAnswer": 0
+}
+              \end{json}
+          \end{addmargin}
+\end{itemize}
+
+\subsubsection{Válaszok}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\nolinkurl{api/answers:}}
+          \begin{addmargin}[\parindent]{0pt}
+              Itt egy teszt kérdés válaszának küldésekor csak egy egyszerű, négy számot tartalmazó objektum, ahol a kérdés és a felhasználói teszt azonosítója adja az egyediségét minden válasznak. Emelet elküldjük még azt, hogy milyen gyorsan válaszolt és hogy mi volt a válasza.
+
+              \begin{json}
+{
+    "questionId": 1,
+    "usersTestId": 2,
+    "responseTime": 5,
+    "userAnswer": 4
+}
+              \end{json}
+          \end{addmargin}
+\end{itemize}
+
+\subsubsection{Felhasználó tesztjei}
+\begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
+    \item[] {\nolinkurl{api/users-tests:}}
+          \begin{addmargin}[\parindent]{0pt}
+            Egy felhasználói teszt lekérés a felhasználó id-jának elküldésével történne és ezt kell visszakapnunk:
+              \begin{json}
+{
+    "id": 1,
+    "userId": 1,
+    "testId": 1,
+    "test": {
+        "id": 1,
+        "description": "A tesztben csak kvíz kérdések szerepelnek, tehát 4 választási lehetőség közül kell majd választaniuk. Eredményes munkát kívánok!",
+        "userId": "152",
+        "title": "Mesterséges intelligencia alapok 2 teszt",
+        "created": "2021-01-12T00:00:00",
+        "deadline": "2021-01-22T00:00:00",
+        "questions": [
+            {
+                "id": 1,
+                "problem": "Ha csinálnánk egy csoportos IQ tesztet egy tankör hallgatóival mennyi lenne az átlag?",
+                "answerOne": "110",
+                "answerTwo": "120",
+                "answerThree": "130",
+                "answerFour": "140",
+                "timeLimit": 10,
+                "xp": 5,
+                "correctAnswer": 0
+            },
+            {
+                "id": 2,
+                "problem": "A Turing-teszt teljesítéséért járó arany medál a díj kitűzőjét, Hugh Loebnert ábrázolja?",
+                "answerOne": "true",
+                "answerTwo": "false",
+                "answerThree": null,
+                "answerFour": null,
+                "timeLimit": 5,
+                "xp": 3,
+                "correctAnswer": 0
+            }
+        ]
+    },
+    "finished": "2021-01-13T00:00:00",
+    "earnedXp": 6
+}
+              \end{json}
+
+              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor, hogy ki hány pontot ért el. Ehhez le kell kérni az összes játékost akik kitöltötték a tesztet. Ezt megtehetjük a \nolinkurl{api/users-tests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
+          \end{addmargin}
+\end{itemize}
+
+\subsection{Session tárolása}
+
+A régi ASP.NET-től eltérően az ASP.NET Core nem rendelkezik \lstinline{Cache} objektummal. Az ASP.NET Core azonban számos különféle gyorsítótár-támogatást nyújt ilyen lehet a memóriában, az elosztott gyorsítótárban vagy a válasz-gyorsítótárban tárolt. \newline
+
+Az elosztott SQL Server-es gyorsítótár megvalósítása lehetővé teszi az elosztott gyorsítótár számára, hogy az SQL Server adatbázist használja háttértárként. Először ezt hozzá kell adni a \lstinline{Startup.cs} file-hoz:
+
+\begin{cpp}
+    services.AddDistributedSqlServerCache(options => {
+        options.ConnectionString =
+            Configuration.GetConnectionString("TestMEApiContext");
+        options.SchemaName = "dbo";
+        options.TableName = "Session";
+    });
+\end{cpp}
+
+SQL Server gyorsítótárazott cache létrehozásához egy SQL Server példányban használni kell az \lstinline{sql-cache} eszközt. Először létre kell hozni egy táblázatot az SQL Server kiszolgálón az \lstinline{sql-cache create} parancs futtatásával. Meg kell adni az SQL Server példányt, az adatbázist, a sémát (például dbo) és a tábla nevét (például Session) \cite{distributedSQLServerCache}:
+
+\begin{cpp}
+    dotnet sql-cache create "Data Source=(localdb)\MSSQLLocalDB;Initial
+    Catalog=DistCache;Integrated Security=True;" dbo Session
+\end{cpp}
+
+Így hoztam létre a táblát amiben az összes bejelentkezett felhasználó session-je tárolódik.

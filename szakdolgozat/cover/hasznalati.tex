@@ -4,17 +4,15 @@
 
 \vskip 1cm
 
-Ennek a címe lehet például \textit{A mellékelt CD tartalma} vagy \textit{Adathordozó használati útmutató} is.
+A CD lemezen 3 mappa található, ebben a leírásban bemutatom, hogy mik ezek a mappák és, hogy mi van bennük.
 
-Ez jellemzően csak egy fél-egy oldalas leírás.
-Arra szolgál, hogy ha valaki kézhez kapja a szakdolgozathoz tartozó CD-t, akkor tudja, hogy mi hol van rajta.
-Jellemzően elég csak felsorolni, hogy milyen jegyzékek vannak, és azokban mi található.
-Az elkészített programok telepítéséhez, futtatásához tartozó instrukciók kerülhetnek ide.
+\subsubsection{szakdolgozat}
 
-A CD lemezre mindenképpen rá kell tenni
-\begin{itemize}
-\item a dolgozatot egy \texttt{dolgozat.pdf} fájl formájában,
-\item a LaTeX forráskódját a dolgozatnak,
-\item az elkészített programot, fontosabb futási eredményeket (például ha kép a kimenet),
-\item egy útmutatót a CD használatához (ami lehet ez a fejezet külön PDF-be vagy MarkDown fájlként kimentve).
-\end{itemize}
+Ebben a mappában található a LaTeX forráskódja a dolgozatnak. A "chapters" mappában vannak a fejezetekhez kapcsolódó tex fájlok, az "images" mappában pedig a dolgozatban használt képek.
+
+\subsubsection{test-me}
+A test-me jegyzékben van az alkalmazás felületéhez tartozó TypeScript kód.
+A "src" mappában van az összes forráskód. Ezen belül a "components"-ben van az összes használt komponens.
+
+\subsubsection{TestMEApi}
+A TestMEApi-ban van az alkalmazás API-jának C\# kódja. A "Controllers" mappában vannak a kontrollerek, a "Models" mappában vannak az adatmodellek, a "Data"-ban pedig az adatbázis létrehozásához szükséges kód.
