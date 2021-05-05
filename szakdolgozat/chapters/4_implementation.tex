@@ -1,64 +1,66 @@
-\Chapter{Megvalósítás}
+\Chapter{A frontend megvalósítása}
 
-\Section{Frontend}
+A fejezet a felhasználóhoz közeli grafikus elemek elkészítését, azok működését mutatja be.
 
-A felület létrehozásához TypeScript \cite{typescript} programozási nyelvet használtam és React \cite{react} könyvtárat.
+\Section{Felhasznált technológiák}
 
-\subsection{TypeScript}
+A felület létrehozásához \textit{TypeScript} \cite{typescript} programozási nyelvet használtam és \textit{React} \cite{react} könyvtárat.
 
-A TypeScript egy nyílt forráskódú nyelv, amely a JavaScriptre, a világ egyik leggyakrabban használt nyelvére épít rá, statikus típusdefiníciók hozzáadásával. Tehát minden jól működő JavaScript kód egyben jó TypeScript kód is. Viszont lehet kapunk pár típussokkal kapcsolatos hibát de pont emiatt szerettem volna használni, hogy átláthatóbb kódot írjak és kevesebb időt kelljen töltenem debug-olással. \bigskip
+\SubSection{TypeScript}
+
+A \textit{TypeScript} egy nyílt forráskódú nyelv, amely a JavaScript-re, a világ egyik leggyakrabban használt nyelvére épít rá, statikus típusdefiníciók hozzáadásával bővíti azt. Tehát minden jól működő JavaScript kód egyben jó TypeScript kód is. Viszont lehet kapunk pár típussokkal kapcsolatos hibát de pont emiatt szerettem volna használni, hogy átláthatóbb kódot írjak és kevesebb időt kelljen töltenem hibakereséssel. \bigskip
 
 A típusok biztosítják nekünk az objektum alakjának leírását, jobb dokumentációt nyújtanak, és elősegíti a TypeScript számára, hogy ellenőrizze, a kód megfelelően működik.\bigskip
 
-Az típusok definiálása opcionális TypeScript-ben, de azért jó ha írunk típusokat mert lehetővé teszi, hogy sok energiát spóroljunk anélkül, hogy több kódot írnánk.
+Az típusok definiálása opcionális TypeScript-ben, de azért jó ha írunk típusokat mert lehetővé teszi, hogy sok energiát spóroljunk azzal, hogy maga a kód rövidebb, kifejezőbb tud lenni.
 
-\subsection{React}
+\SubSection{React}
 
-Az eredetileg a Facebook számára kifejlesztett React egy JavaScript könyvtár, amely single-page alkalmazások készítésére szokás használni, azáltal, hogy a UI-t komponensekre osztja fel. Mivel csak a HTML és a JavaScript  minimális megértését igényli, a React mint front-end webfejlesztő eszköz egyre népszerűbb, ma már talán a legelterjedtebb JavaScript könyvtár. \bigskip
+Az eredetileg a Facebook számára kifejlesztett React egy JavaScript könyvtár, amely single-page (SPA, \textit{Single Page Application}) alkalmazások készítésére szokás használni, azáltal, hogy a UI-t komponensekre osztja fel. Mivel csak a HTML és a JavaScript minimális megértését igényli, a React mint front-end webfejlesztő eszköz egyre népszerűbb, ma már talán a legelterjedtebb JavaScript könyvtár. \bigskip
 
-Pont emiatt esett rá a választásom, mert rendkívül felkapott és rengeteg ember használja így sok helyen lehet hozzá forrást találni, valamint nagyon gyors.
+Pont emiatt esett rá a választásom, mert rendkívül felkapott és rengeteg ember használja, így sok helyen lehet hozzá forrást találni, valamint nagyon gyors.
 
-\subsection{Komponensek}
+\Section{Az alkalmazás komponensei}
 
-Az oldalon 5 fő komponense található amik megvalósítják a fő funkciókat. A többi komponense ezekben van hivatkozva, tehát ezeknek a gyerekei.
+Az oldalon 5 fő komponens található, amelyek megvalósítják a funkciókat. A többi komponens ezekben kerül hivatkozásra, tehát ezeknek a gyerekei. A következő szakaszok ezen komponenseket taglalják.
 
-\subsubsection{Authentication}
+\SubSection{Authentication}
 
 Ebben a komponenseben történik a bejelentkezés és regisztráció is egyszerre. Egy új felhasználónak ide kell jönnie először mivel csak bejelentkezve érhetőek el a funkciók.
 
-
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\linewidth]{images/signin.png}
     \caption{Regisztráció}
     \label{fig:signin}
 \end{figure}
 
+Legelőször is regisztrálni kell (\prettyref{fig:signin}. ábra). Ehhez szükséges megadni, hogy diák vagy tanárként regisztrálunk, a teljes nevünket, egy tetszőleges felhasználónevet egy email címet és a jelszót. Majd ezt követően kapunk egy email-t amiben van egy hivatkozás, aminek a segítségével vissza tudjuk igazolni a regisztrációt. Erre azért van szükség, mert így biztos mi regisztráljuk az email címünkkel és nem más.
 
-Legelőször is regisztrálni \prettyref{fig:signin} kell. Ehhez szükséges megadni, hogy diák vagy tanárként regisztrálunk, a teljes nevünket, egy tetszőleges felhasználónevet egy email címet és a jelszót. Majd ezt követően kapunk egy email-t amiben van egy hivatkozás, aminek a segítségével, vissza tudjuk igazolni a regisztrációt. Erre azért van szükség, mert így biztos mi regisztráljuk az email címünkkel és nem más.
-
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\linewidth]{images/login.png}
     \caption{Bejelentkezés}
     \label{fig:login}
 \end{figure}
 
-Ezután, ha sikeresen megerősítettük az email címünket, bejelentkezhetünk \prettyref{fig:login} a felhasználónevünkkel és jelszavunkkal.
-A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők üresek nem küldi el az adatokat, emellett ha helytelen az email cím nem enged regisztrálni vele. Valamint hibaüzenetet ír ki, ha úgy próbálunk bejelentkezni, hogy nincs visszaigazolva az email címünk vagy rossz felhasználónevet, jelszót próbáltunk beírni.
+Ez után, ha sikeresen megerősítettük az email címünket, bejelentkezhetünk a felhasználónevünkkel és jelszavunkkal (\prettyref{fig:login}. ábra).
+A bejelentkezés és regisztrációs űrlapon is van validáció. Ha a mezők üresek, akkor nem küldi el az adatokat, emellett ha helytelen az email cím nem enged regisztrálni vele. Valamint hibaüzenetet ír ki, ha úgy próbálunk bejelentkezni, hogy nincs visszaigazolva az email címünk vagy rossz felhasználónevet, jelszót próbáltunk beírni.
 
-\subsubsection{Home}
+\SubSection{Home}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{images/home.png}
-    \caption{Főoldal}
-    \label{fig:home}
+Bejelentkezés után automatikusan átkerülünk a főoldalra (\prettyref{fig:home}. ábra) ahol láthatjuk a teljes nevünket, hanyas szintűek vagyunk a pontjaink alapján és, hogy hány darab kitöltött és kitöltetlen tesztünk van.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{images/home.png}
+	\caption{Főoldal}
+	\label{fig:home}
 \end{figure}
 
-Bejelentkezés után automatikusan átkerülünk a főoldalra \prettyref{fig:home} ahol láthatjuk a teljes nevünket, hanyas szintűek vagyunk a pontjaink alapján és, hogy hány darab kitöltött és kitöltetlen tesztünk van. Itt láthatjuk egyben a főbb fontos adatokat. A szint meghatározása úgy történik hogy 5000 pontoként lehet egy szintet lépni, tehát például az itt szereplő képen 8 és 9-es szint között vagyok. Ez azt jelenti, hogy 35000-től több de 40000-től kevesebb pontom van.
+\noindent Itt láthatjuk egyben a fontos adatokat. A szint meghatározása úgy történik hogy 5000 pontonként lehet egy szintet lépni, tehát például az itt szereplő képen 8 és 9-es szint között vagyunk. Ez azt jelenti, hogy 35000-től több de 40000-től kevesebb pontom van.
 
-\subsubsection{CreateTest}
+\SubSection{CreateTest}
 
 Ebben a komponenseben történik a tesztek létrehozása.
 
@@ -69,7 +71,7 @@ Ebben a komponenseben történik a tesztek létrehozása.
     \label{fig:make_test1}
 \end{figure}
 
-Két részre van osztva a felület \prettyref{fig:make_test1}. A bal oldali sávban vannak az eddig hozzáadott kérdéseink amiket tudunk létrehozni, törölni, kiválasztani majd szerkeszteni. A téglalapokban látszódik a feltett kérdésünk, fölötte pedig, hogy hányadik és milyen típusú. A jobb oldali részen pedig, ha rákattintunk egy létrehozott kérdésre ide tölti be a kérdés adatait. Így tudjuk kitölteni vagy módosítani. Itt adjuk meg mi legyen a kérdés, mik a lehetséges válaszok, ezek közül melyik a jó, mennyi időt engedünk, hogy válaszoljanak rá és mennyi pontot adunk érte. Ez a pont viszont teszt kitöltésnél idő és válasz alapján dől el, hogy mennyit kap belőle a kitöltő. Tehát például ezt a 700 pontot akkor kapja meg, ha azonnali jó választ ad. Minél többet gondolkodik a kérdésen annál kevesebbet kap meg belőle. Tehát itt, egy maximum értéket kell meghatározni.
+\noindent Két részre van osztva a felület (\prettyref{fig:make_test1}. ábra). A bal oldali sávban vannak az eddig hozzáadott kérdéseink amiket létre tudunk hozni, törölni, kiválasztani majd szerkeszteni. A téglalapokban látszódik a feltett kérdésünk, fölötte pedig, hogy hanyadik és milyen típusú. A jobb oldali részen pedig, ha rákattintunk egy létrehozott kérdésre ide tölti be a kérdés adatait. Így tudjuk kitölteni vagy módosítani. Itt adjuk meg mi legyen a kérdés, mik a lehetséges válaszok, ezek közül melyik a jó, mennyi időt engedünk, hogy válaszoljanak rá és mennyi pontot adunk érte. Ez a pont viszont teszt kitöltésnél idő és válasz alapján dől el, hogy mennyit kap belőle a kitöltő. Tehát például ezt a 700 pontot akkor kapja meg, ha azonnali jó választ ad. Minél többet gondolkodik a kérdésen, annál kevesebbet kap meg belőle. Tehát itt, egy maximum értéket kell meghatározni.
 
 \begin{figure}[H]
     \centering
@@ -78,8 +80,7 @@ Két részre van osztva a felület \prettyref{fig:make_test1}. A bal oldali sáv
     \label{fig:make_test2}
 \end{figure}
 
-Kétféle kérdés típus közül lehet választani \prettyref{fig:make_test2}. Van a kvíz kérdés, aminél egy kérdésre négy válaszlehetőség van és egy jó válasz. Valamint van az igaz-hamis aminél értelem szerűen meg kell adni hogy a feltett kérdés igaz vagy hamis.
-
+Kétféle kérdés típus közül lehet választani (\prettyref{fig:make_test2}. ábra). Van a kvíz kérdés, aminél egy kérdésre négy válaszlehetőség van és egy jó válasz. Valamint van az igaz-hamis aminél értelem szerűen meg kell adni, hogy a feltett kérdés igaz vagy hamis.
 
 \begin{figure}[H]
     \centering
@@ -88,28 +89,29 @@ Kétféle kérdés típus közül lehet választani \prettyref{fig:make_test2}. 
     \label{fig:make_test3}
 \end{figure}
 
-Ezután, ha mindennel megvagyunk és rákattintunk a mentés gombra, majd felugrik egy űrlap \prettyref{fig:make_test3} ahova be kell írni az alap teszthez tartozó adatokat. Ezek közé tartozik a teszt címe, kitöltési határideje, leírása és a felhasználók email címe, akiknek ki kell töltenie a tesztet. Az utóbbit úgy tudjuk megtenni, hogy beírjuk a mezőbe és a hozzáadás gombbal tudjuk hozzáadni az oldalsó listához. Emellett törölni is tudjuk őket, ha véletlenül helytelenül írtunk volna be egy email-t.
+Ezután, ha mindennel megvagyunk és rákattintunk a mentés gombra, majd felugrik egy űrlap (\prettyref{fig:make_test3}. ábra) ahova be kell írni az alap teszthez tartozó adatokat. Ezek közé tartozik a teszt címe, kitöltési határideje, leírása és a felhasználók email címe, akiknek ki kell töltenie a tesztet. Az utóbbit úgy tudjuk megtenni, hogy beírjuk a mezőbe és a hozzáadás gombbal tudjuk hozzáadni az oldalsó listához. Emellett törölni is tudjuk őket, ha véletlenül helytelenül írtunk volna be egy email-t.
 
 \subsubsection{MyTests}
 
+Ezt követően ha elmentettük a tesztet átkerülünk a ,,Tesztjeim'' nevű oldalra (\prettyref{fig:my_tests}. ábra), ahol megnézhetjük a tesztjeinket amiket ki kell töltenünk vagy amiket mi kreáltunk.
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{images/my_tests.png}
-    \caption{Saját tesztek}
-    \label{fig:my_tests}
+	\centering
+	\includegraphics[width=\linewidth]{images/my_tests.png}
+	\caption{Saját tesztek}
+	\label{fig:my_tests}
 \end{figure}
 
-Ezt követően ha elmentettük a tesztet átkerülünk a "Tesztjeim" nevű oldalra \prettyref{fig:my_tests}, ahol megnézhetjük a tesztjeinket amiket ki kell töltenünk vagy amiket mi kreáltunk. Itt a játékosság szemléltetése végett minden tesztet egy Game Boy ábrázol. Itt látszódik rajta a teszt címe, hogy ki készítette és mikor, mi a kitöltési határidő, mennyi idő van az összes kérdésre egybevéve, hány kérdés van és, hogy mennyi pont jár az az összes kérdésre ha hibátlanul és gyorsan válaszolunk. \newline
+\noindent Itt a játékosság szemléltetése végett minden tesztet egy Game Boy ábrázol. Itt látszódik rajta a teszt címe, hogy ki készítette és mikor, mi a kitöltési határidő, mennyi idő van az összes kérdésre egybevéve, hány kérdés van és, hogy mennyi pont jár az az összes kérdésre ha hibátlanul és gyorsan válaszolunk. \newline
 
-Azt, hogy melyik kérdést hoztuk mi létre és melyik az amelyiket nekünk kell kitölteni, azt két helyen is észre lehet venni. Először is látjuk, hogy a teszt címe alatt a saját nevük van, második pedig hogy a "Kezdés" gomb helyett rögtön azt látjuk hogy "Eredmények". Viszont ugyan ez az "Eredmények" gomb lesz ott akkor is, ha egy tesztet már kitöltöttünk és később vissza szeretnénk nézni mások, hogy teljesítettek. Igy össze tudjuk hasonlítani az eredményünket másokéval, de elsősorban ez a teszt kitöltőjének jelent fontos információt, hogy tudja ki hány pontot szerzett. \newline
+Azt, hogy melyik kérdést hoztuk mi létre és melyik az amelyiket nekünk kell kitölteni, azt két helyen is észre lehet venni. Először is látjuk, hogy a teszt címe alatt a saját nevük van, második pedig hogy a ,,Kezdés'' gomb helyett rögtön azt látjuk hogy ,,Eredmények''. Viszont ugyan ez az ,,Eredmények'' gomb lesz ott akkor is, ha egy tesztet már kitöltöttünk és később vissza szeretnénk nézni, hogy mások hogy teljesítettek. Így össze tudjuk hasonlítani az eredményünket másokéval, de elsősorban ez a teszt kitöltőjének jelent fontos információt, hogy tudja ki hány pontot szerzett. \newline
 
 A kérdéseket tudjuk rendezni is úgy, hogy a legújabb, a legrégebben vagy a kitöltetlen tesztek legyenek elől.
 A kitöltött tesztek kitöltés után zöld színűek lesznek és a Game Boy kijelzőjén látjuk az elért pontunkat.
 
-\subsubsection{CompleteTest}
+\SubSection{CompleteTest}
 
-Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitöltése és betöltődik a CompleteTest komponens. A CompleteTest-nek 3 további gyerek elemi vannak. Az egyik a QuestionType, ez az ami megjelenik a kérdés előtt, hogy segítse a felhasználót. A következő maga a kérdés ami a kérdést hozza fel a válaszlehetőségekkel, legyen az igaz-hamis vagy kvíz. Az utolsó pedig az Results ami az eredményeket sorolja fel. A CompleteTest pedig ezeket a komponenseket váltogatja addig amíg véget nem ér a teszt.
+Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitöltése és betöltődik a \texttt{CompleteTest} komponens. A \texttt{CompleteTest}-nek 3 további gyerek elemi vannak. Az egyik a \texttt{QuestionType}, ez az ami megjelenik a kérdés előtt, hogy segítse a felhasználót. A következő maga a kérdés ami a kérdést hozza fel a válaszlehetőségekkel, legyen az igaz-hamis vagy kvíz. Az utolsó pedig az \texttt{Results} ami az eredményeket sorolja fel. A CompleteTest pedig ezeket a komponenseket váltogatja addig amíg véget nem ér a teszt.
 
 \begin{figure}[H]
     \centering
@@ -118,7 +120,7 @@ Ha rákattintunk a teszteknél a kezdés gombra kezdetét veszi a teszt kitölt�
     \label{fig:question_type}
 \end{figure}
 
-Azért, hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van, a kérdés szövege \prettyref{fig:question_type}. Így, hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni és jó pontot kapni rá. A kérdés alatt pedig megy egy visszaszámláló, ami mutatja mennyi ideje van még elolvasni.
+Azért, hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik előtt bejön a típusa amit egy képpel jelzek és alatta pedig ott van a kérdés szövege (\prettyref{fig:question_type}. ábra). Így, hogy el tudja olvasni válaszadás előtt, van lehetősége a felhasználónak gyorsan is válaszolni, és jó pontot kapni rá. A kérdés alatt pedig megy egy visszaszámláló, ami mutatja mennyi ideje van még elolvasni.
 
 \begin{figure}[H]
     \centering
@@ -127,7 +129,7 @@ Azért, hogy a kitöltőnek legyen ideje felkészülni egy kérdésre, mindegyik
     \label{fig:question1}
 \end{figure}
 
-Majd ezután bejön a kérdés újra viszont a négy válasszal együtt \prettyref{fig:question1}. Itt is megy a visszaszámláló. Minden kérdésnél annyi másodperctől kezdődik a visszaszámlálás, amennyit a tesztkészítő definiált a konkrét kérdésre.
+Majd ezután bejön a kérdés újra viszont a négy válasszal együtt (\prettyref{fig:question1}. ábra). Itt is megy a visszaszámláló. Minden kérdésnél annyi másodperctől kezdődik a visszaszámlálás, amennyit a tesztkészítő definiált a konkrét kérdésre.
 
 \begin{figure}[H]
     \centering
@@ -136,8 +138,7 @@ Majd ezután bejön a kérdés újra viszont a négy válasszal együtt \prettyr
     \label{fig:question2}
 \end{figure}
 
-Egy igaz-hamis kérdés is ugyan így működik, viszont itt csak 2 lehetőség van \prettyref{fig:question2}.
-
+Egy igaz-hamis kérdés is ugyan így működik, viszont itt csak 2 lehetőség van (\prettyref{fig:question2}. ábra).
 
 \begin{figure}[H]
     \centering
@@ -155,60 +156,74 @@ Egy igaz-hamis kérdés is ugyan így működik, viszont itt csak 2 lehetőség 
     \label{fig:question_good_wrong}
 \end{figure}
 
-Egy kérdés 3 féleképpen fejeződhet be. Az első az, ahogy a kép is mutatja \prettyref{fig:question_good_wrong}, hogy jó választ kapunk a kérdésre és megkapjuk a kiérdemelt pontot. A második, hogy rosszul válaszolunk és nem kapunk semmit. Az utolsó pedig, hogy nem válaszolunk. Ilyenkor az idő lejárta után, autómatikusan rossz válasznak veszi a rendszer és tovább lép a következő kérdésre. \newline
+Egy kérdés 3 féleképpen fejeződhet be.
+\begin{itemize}
+	\item Az első az, ahogy a kép is mutatja \prettyref{fig:question_good_wrong}, hogy jó választ kapunk a kérdésre és megkapjuk a kiérdemelt pontot.
+	\item A második, hogy rosszul válaszolunk és nem kapunk semmit.
+	\item Az utolsó pedig, hogy nem válaszolunk. Ilyenkor az idő lejárta után, autómatikusan rossz válasznak veszi a rendszer és tovább lép a következő kérdésre.
+\end{itemize}
 
-Az XP értéke a helyesség és a sebesség alapján számolódik ki.
+Az XP értéke a helyesség és a sebesség alapján számítható ki.
 Jó válasz esetén a pontszámítás az alábbi képlet szerint működik:
-\[ \left\lfloor\left(\frac{\left(\frac{\left( \text{időkorlát} - \text{maradék idő}\right)}{ \text{időkorlát}}\right)}{2}\right)\cdot xp\right\rfloor \]
+\[
+\left\lfloor
+\dfrac{1}{2} \cdot
+\frac
+{\text{időkorlát} - \text{maradék idő}}
+{\text{időkorlát}}
+\cdot \text{xp}
+\right\rfloor.
+\]
 Viszont ha azonnali jó választ adunk, akkor a képleten látható számítás nem megy végbe, hanem megkapjuk az összes lehetséges pontot amit a kérdésre lehet.
 
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\linewidth]{images/results.png}
     \caption{Eredmények a teszt után}
     \label{fig:results}
 \end{figure}
 
-Majd ha az összes kérdés elfogyott, összeadjuk a felhasználó összesen elért pontját és megjelenítjük a többiekével együtt \prettyref{fig:results}. Így megnézhetjük, hányadikok lettünk. Ezután a "Kilépés" gombra kattintva vissza kerülünk a tesztjeinkhez és a főoldalon látjuk, hogy az XP száma növekedett, ha értünk el pontot a teszt kitöltése során.
+Majd ha az összes kérdés elfogyott, összeadjuk a felhasználó összesen elért pontját és megjelenítjük a többiekével együtt (\prettyref{fig:results}. ábra). Így megnézhetjük, hogy hanyadikok lettünk. Ezután a ,,Kilépés'' gombra kattintva vissza kerülünk a tesztjeinkhez és a főoldalon látjuk, hogy az XP száma növekedett, ha értünk el pontot a teszt kitöltése során.
 
-\Section{Backend}
+\Chapter{A backend megvalósítása}
 
-\subsubsection{ASP.NET Core}
+A fejezet részletezi, hogy milyen előnyei miatt esett a választás a .NET Core használatára, majd részletezi a létrehozott adatmodelleket.
 
-Az ASP.NET Core egy nagy teljesítményű, nyílt forráskódú, modern, felhőalapú, internetes alkalmazások felépítéséhez használt keretrendszer. Azért jó ez a keretrendszer mert így készen kapom az eszközöket a HTTP-szolgáltatások kiépítéséhez, amelyek bármely kliensről elérhetőek, beleértve a böngészőket és a mobileszközöket is. Egy ideális környeztetett biztosít a RESTful alkalmazások felépítéséhez a .NET Framework-el. \newline
+\Section{ASP.NET Core}
 
-Az ASP.NET Core számos fejlesztést kínál az ASP.NET MVC / Web API-hoz képest. Azért választottam, mert a core egy olyan platformokon átívelő webes keretrendszer, amely Windows, macOS, Linux-ra is telepíthető. Így egy elég rugalmas keretrendszer webes és mobilalkalmazásokat vezérlő webes API-k fejlesztésére. Azért is döntöttem az ASP.NET Core mellett, mert biztosítja a megfelelő architektúrát amihez alkalmazkodva elég gyorsan lehet API-t kreálni. A project létrehozásakor kiválasztottam a Web API projekt sablon-t és így már csak annyi dolgom volt, hogy létrehozzam a modelleket amikre szükségem van és megírjak a hozzájuk tartozó kontrollereket.
+Az ASP.NET Core egy nagy teljesítményű, nyílt forráskódú, modern, felhőalapú, internetes alkalmazások felépítéséhez használt keretrendszer. Azért jó ez a keretrendszer mert így készen kapjuk az eszközöket a HTTP-szolgáltatások kiépítéséhez, amelyek bármely kliensről elérhetőek, beleértve a böngészőket és a mobileszközöket is. Egy ideális környeztetett biztosít a RESTful alkalmazások felépítéséhez a .NET Framework-el. \newline
 
-\subsection{Adatmodellek leképzése}
+Az ASP.NET Core számos fejlesztést kínál az ASP.NET MVC/Web API-hoz képest. Azért választottam, mert a core egy olyan platformokon átívelő webes keretrendszer, amely Windows, macOS, Linux-ra is telepíthető. Így egy elég rugalmas keretrendszer webes és mobilalkalmazásokat vezérlő webes API-k fejlesztésére. Azért is döntöttem az ASP.NET Core mellett, mert biztosítja a megfelelő architektúrát, amihez alkalmazkodva elég gyorsan lehet API-t kreálni. A project létrehozásakor kiválasztottam a Web API projekt sablont, és így már csak annyi dolgom volt, hogy létrehozzam a modelleket amikre szükségem van, és megírjak a hozzájuk tartozó vezérlőket.
 
-Az adatbázisban a táblák létrehozásához "Code First" megközelítést alkalmaztam, ahelyett, hogy először megterveznénk az adatbázist, majd létrehozná azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz, hogy ez létrejöhessen kell egy úgynevezett ORM (Object-Relational Mapping) eszköz. Az én választásom az Entity Framework-re esett mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Tehát Entity Framework az, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
+\Section{Adatmodellek leképzése}
 
-Az api kódjában 6 osztályt hoztam létre amelyekből létre fognak jönni a táblák ezek adattagjait részleteztem az \nameref{Adatmodell} fejezetben.
-Viszont a közöttük lévő kapcsolat látszik az említett fejezetben lévő ábrán de a megvalósításáról kód szinten még nem beszéltem. \newline
+Az adatbázisban a táblák létrehozásához ,,Code First'' megközelítést alkalmaztam. A helyett, hogy először megterveznénk az adatbázist, majd létrehoznánk azokat az osztályokat amelyek megfelelnek az adatbázis tervezésének. A Code-First megközelítésben az alkalmazás kód részére összpontosít, és ilyenkor osztályokat hozunk létre amelyekből leképződik az adatbázis. Ahhoz, hogy ez létrejöhessen kell egy úgynevezett ORM (\textit{Object-Relational Mapping}) eszköz. A választásom az \textit{Entity Framework}-re esett, mivel ez az egyik legelterjedtebb keretrendszer erre a feladatra. Az Entity Framework az jelen esetben, amely lehetővé teszi, hogy egy adatbázis tábláit C\# osztályokká képezzünk le. \newline
 
-A UsersTest táblával kezdeném, hiszen ez a fő tábla amely a többit összeköti.
-A UsersTest-ben két idegen kulcs van, az egyik a UserId, másik pedig a TestId. Ezekkel kapcsolódik a két legfontosabb tábla, a felhasználó és a teszt. Így a UsersTest segítségével tudjuk azt létrehozni, hogy az, aki az oldalt használja és hozzáadtak egy tesztet, az kap egy példányt a tesztből, így el tudjuk menteni az eredményeit egyesével a meghívottaknak.
-Tehát egy UsersTest-hez egy felhasználó és egy teszt tartozik, viszont felhasználókhoz és tesztekhez is több ilyen UsersTest tábla tartozik mivel több ember használja az oldalt és több teszt is van. \newline
+Az API kódjában 6 osztályt hoztam létre amelyekből létre fognak jönni a táblák. Ezek adattagjait részleteztem az \nameref{Adatmodell}. szakaszban.
+Viszont a közöttük lévő kapcsolat látszik az említett fejezetben lévő ábrán, de a megvalósításáról kód szinten még nem esett szó. \newline
 
-A User táblának csak egy idegen kulcsa van ez pedig a RoleId, mivel minden felhasználóhoz tartozik egy jogosultság.\newline
+A \texttt{UsersTest} táblával kezdeném, hiszen ez a fő tábla amely a többit összeköti.
+A \texttt{UsersTest}-ben két idegen kulcs van, az egyik a UserId, másik pedig a \texttt{TestId}. Ezekkel kapcsolódik a két legfontosabb tábla, a felhasználó és a teszt. Így a UsersTest segítségével tudjuk azt létrehozni, hogy az, aki az oldalt használja és hozzáadtak egy tesztet, az kap egy példányt a tesztből, így el tudjuk menteni az eredményeit egyesével a meghívottaknak.
+Tehát egy \texttt{UsersTest}-hez egy felhasználó és egy teszt tartozik, viszont felhasználókhoz és tesztekhez is több ilyen UsersTest tábla tartozik mivel több ember használja az oldalt és több teszt is van. \newline
 
+A \texttt{User} táblának csak egy idegen kulcsa van ez pedig a RoleId, mivel minden felhasználóhoz tartozik egy jogosultság. \newline
 
-A Test-hez értelem szerűen hivatkozva van maga a kérdés.
+A \texttt{Test}-hez értelemszerűen hivatkozva van maga a kérdés.
 \begin{cpp}
-    [ForeignKey("User")]
-    public string UserId { get; set; }
-
-    public ICollection<Question> Questions { get; set; }
+[ForeignKey("User")]
+public string UserId { get; set; }
+public ICollection<Question> Questions { get; set; }
 \end{cpp}
-Itt egy-több kapcsolat van melyet úgy valósítottam meg, hogy a Test osztályban létrehoztam egy gyűjteményt, ami egy generikus típus, és ennek a típusparamétere a Question osztály így hivatkozunk rá, hogy itt több kérdés fog tartozni egy teszthez. A másik azonosító pedig a UserId, ami a teszt készítőjének egyedi azonosítóját tartalmazza. \newline
+Itt egy-több kapcsolat van, melyet úgy valósítottam meg, hogy a \texttt{Test} osztályban létrehoztam egy gyűjteményt, ami egy generikus típus, és ennek a típusparamétere a \texttt{Question} osztály így hivatkozunk rá, hogy itt több kérdés fog tartozni egy teszthez. A másik azonosító pedig a \texttt{UserId}, ami a teszt készítőjének egyedi azonosítóját tartalmazza. \newline
 
-Az Answer táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt, hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a UserTest azonosítója így vissza tudjuk keresni,  melyik tesztre érkezett a válasz és ki adta a választ, mivel a UserTest-ben benne van a felhasználó azonosítója.
+Az \texttt{Answer} táblának pedig két idegen kulcsa van, az egyik a kérdés azonosítója, amiatt, hogy meg tudjuk mondani melyik kérdésre érkezett a válasz. A másik pedig a \texttt{UserTest} azonosítója így vissza tudjuk keresni,  melyik tesztre érkezett a válasz és ki adta a választ, mivel a \texttt{UserTest}-ben benne van a felhasználó azonosítója.
 
-\subsection{API}
+\Section{Az API megvalósítása}
 
-Azt, hogy milyen endpoint-okat szeretnék és mi a szerepük, az \nameref{API} fejezetben kifejtettem. Viszont így megvalósítás után, be szeretném mutatni néhány fontosabb elküldött adatot, hogy lássuk mik kerülnek a kontrollerhez és miket adunk vissza. 
+Azt, hogy milyen \textit{endpoint}-okat szeretnék létrehozni, és mi a szerepük, az \nameref{API} szakaszban kifejtettem. Viszont így megvalósítás után be szeretném mutatni néhány elemét az adatküldésnek, hogy lássuk, hogy milyen formában kerülnek a kontrollerhez és miket adunk vissza. 
 
-\subsubsection{Felhasználók}
+\SubSection{Felhasználók}
+
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\nolinkurl{api/users:}}
           \begin{addmargin}[\parindent]{0pt}
@@ -240,7 +255,8 @@ Azt, hogy milyen endpoint-okat szeretnék és mi a szerepük, az \nameref{API} f
           \end{addmargin}
 \end{itemize}
 
-\subsubsection{Teszt}
+\SubSection{Teszt}
+
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\nolinkurl{api/tests:}}
           \begin{addmargin}[\parindent]{0pt}
@@ -268,7 +284,10 @@ Azt, hogy milyen endpoint-okat szeretnék és mi a szerepük, az \nameref{API} f
           \end{addmargin}
 \end{itemize}
 
-\subsubsection{Kérdések}
+\newpage
+
+\SubSection{Kérdések}
+
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\nolinkurl{api/questions:}}
           \begin{addmargin}[\parindent]{0pt}
@@ -288,11 +307,12 @@ Azt, hogy milyen endpoint-okat szeretnék és mi a szerepük, az \nameref{API} f
           \end{addmargin}
 \end{itemize}
 
-\subsubsection{Válaszok}
+\SubSection{Válaszok}
+
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\nolinkurl{api/answers:}}
           \begin{addmargin}[\parindent]{0pt}
-              Itt egy teszt kérdés válaszának küldésekor csak egy egyszerű, négy számot tartalmazó objektum, ahol a kérdés és a felhasználói teszt azonosítója adja az egyediségét minden válasznak. Emelet elküldjük még azt, hogy milyen gyorsan válaszolt és hogy mi volt a válasza.
+              Itt egy teszt kérdés válaszának küldésekor csak egy egyszerű, négy számot tartalmazó objektum, ahol a kérdés és a felhasználói teszt azonosítója adja az egyediségét minden válasznak. Emellet elküldjük még azt, hogy milyen gyorsan válaszolt, és hogy mi volt a válasza.
 
               \begin{json}
 {
@@ -305,7 +325,8 @@ Azt, hogy milyen endpoint-okat szeretnék és mi a szerepük, az \nameref{API} f
           \end{addmargin}
 \end{itemize}
 
-\subsubsection{Felhasználó tesztjei}
+\SubSection{Felhasználó tesztjei}
+
 \begin{itemize}[label={$\bullet$}, topsep=0pt, itemsep=0pt, leftmargin=15pt]
     \item[] {\nolinkurl{api/users-tests:}}
           \begin{addmargin}[\parindent]{0pt}
@@ -352,13 +373,13 @@ Azt, hogy milyen endpoint-okat szeretnék és mi a szerepük, az \nameref{API} f
 }
               \end{json}
 
-              Valamint amikor egy felhasználó befejezi a tesztkitöltést akkor itt módosításra kerül az xp adattag és megjelenik egy rangsor, hogy ki hány pontot ért el. Ehhez le kell kérni az összes játékost akik kitöltötték a tesztet. Ezt megtehetjük a \nolinkurl{api/users-tests/test/testId} endpoint-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
+              Amikor egy felhasználó befejezi a tesztkitöltést, akkor itt módosításra kerül az XP adattag és megjelenik egy rangsor, hogy ki hány pontot ért el. Ehhez le kell kérni az összes játékost akik kitöltötték a tesztet. Ezt megtehetjük a \nolinkurl{api/users-tests/test/testId} \textit{endpoint}-on. A főoldalon szereplő kitöltött és kitöltetlen tesztek számát is innen tudjuk lekérni.
           \end{addmargin}
 \end{itemize}
 
-\subsection{Session tárolása}
+\Section{Session tárolása}
 
-A régi ASP.NET-től eltérően az ASP.NET Core nem rendelkezik \lstinline{Cache} objektummal. Az ASP.NET Core azonban számos különféle gyorsítótár-támogatást nyújt ilyen lehet a memóriában, az elosztott gyorsítótárban vagy a válasz-gyorsítótárban tárolt. \newline
+A régi ASP.NET-től eltérően az ASP.NET Core nem rendelkezik \lstinline{Cache} objektummal. Az ASP.NET Core azonban számos különféle gyorsítótár-támogatást nyújt. Ilyen lehet a memóriában, az elosztott gyorsítótárban vagy a válasz-gyorsítótárban tárolt. \newline
 
 Az elosztott SQL Server-es gyorsítótár megvalósítása lehetővé teszi az elosztott gyorsítótár számára, hogy az SQL Server adatbázist használja háttértárként. Először ezt hozzá kell adni a \lstinline{Startup.cs} file-hoz:
 
