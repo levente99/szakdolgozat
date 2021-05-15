@@ -142,7 +142,8 @@
     font-family: monospace;
 }
 
-.gameboy-earned-xp-number {
+.gameboy-earned-xp-number,
+.gameboy-deadline {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -154,6 +155,10 @@
 
 .gameboy-earned-xp-number::after {
     content: ' XP';
+}
+
+.gameboy-deadline {
+    font-size: 20px;
 }
 
 .test-name {

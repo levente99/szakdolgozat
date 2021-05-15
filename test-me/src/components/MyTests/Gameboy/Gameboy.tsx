@@ -9,6 +9,7 @@ interface GameboyProps {
     lastName: string;
     createdTime: string;
     deadline: string;
+    currentDate: string;
     testTime: string;
     questionNumber: number;
     xp: number;
@@ -17,15 +18,25 @@ interface GameboyProps {
     thisIsMyTest: boolean;
 }
 
-export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastName, createdTime, deadline, testTime, questionNumber, xp, finished, earnedXp, thisIsMyTest }: GameboyProps) => {
+export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastName, createdTime, deadline, testTime, questionNumber, xp, finished, earnedXp, thisIsMyTest, currentDate }: GameboyProps) => {
+    
     return (
-        <div className={finished == null ? "gameboy" : "gameboy finished-gameboy-color"}>
+        <div className={thisIsMyTest ? "gameboy finished-gameboy-color" : 
+            finished === null ? 
+                deadline < currentDate ? "gameboy finished-gameboy-color" : "gameboy" 
+            : "gameboy finished-gameboy-color"}>
             <div className="screen-cont">
                 <div className="screen">
                     <div className="header"></div>
                     <div className="test-name">{testName}</div>
                     <div className="test-name">{firstName + " " + lastName}</div>
-                    {finished == null ? null : <div className="gameboy-earned-xp-number">{earnedXp}</div>}
+                    {thisIsMyTest ? 
+                        null : 
+                        finished === null ? 
+                            deadline < currentDate ?  
+                                <div className="gameboy-deadline">Lejárt a határidő</div> :
+                                null
+                            : <div className="gameboy-earned-xp-number">{earnedXp}</div>}
                     <div className="test-create-dates">Kiírva: {createdTime}</div>
                     <div className="test-deadline">Kitöltési határidő: {deadline}</div>
                 </div>
@@ -45,7 +56,7 @@ export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastN
                 </div>
                 <div className="btn-select"></div>
                 {
-                    thisIsMyTest ? (
+                    thisIsMyTest || (deadline < currentDate) ? (
                         <>
                             <Link to={`/results/${id}`} className="btn-start-finished" />
                             <div className="btn-start-label">Eredmények</div>
@@ -63,10 +74,7 @@ export const Gameboy: React.FC<GameboyProps> = ({ id, testName, firstName, lastN
                             </>
                         )
                     )
-
                 }
-
-
             </div>
             <div className="speakers"></div>
             <div className="on-off">off-on</div>

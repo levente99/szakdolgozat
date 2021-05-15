@@ -59,6 +59,14 @@ export default class MyTests extends Component {
         });
     }
 
+    getDate = () => {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        return yyyy + '-' + mm + '-' + dd;
+    }
+
     render() {
         var userTestCopy = [...this.state.usersTests];
         const orderedTests = () => {
@@ -84,6 +92,7 @@ export default class MyTests extends Component {
                     lastName={userTest.test.user.lastName}
                     createdTime={userTest.test.created.split('T')[0]}
                     deadline={userTest.test.deadline.split('T')[0]}
+                    currentDate={this.getDate()}
                     earnedXp={userTest.earnedXp}
                     finished={userTest.finished}
                     testTime={this.convertSecToMin(userTest.test.questions.reduce(function (a, b) {

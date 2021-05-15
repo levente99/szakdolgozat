@@ -97,7 +97,7 @@ class CreateTest extends Component<CreateTestProps, CreateTestState> {
 
     render() {
         if (this.state.createdTest) {
-            this.props.history.push('/tests')
+            this.props.history.push('/')
         }
         const selectQuestionType = (
             <Popover id="popover" >
